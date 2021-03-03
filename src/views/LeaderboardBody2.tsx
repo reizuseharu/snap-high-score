@@ -88,7 +88,22 @@ const data = [
 const options = {
   filter: true,
   filterType: "dropdown",
-  responsive: "stacked"
+  responsive: "stacked",
+  selectableRows: false,
+  downloadCsv: false,
+  print: false,
+  serverSide: true,
+  setRowProps: row => {
+    if (row[0] === "Gabby George") {
+      return {
+        style: { backgroundColor: "#FFC3E3" }
+      };
+    }
+  },
+  fixedHeaderOptions: {
+    xAxis: false,
+    yAxis: true,
+  },
 }
 
 export class Leaderboard extends React.Component {
@@ -101,11 +116,6 @@ export class Leaderboard extends React.Component {
           },
           paper: {
             boxShadow: "none"
-          }
-        },
-        MUIDataTableBodyCell: {
-          root: {
-            backgroundColor: "#CBC3E3"
           }
         }
       }
