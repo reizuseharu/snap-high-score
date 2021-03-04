@@ -9,6 +9,7 @@ import image from '../assets/img/sidebar-2.jpg'
 import LeaderboardBody from "./LeaderboardBody"
 import {Leaderboard as LeaderboardBody2} from "./LeaderboardBody2"
 import {RouteComponentProps} from "react-router"
+import Navbar from "./Navbar"
 
 interface Props {
   classes: any
@@ -99,6 +100,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
     const { shouldShowPokemonLeaderboard, shouldShowAllLeaderboard } = this.state
     return (
       <div id="container">
+        <Navbar/>
         <AppBar position="static">
           <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
             <Tab label="Pokemon" />

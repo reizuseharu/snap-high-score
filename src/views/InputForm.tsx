@@ -16,6 +16,7 @@ import {
   Button,
   CssBaseline, IconButton, makeStyles, Theme, createStyles,
 } from "@material-ui/core"
+import Navbar from "./Navbar"
 
 import DateFnsUtils from '@date-io/date-fns'
 // ! Date pulls UTC but shows EST on selection
@@ -74,6 +75,8 @@ export function InputForm() {
 
   const classes = useStyles()
   return (
+    <div id={"container"}>
+    <Navbar/>
     <div style={{ padding: 16, margin: 'auto', maxWidth: 600 }}>
       <CssBaseline />
       <Typography variant="h4" align="center" component="h1" gutterBottom>
@@ -157,6 +160,8 @@ export function InputForm() {
                       radioGroupProps={{ row: true }}
                     />
                   </Grid>
+                </Grid>
+                <Grid container spacing={0} alignItems="center">
                   <Grid item xs={3}>
                     <Checkboxes
                       label=""
@@ -166,8 +171,11 @@ export function InputForm() {
                     />
                   </Grid>
                 </Grid>
-                <Grid container spacing={0} alignItems="center">
-                  <Grid item xs={4}>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField name="videoLink" label="Video Link" />
+                  </Grid>
+                  <Grid item xs={6}>
                     <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
                     <label htmlFor="icon-button-file">
                       <IconButton color="primary" aria-label="upload picture" component="span">
@@ -175,10 +183,9 @@ export function InputForm() {
                       </IconButton>
                     </label>
                   </Grid>
-                  <Grid item xs={4}>
-                    <TextField name="videoLink" label="Video Link" />
-                  </Grid>
-                  <Grid item xs={8}>
+                </Grid>
+                <Grid container spacing={0} alignItems="center">
+                  <Grid item xs={6}>
                     <DatePicker
                       label="Picture/Video Taken On"
                       name="takenOn"
@@ -218,5 +225,6 @@ export function InputForm() {
         )}
       />
     </div>
+  </div>
   )
 }
