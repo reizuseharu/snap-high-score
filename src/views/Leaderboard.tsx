@@ -1,4 +1,5 @@
 /* eslint-disable */
+import {Button} from "@material-ui/core"
 import React from 'react'
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -22,6 +23,8 @@ interface State {
   hasImage: boolean
   fixedClasses: string
   mobileOpen: boolean
+  shouldShowPokemonLeaderboard: boolean
+  shouldShowAllLeaderboard: boolean
 }
 
 class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
@@ -33,32 +36,32 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
       color: 'blue',
       hasImage: true,
       fixedClasses: 'dropdown show',
-      mobileOpen: false
+      mobileOpen: false,
+      shouldShowPokemonLeaderboard: true,
+      shouldShowAllLeaderboard: false
+    }
+    this.hideComponent = this.hideComponent.bind(this)
+    this.showOtherComponent = this.showOtherComponent.bind(this)
+  }
+
+  hideComponent(name: string) {
+    switch (name) {
+      case "shouldShowPokemonLeaderboard":
+        this.setState({ shouldShowPokemonLeaderboard: !this.state.shouldShowPokemonLeaderboard })
+        this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
+        break;
+      case "shouldShowAllLeaderboard":
+        this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
+        this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
+        break
+      default:
+        break
     }
   }
 
-  handleImageClick = (i: string) => {
-    this.setState({ image: i })
-  }
-
-  handleColorClick = (c: string) => {
-    this.setState({ color: c })
-  }
-
-  handleFixedClick = () => {
-    if (this.state.fixedClasses === 'dropdown') {
-      this.setState({ fixedClasses: 'dropdown show' })
-    } else {
-      this.setState({ fixedClasses: 'dropdown' })
-    }
-  }
-
-  handleDrawerToggle = () => {
-    this.setState({ mobileOpen: !this.state.mobileOpen })
-  }
-
-  getRoute() {
-    return this.props.location.pathname !== '/darts'
+  showOtherComponent() {
+    this.setState({ shouldShowPokemonLeaderboard: !this.state.shouldShowPokemonLeaderboard })
+    this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
   }
 
   resizeFunction = () => {
@@ -77,9 +80,6 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
   componentDidUpdate(e: any) {
     if (e.history.location.pathname !== e.location.pathname) {
       this.refs.mainPanel.scrollTop = 0
-      if (this.state.mobileOpen) {
-        this.setState({ mobileOpen: false })
-      }
     }
   }
 
@@ -89,9 +89,15 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
 
   render() {
     const { classes, ...rest } = this.props
+    const { shouldShowPokemonLeaderboard, shouldShowAllLeaderboard } = this.state
     return (
-      <LeaderboardBody location={this.props.location} history={this.props.history} match={this.props.match}/>
-      // <LeaderboardBody2/>
+      <div id="container">
+        <Button onClick={() => { this.showOtherComponent() }}>Show Other Leaderboard</Button>
+        { shouldShowPokemonLeaderboard &&
+          <LeaderboardBody location={this.props.location} history={this.props.history} match={this.props.match}/>
+        }
+        { shouldShowAllLeaderboard && <LeaderboardBody2/> }
+      </div>
     )
   }
 }

@@ -1,4 +1,5 @@
 // @ts-nocheck
+import {PhotoCamera} from "@material-ui/icons"
 import React from 'react'
 import { Form } from 'react-final-form'
 import {
@@ -13,8 +14,8 @@ import {
   Paper,
   Grid,
   Button,
-  CssBaseline,
-} from '@material-ui/core'
+  CssBaseline, IconButton, makeStyles, Theme, createStyles,
+} from "@material-ui/core"
 
 import DateFnsUtils from '@date-io/date-fns'
 // ! Date pulls UTC but shows EST on selection
@@ -56,7 +57,22 @@ const validate = (values) => {
   return errors
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+    input: {
+      display: 'none',
+    },
+  }),
+)
+
 export function InputForm() {
+
+  const classes = useStyles()
   return (
     <div style={{ padding: 16, margin: 'auto', maxWidth: 600 }}>
       <CssBaseline />
@@ -152,10 +168,12 @@ export function InputForm() {
                 </Grid>
                 <Grid container spacing={0} alignItems="center">
                   <Grid item xs={4}>
-                    <Button variant="contained" component="label">
-                      Upload Picture
-                      <input type="file" hidden />
-                    </Button>
+                    <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+                    <label htmlFor="icon-button-file">
+                      <IconButton color="primary" aria-label="upload picture" component="span">
+                        <PhotoCamera />
+                      </IconButton>
+                    </label>
                   </Grid>
                   <Grid item xs={4}>
                     <TextField name="videoLink" label="Video Link" />
