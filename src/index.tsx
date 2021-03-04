@@ -7,7 +7,7 @@ import './index.css'
 import {Redirect, Route, Router, Switch} from "react-router"
 import {InputForm} from "./views/InputForm"
 
-let history = createBrowserHistory();
+let history = createBrowserHistory()
 
 ReactDOM.render(
   <React.StrictMode>

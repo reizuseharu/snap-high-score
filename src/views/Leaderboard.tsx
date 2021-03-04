@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {Button} from "@material-ui/core"
+import {AppBar, Tab, Tabs} from "@material-ui/core"
 import React from 'react'
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -18,6 +18,7 @@ interface Props {
 }
 
 interface State {
+  value: number
   image: string
   color: string
   hasImage: boolean
@@ -33,6 +34,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
     super(props)
     this.state = {
       image,
+      value: 0,
       color: 'blue',
       hasImage: true,
       fixedClasses: 'dropdown show',
@@ -49,7 +51,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
       case "shouldShowPokemonLeaderboard":
         this.setState({ shouldShowPokemonLeaderboard: !this.state.shouldShowPokemonLeaderboard })
         this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
-        break;
+        break
       case "shouldShowAllLeaderboard":
         this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
         this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
@@ -87,12 +89,22 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
     window.removeEventListener('resize', this.resizeFunction)
   }
 
+  handleChange = (event: React.ChangeEvent<{}>, value: number) => {
+    this.setState({ value: value })
+    this.showOtherComponent()
+  }
+
   render() {
     const { classes, ...rest } = this.props
     const { shouldShowPokemonLeaderboard, shouldShowAllLeaderboard } = this.state
     return (
       <div id="container">
-        <Button onClick={() => { this.showOtherComponent() }}>Show Other Leaderboard</Button>
+        <AppBar position="static">
+          <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
+            <Tab label="Pokemon" />
+            <Tab label="All" />
+          </Tabs>
+        </AppBar>
         { shouldShowPokemonLeaderboard &&
           <LeaderboardBody location={this.props.location} history={this.props.history} match={this.props.match}/>
         }
