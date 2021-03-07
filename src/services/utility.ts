@@ -3,12 +3,26 @@ export function ordinal_suffix_of(i: number) {
   const k = i % 100
 
   if (j === 1 && k !== 11) {
-    return `${i}st`;
+    return `${i}st`
   } else if (j === 2 && k !== 12) {
-    return `${i}nd`;
+    return `${i}nd`
   } else if (j === 3 && k !== 13) {
-    return `${i}rd`;
+    return `${i}rd`
   } else {
-    return `${i}th`;
+    return `${i}th`
   }
+}
+
+export function endsWithAny(suffixes: Array<string>, word: string) {
+  return suffixes.some(function (suffix) {
+    return word.endsWith(suffix)
+  });
+}
+
+export function isURLImage(url: string): boolean {
+  return url.match(/\.(jpeg|jpg|gif|png)$/) !== null
+}
+
+export function isURLVideo(url: string): boolean {
+  return url.match(/(mp4|mkv|mov|wmv|avi|webm|html5|youtube|youtu.be)/) !== null
 }

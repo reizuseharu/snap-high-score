@@ -6,8 +6,9 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'perfect-scrollbar/css/perfect-scrollbar.css'
 
 import image from '../assets/img/sidebar-2.jpg'
-import LeaderboardBody from "./LeaderboardBody"
-import {Leaderboard as LeaderboardBody2} from "./LeaderboardBody2"
+import {ChallengeLeaderboard} from "./ChallengeLeaderboard"
+import PokemonLeaderboard from "./PokemonLeaderboard"
+import { ReportLeaderboard } from "./ReportLeaderboard"
 import {RouteComponentProps} from "react-router"
 import Navbar from "./Navbar"
 
@@ -25,8 +26,12 @@ interface State {
   hasImage: boolean
   fixedClasses: string
   mobileOpen: boolean
-  shouldShowPokemonLeaderboard: boolean
-  shouldShowAllLeaderboard: boolean
+  shouldShowLeaderboardPokemon: boolean
+  shouldShowLeaderboardReportScore: boolean
+  shouldShowLeaderboardCourse: boolean
+  shouldShowLeaderboardChallenge: boolean
+  shouldShowLeaderboardSiteReportScore: boolean
+  shouldShowLeaderboardTimeAttack: boolean
 }
 
 class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
@@ -40,22 +45,82 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
       hasImage: true,
       fixedClasses: 'dropdown show',
       mobileOpen: false,
-      shouldShowPokemonLeaderboard: true,
-      shouldShowAllLeaderboard: false
+      shouldShowLeaderboardPokemon: true,
+      shouldShowLeaderboardReportScore: false,
+      shouldShowLeaderboardCourse: false,
+      shouldShowLeaderboardChallenge: false,
+      shouldShowLeaderboardSiteReportScore: false,
+      shouldShowLeaderboardTimeAttack: false
     }
     this.hideComponent = this.hideComponent.bind(this)
     this.showOtherComponent = this.showOtherComponent.bind(this)
+    this.showComponent = this.showComponent.bind(this)
+  }
+
+  showComponent(index: number) {
+    switch (index) {
+      case 0:
+        this.setState({ shouldShowLeaderboardPokemon: true })
+        this.setState({ shouldShowLeaderboardReportScore: false })
+        this.setState({ shouldShowLeaderboardCourse: false })
+        this.setState({ shouldShowLeaderboardChallenge: false })
+        this.setState({ shouldShowLeaderboardSiteReportScore: false })
+        this.setState({ shouldShowLeaderboardTimeAttack: false })
+        break
+      case 1:
+        this.setState({ shouldShowLeaderboardPokemon: false })
+        this.setState({ shouldShowLeaderboardReportScore: true })
+        this.setState({ shouldShowLeaderboardCourse: false })
+        this.setState({ shouldShowLeaderboardChallenge: false })
+        this.setState({ shouldShowLeaderboardSiteReportScore: false })
+        this.setState({ shouldShowLeaderboardTimeAttack: false })
+        break
+      case 2:
+        this.setState({ shouldShowLeaderboardPokemon: false })
+        this.setState({ shouldShowLeaderboardReportScore: false })
+        this.setState({ shouldShowLeaderboardCourse: true })
+        this.setState({ shouldShowLeaderboardChallenge: false })
+        this.setState({ shouldShowLeaderboardSiteReportScore: false })
+        this.setState({ shouldShowLeaderboardTimeAttack: false })
+        break
+      case 3:
+        this.setState({ shouldShowLeaderboardPokemon: false })
+        this.setState({ shouldShowLeaderboardReportScore: false })
+        this.setState({ shouldShowLeaderboardCourse: false })
+        this.setState({ shouldShowLeaderboardChallenge: true })
+        this.setState({ shouldShowLeaderboardSiteReportScore: false })
+        this.setState({ shouldShowLeaderboardTimeAttack: false })
+        break
+      case 4:
+        this.setState({ shouldShowLeaderboardPokemon: false })
+        this.setState({ shouldShowLeaderboardReportScore: false })
+        this.setState({ shouldShowLeaderboardCourse: false })
+        this.setState({ shouldShowLeaderboardChallenge: false })
+        this.setState({ shouldShowLeaderboardSiteReportScore: true })
+        this.setState({ shouldShowLeaderboardTimeAttack: false })
+        break
+      case 5:
+        this.setState({ shouldShowLeaderboardPokemon: false })
+        this.setState({ shouldShowLeaderboardReportScore: false })
+        this.setState({ shouldShowLeaderboardCourse: false })
+        this.setState({ shouldShowLeaderboardChallenge: false })
+        this.setState({ shouldShowLeaderboardSiteReportScore: false })
+        this.setState({ shouldShowLeaderboardTimeAttack: true })
+        break
+      default:
+        break
+    }
   }
 
   hideComponent(name: string) {
     switch (name) {
-      case "shouldShowPokemonLeaderboard":
-        this.setState({ shouldShowPokemonLeaderboard: !this.state.shouldShowPokemonLeaderboard })
-        this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
+      case "shouldShowLeaderboardPokemon":
+        this.setState({ shouldShowLeaderboardPokemon: !this.state.shouldShowLeaderboardPokemon })
+        this.setState({ shouldShowLeaderboardReportScore: !this.state.shouldShowLeaderboardReportScore })
         break
-      case "shouldShowAllLeaderboard":
-        this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
-        this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
+      case "shouldShowLeaderboardReportScore":
+        this.setState({ shouldShowLeaderboardReportScore: !this.state.shouldShowLeaderboardReportScore })
+        this.setState({ shouldShowLeaderboardReportScore: !this.state.shouldShowLeaderboardReportScore })
         break
       default:
         break
@@ -63,8 +128,8 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
   }
 
   showOtherComponent() {
-    this.setState({ shouldShowPokemonLeaderboard: !this.state.shouldShowPokemonLeaderboard })
-    this.setState({ shouldShowAllLeaderboard: !this.state.shouldShowAllLeaderboard })
+    this.setState({ shouldShowLeaderboardPokemon: !this.state.shouldShowLeaderboardPokemon })
+    this.setState({ shouldShowLeaderboardReportScore: !this.state.shouldShowLeaderboardReportScore })
   }
 
   resizeFunction = () => {
@@ -92,25 +157,41 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
 
   handleChange = (event: React.ChangeEvent<{}>, value: number) => {
     this.setState({ value: value })
-    this.showOtherComponent()
+    this.showComponent(value)
+    // this.showOtherComponent()
   }
 
   render() {
     const { classes, ...rest } = this.props
-    const { shouldShowPokemonLeaderboard, shouldShowAllLeaderboard } = this.state
+    const {
+      shouldShowLeaderboardPokemon,
+      shouldShowLeaderboardReportScore,
+      shouldShowLeaderboardCourse,
+      shouldShowLeaderboardChallenge,
+      shouldShowLeaderboardSiteReportScore,
+      shouldShowLeaderboardTimeAttack
+    } = this.state
     return (
       <div id="container">
         <Navbar/>
         <AppBar position="static">
           <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
             <Tab label="Pokemon" />
-            <Tab label="All" />
+            <Tab label="Report Score" />
+            <Tab label="Course" />
+            <Tab label="Challenge" />
+            <Tab label="Site Report" />
+            <Tab label="Time Attack" />
           </Tabs>
         </AppBar>
-        { shouldShowPokemonLeaderboard &&
-          <LeaderboardBody location={this.props.location} history={this.props.history} match={this.props.match}/>
+        { shouldShowLeaderboardPokemon &&
+          <PokemonLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/>
         }
-        { shouldShowAllLeaderboard && <LeaderboardBody2/> }
+        { shouldShowLeaderboardReportScore && <ReportLeaderboard/> }
+        { shouldShowLeaderboardCourse && <ReportLeaderboard/> }
+        { shouldShowLeaderboardChallenge && <ChallengeLeaderboard/> }
+        { shouldShowLeaderboardSiteReportScore && <ReportLeaderboard/> }
+        { shouldShowLeaderboardTimeAttack && <ReportLeaderboard/> }
       </div>
     )
   }

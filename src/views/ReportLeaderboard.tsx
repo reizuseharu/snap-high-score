@@ -88,8 +88,8 @@ const data = [
 const options = {
   filter: true,
   filterType: "dropdown",
-  responsive: "stacked",
-  selectableRows: false,
+  responsive: "vertical",
+  selectableRows: "none",
   downloadCsv: false,
   print: false,
   serverSide: true,
@@ -100,13 +100,11 @@ const options = {
       };
     }
   },
-  fixedHeaderOptions: {
-    xAxis: false,
-    yAxis: true,
-  },
+  fixedHeader: false,
+  fixedSelectColumn: true
 }
 
-export class Leaderboard extends React.Component {
+export class ReportLeaderboard extends React.Component {
   getMuiTheme = () =>
     createMuiTheme({
       overrides: {

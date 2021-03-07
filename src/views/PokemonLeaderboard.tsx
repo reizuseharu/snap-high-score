@@ -28,7 +28,7 @@ interface State {
   currentLinealChampion: string
 }
 
-class LeaderboardBody extends React.Component<Props & RouteComponentProps, State> {
+class PokemonLeaderboard extends React.Component<Props & RouteComponentProps, State> {
   constructor(props: Props) {
     super(props)
 
@@ -111,4 +111,4 @@ class LeaderboardBody extends React.Component<Props & RouteComponentProps, State
   }
 }
 
-export default LeaderboardBody
+export default PokemonLeaderboard

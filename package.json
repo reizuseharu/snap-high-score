@@ -46,6 +46,7 @@
     "@types/glob": "^7.1.1",
     "@types/history": "^4.7.3",
     "@types/js-yaml": "^3.12.3",
+    "@types/material-ui": "^4.11.2",
     "@types/mui-datatables": "^3.7.0",
     "@types/node": "^12.7.12",
     "@types/query-string": "^6.3.0",
