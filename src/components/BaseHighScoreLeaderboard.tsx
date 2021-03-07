@@ -4,7 +4,7 @@ import {LeaderboardTableRankCell} from "./LeaderboardTableRankCell"
 import {LeaderboardTableHeaderCell} from "./LeaderboardTableHeaderCell"
 import {LeaderboardTableRowCell} from "./LeaderboardTableRowCell"
 import {green} from "@material-ui/core/colors"
-import {Cancel, CheckCircle, Image, YouTube} from "@material-ui/icons"
+import {Cancel, CheckCircle, Error, Image, YouTube} from "@material-ui/icons"
 import {OptionalString} from "../utilities/constants"
 import {rankBackgroundColor} from "../services/rank"
 import {ScoreAttack} from "../services/ScoreAttack"
@@ -47,13 +47,13 @@ class BaseHighScoreLeaderboard extends React.Component<LeaderboardProps & RouteC
     const isImage: boolean = proofLink ? isURLImage(proofLink) : false
     const isVideo: boolean = proofLink ? isURLVideo(proofLink) : false
 
-    if (!isImage && !isVideo) { return null}
+    if (!isImage && !isVideo) { return <IconButton disabled><Error/></IconButton> }
 
     return (
       /* @ts-ignore */
       <IconButton href={proofLink} target="_blank" aria-label="link">
-        { isImage && <Image /> }
-        { isVideo && <YouTube color={"secondary"}/> }
+        { isImage && <Image style={{ color: green[500]}}/> }
+        { isVideo && <YouTube style={{ color: green[500]}}/> }
       </IconButton>
     )
   }
