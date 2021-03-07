@@ -1,4 +1,5 @@
 // @ts-nocheck
+import background from "../assets/img/background.png"
 import {PhotoCamera} from "@material-ui/icons"
 import React from 'react'
 import { Form } from 'react-final-form'
@@ -75,7 +76,13 @@ export function InputForm() {
 
   const classes = useStyles()
   return (
-    <div id={"container"}>
+    <div id="container" style={{
+      backgroundImage: `url(${background})`,
+      backgroundAttachment: "fixed",
+      height: "200%",
+      backgroundRepeat: "repeat"
+    }}
+    >
     <Navbar/>
     <div style={{ padding: 16, margin: 'auto', maxWidth: 600 }}>
       <CssBaseline />
@@ -132,19 +139,21 @@ export function InputForm() {
                     label="Score"
                   />
                 </Grid>
-                <Grid item>
-                  <Radios
-                    label="Region"
-                    name="region"
-                    required={true}
-                    data={[
-                      { label: 'NTSC-USA', value: 'NTSC-USA' },
-                      { label: 'NTSC-JPN', value: 'NTSC-JPN' },
-                      { label: 'PAL', value: 'PAL' },
-                      { label: 'PAL-M', value: 'PAL-M' },
-                    ]}
-                    radioGroupProps={{ row: true }}
-                  />
+                <Grid container spacing={0} alignItems="center">
+                  <Grid item>
+                    <Radios
+                      label="Region"
+                      name="region"
+                      required={true}
+                      data={[
+                        { label: 'NTSC-USA', value: 'NTSC-USA' },
+                        { label: 'NTSC-JPN', value: 'NTSC-JPN' },
+                        { label: 'PAL', value: 'PAL' },
+                        { label: 'PAL-M', value: 'PAL-M' },
+                      ]}
+                      radioGroupProps={{ row: true }}
+                    />
+                  </Grid>
                 </Grid>
                 <Grid container spacing={0} alignItems="center">
                   <Grid item xs={9}>
@@ -220,7 +229,7 @@ export function InputForm() {
                 </Grid>
               </Grid>
             </Paper>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
+            <pre><span style={{color: "#FFFFFF"}}>{JSON.stringify(values, 0, 2)}</span></pre>
           </form>
         )}
       />

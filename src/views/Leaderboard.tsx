@@ -1,12 +1,14 @@
 /* eslint-disable */
-import {AppBar, Tab, Tabs} from "@material-ui/core"
+import background from "../assets/img/background.png"
+import {AppBar, Tab, TableHead, Tabs} from "@material-ui/core"
 import React from 'react'
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'perfect-scrollbar/css/perfect-scrollbar.css'
 
 import image from '../assets/img/sidebar-2.jpg'
-import {ChallengeLeaderboard} from "./ChallengeLeaderboard"
+import { ChallengeLeaderboard } from "./ChallengeLeaderboard"
+import CourseLeaderboard from "./CourseLeaderboard"
 import PokemonLeaderboard from "./PokemonLeaderboard"
 import { ReportLeaderboard } from "./ReportLeaderboard"
 import {RouteComponentProps} from "react-router"
@@ -171,27 +173,51 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
       shouldShowLeaderboardSiteReportScore,
       shouldShowLeaderboardTimeAttack
     } = this.state
+
+    const width = 600
+
     return (
-      <div id="container">
+      <div id="container" style={{
+        backgroundImage: `url(${background})`,
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        height: "200%",
+        backgroundRepeat: "repeat"
+      }}
+      >
         <Navbar/>
-        <AppBar position="static">
-          <Tabs value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
-            <Tab label="Pokemon" />
-            <Tab label="Report Score" />
-            <Tab label="Course" />
-            <Tab label="Challenge" />
-            <Tab label="Site Report" />
-            <Tab label="Time Attack" />
-          </Tabs>
-        </AppBar>
+        <div>
+        <Tabs
+          value={this.state.value}
+          style={{
+            backgroundColor: "#FFFFFF",
+            opacity: 0.7,
+            marginLeft: "10%",
+            marginRight: "10%",
+            width: "80%"
+          }}
+          variant="scrollable"
+          scrollButtons="off"
+          textColor="inherit"
+          onChange={this.handleChange}
+          aria-label="simple tabs example">
+          <Tab label="Pokemon" />
+          <Tab label="Report Score" />
+          <Tab label="Course" />
+          <Tab label="Challenge" />
+          <Tab label="Site Report" disabled />
+          <Tab label="Time Attack" disabled />
+        </Tabs>
         { shouldShowLeaderboardPokemon &&
           <PokemonLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/>
         }
         { shouldShowLeaderboardReportScore && <ReportLeaderboard/> }
-        { shouldShowLeaderboardCourse && <ReportLeaderboard/> }
+        { shouldShowLeaderboardCourse && <CourseLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/> }
         { shouldShowLeaderboardChallenge && <ChallengeLeaderboard/> }
         { shouldShowLeaderboardSiteReportScore && <ReportLeaderboard/> }
         { shouldShowLeaderboardTimeAttack && <ReportLeaderboard/> }
+      </div>
       </div>
     )
   }
