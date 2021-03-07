@@ -1,20 +1,34 @@
+import {OptionalNumber} from "../utilities/constants"
 import first from "../assets/img/1st.png"
 import second from "../assets/img/2nd.png"
 import third from "../assets/img/3rd.png"
 import fourth from "../assets/img/4th.png"
 
-export function rankColor(index: number) {
-  const rankIndex = index + 1
+function scoresToRanks(scores: Array<number>): Map<number, number> {
+  let sorted = scores.slice().sort((a: number, b: number) => { return b - a })
+  return new Map(scores.map((score: number) => { return [score, sorted.indexOf(score) + 1]}))
+}
 
+export function scoreToRank(score: number, scores: Array<number>) {
+  let ranks = scoresToRanks(scores)
+  return ranks.get(score)
+}
+
+export function scoreToRankColor(score: number, scores: Array<number>) {
+  let rank = scoreToRank(score, scores)
+  return rankColor(rank)
+}
+
+export function rankColor(rank: OptionalNumber) {
   let color: string
 
-  if (rankIndex === 1) {
+  if (rank === 1) {
     color = "#FFD700"
-  } else if (rankIndex === 2) {
+  } else if (rank === 2) {
     color = "#D9D9D9"
-  } else if (rankIndex === 3) {
+  } else if (rank === 3) {
     color = "#CD7F32"
-  } else if (rankIndex === 4) {
+  } else if (rank === 4) {
     color = "#FF0800"
   } else {
     color = "#000000"
@@ -24,18 +38,22 @@ export function rankColor(index: number) {
     border: 0
   }
 }
-export function rankImage(index: number) {
-  const rankIndex = index + 1
 
+export function scoreToRankImage(score: number, scores: Array<number>) {
+  let rank = scoreToRank(score, scores)
+  return rankImage(rank)
+}
+
+export function rankImage(rank: OptionalNumber) {
   let image: string
 
-  if (rankIndex === 1) {
+  if (rank === 1) {
     image = first
-  } else if (rankIndex === 2) {
+  } else if (rank === 2) {
     image = second
-  } else if (rankIndex === 3) {
+  } else if (rank === 3) {
     image = third
-  } else if (rankIndex === 4) {
+  } else if (rank === 4) {
     image = fourth
   } else {
     image = ""

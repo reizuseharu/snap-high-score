@@ -3,11 +3,7 @@ import {LeaderboardType} from "../services/LeaderboardType"
 import background from "../assets/img/background.png"
 import {Button, ButtonGroup, Grid} from "@material-ui/core"
 import React from 'react'
-// creates a beautiful scrollbar
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import 'perfect-scrollbar/css/perfect-scrollbar.css'
 
-import image from '../assets/img/sidebar-2.jpg'
 import ChallengeLeaderboard from "./ChallengeLeaderboard"
 import CourseLeaderboard from "./CourseLeaderboard"
 import PokemonLeaderboard from "./PokemonLeaderboard"
@@ -26,11 +22,6 @@ interface Props {
 
 interface State {
   value: number
-  image: string
-  color: string
-  hasImage: boolean
-  fixedClasses: string
-  mobileOpen: boolean
   shouldShowLeaderboardPokemon: boolean
   shouldShowLeaderboardReportScore: boolean
   shouldShowLeaderboardCourse: boolean
@@ -48,12 +39,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      image,
       value: 0,
-      color: 'blue',
-      hasImage: true,
-      fixedClasses: 'dropdown show',
-      mobileOpen: false,
       shouldShowLeaderboardPokemon: true,
       shouldShowLeaderboardReportScore: false,
       shouldShowLeaderboardCourse: false,
@@ -76,37 +62,18 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
     })
   }
 
-  resizeFunction = () => {
-    if (window.innerWidth >= 960) {
-      this.setState({ mobileOpen: false })
-    }
-  }
-
-  componentDidMount() {
-    if (navigator.platform.indexOf('Win') > -1) {
-      const ps = new PerfectScrollbar(this.refs.mainPanel)
-    }
-    window.addEventListener('resize', this.resizeFunction)
-  }
-
   componentDidUpdate(e: any) {
     if (e.history.location.pathname !== e.location.pathname) {
       this.refs.mainPanel.scrollTop = 0
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeFunction)
-  }
-
   handleChange = (value: number) => {
     this.setState({ value: value })
     this.showComponent(value)
-    // this.showOtherComponent()
   }
 
   render() {
-    const { classes, ...rest } = this.props
     const {
       shouldShowLeaderboardPokemon,
       shouldShowLeaderboardReportScore,

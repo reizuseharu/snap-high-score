@@ -1,27 +1,29 @@
+import {LeaderboardTableRankCell} from "../components/LeaderboardTableRankCell"
+import {LeaderboardTableHeaderCell} from "../components/LeaderboardTableHeaderCell"
+import {LeaderboardTableRowCell} from "../components/LeaderboardTableRowCell"
 import {green} from "@material-ui/core/colors"
 import {Cancel, CheckCircle, Image, YouTube} from "@material-ui/icons"
 import {OptionalString} from "../utilities/constants"
-import {rankBackgroundColor, rankColor, rankImage} from "../services/rank"
+import {rankBackgroundColor} from "../services/rank"
 import {ScoreAttack} from "../services/ScoreAttack"
 import React from 'react'
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router'
+import {tableHeadStyle} from "../utilities/leaderboardHelpers"
 
 import {
   IconButton,
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableRow
 } from "@material-ui/core"
-import {isURLImage, isURLVideo, ordinal_suffix_of} from "../services/utility"
+import {isURLImage, isURLVideo} from "../services/utility"
 
 interface Props {
   location: any
   history: any
   match: any
 }
-
 
 interface State {
   scoreAttacks: Array<ScoreAttack>
@@ -33,6 +35,7 @@ const scoreAttacks: Array<ScoreAttack> = [
   { attacker: "packattack", score: 10000, submittedOn: "2005-04-15", platform: "NTSC-U • N64", proofLink: null, isVerified: true },
   { attacker: "feketerigo", score: 10000, submittedOn: "2018-12-01", platform: "NTSC-U • N64", proofLink: "/proofs/32216/1478993.jpg", isVerified: true },
   { attacker: "reizu", score: 12000, submittedOn: "2021-03-06", platform: "NTSC-J • N64", proofLink: null, isVerified: false },
+  { attacker: "CJItsAllGewd_", score: 9999, submittedOn: "2020-01-01", platform: "NTSC-J • N64", proofLink: null, isVerified: true },
 ]
 
 class ChallengeLeaderboard extends React.Component<Props & RouteComponentProps, State> {
@@ -60,6 +63,9 @@ class ChallengeLeaderboard extends React.Component<Props & RouteComponentProps, 
   displayProof(proofLink: OptionalString) {
     const isImage: boolean = proofLink ? isURLImage(proofLink) : false
     const isVideo: boolean = proofLink ? isURLVideo(proofLink) : false
+
+    if (!isImage && !isVideo) { return null}
+
     return (
       /* @ts-ignore */
       <IconButton href={proofLink} target="_blank" aria-label="link">
@@ -81,27 +87,29 @@ class ChallengeLeaderboard extends React.Component<Props & RouteComponentProps, 
   render() {
     return (
       <Table size="small" aria-label="a dense table">
-        <TableHead style={{backgroundColor: "#000000", opacity: 0.7}}>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Rank</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Attacker</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Score</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Submission Date</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Platform</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Proof</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Verified</strong></TableCell>
+        <TableHead style={tableHeadStyle}>
+          <LeaderboardTableHeaderCell name={"Rank"}/>
+          <LeaderboardTableHeaderCell name={"Attacker"}/>
+          <LeaderboardTableHeaderCell name={"Score"}/>
+          <LeaderboardTableHeaderCell name={"Submission Date"}/>
+          <LeaderboardTableHeaderCell name={"Platform"}/>
+          <LeaderboardTableHeaderCell name={"Proof"}/>
+          <LeaderboardTableHeaderCell name={"Verified"}/>
         </TableHead>
         <TableBody>
-          {this.state.scoreAttacks.map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
-            return <TableRow style={rankBackgroundColor(index)}>
-              <TableCell align="center" style={rankColor(index)}><img src={rankImage(index)} alt=""/>{ordinal_suffix_of(index + 1)}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>{attacker}</strong></TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{score}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{submittedOn}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{platform}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayProof(proofLink) || "--"}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayVerified(isVerified)}</TableCell>
-            </TableRow>
-          })}
+          {this.state.scoreAttacks
+            .sort((sA, sB) => {return sB.score - sA.score})
+            .map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
+              return <TableRow style={rankBackgroundColor(index)}>
+                <LeaderboardTableRankCell index={index} score={score} ranks={this.state.scoreAttacks.map(({score}, _) => {return score})}/>
+                <LeaderboardTableRowCell name={<strong>{attacker}</strong>}/>
+                <LeaderboardTableRowCell name={score}/>
+                <LeaderboardTableRowCell name={submittedOn}/>
+                <LeaderboardTableRowCell name={platform}/>
+                <LeaderboardTableRowCell name={this.displayProof(proofLink) || "—"}/>
+                <LeaderboardTableRowCell name={this.displayVerified(isVerified)}/>
+              </TableRow>
+            })}
         </TableBody>
       </Table>
     )

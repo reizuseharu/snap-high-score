@@ -9,3 +9,4 @@ export const leagueToFileTag: Map<any, string> = new Map([
 ])
 
 export type OptionalString = string | null | undefined
+export type OptionalNumber = number | null | undefined

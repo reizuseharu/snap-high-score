@@ -16,7 +16,7 @@ export function ordinal_suffix_of(i: number) {
 export function endsWithAny(suffixes: Array<string>, word: string) {
   return suffixes.some(function (suffix) {
     return word.endsWith(suffix)
-  });
+  })
 }
 
 export function isURLImage(url: string): boolean {
