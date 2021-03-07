@@ -1,4 +1,5 @@
 /* eslint-disable */
+import {LeaderboardType} from "../services/LeaderboardType"
 import background from "../assets/img/background.png"
 import {Button, ButtonGroup, Grid} from "@material-ui/core"
 import React from 'react'
@@ -60,84 +61,19 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
       shouldShowLeaderboardSiteReportScore: false,
       shouldShowLeaderboardTimeAttack: false
     }
-    this.hideComponent = this.hideComponent.bind(this)
-    this.showOtherComponent = this.showOtherComponent.bind(this)
+
     this.showComponent = this.showComponent.bind(this)
   }
 
-  showComponent(index: number) {
-    switch (index) {
-      case 0:
-        this.setState({ shouldShowLeaderboardPokemon: true })
-        this.setState({ shouldShowLeaderboardReportScore: false })
-        this.setState({ shouldShowLeaderboardCourse: false })
-        this.setState({ shouldShowLeaderboardChallenge: false })
-        this.setState({ shouldShowLeaderboardSiteReportScore: false })
-        this.setState({ shouldShowLeaderboardTimeAttack: false })
-        break
-      case 1:
-        this.setState({ shouldShowLeaderboardPokemon: false })
-        this.setState({ shouldShowLeaderboardReportScore: true })
-        this.setState({ shouldShowLeaderboardCourse: false })
-        this.setState({ shouldShowLeaderboardChallenge: false })
-        this.setState({ shouldShowLeaderboardSiteReportScore: false })
-        this.setState({ shouldShowLeaderboardTimeAttack: false })
-        break
-      case 2:
-        this.setState({ shouldShowLeaderboardPokemon: false })
-        this.setState({ shouldShowLeaderboardReportScore: false })
-        this.setState({ shouldShowLeaderboardCourse: true })
-        this.setState({ shouldShowLeaderboardChallenge: false })
-        this.setState({ shouldShowLeaderboardSiteReportScore: false })
-        this.setState({ shouldShowLeaderboardTimeAttack: false })
-        break
-      case 3:
-        this.setState({ shouldShowLeaderboardPokemon: false })
-        this.setState({ shouldShowLeaderboardReportScore: false })
-        this.setState({ shouldShowLeaderboardCourse: false })
-        this.setState({ shouldShowLeaderboardChallenge: true })
-        this.setState({ shouldShowLeaderboardSiteReportScore: false })
-        this.setState({ shouldShowLeaderboardTimeAttack: false })
-        break
-      case 4:
-        this.setState({ shouldShowLeaderboardPokemon: false })
-        this.setState({ shouldShowLeaderboardReportScore: false })
-        this.setState({ shouldShowLeaderboardCourse: false })
-        this.setState({ shouldShowLeaderboardChallenge: false })
-        this.setState({ shouldShowLeaderboardSiteReportScore: true })
-        this.setState({ shouldShowLeaderboardTimeAttack: false })
-        break
-      case 5:
-        this.setState({ shouldShowLeaderboardPokemon: false })
-        this.setState({ shouldShowLeaderboardReportScore: false })
-        this.setState({ shouldShowLeaderboardCourse: false })
-        this.setState({ shouldShowLeaderboardChallenge: false })
-        this.setState({ shouldShowLeaderboardSiteReportScore: false })
-        this.setState({ shouldShowLeaderboardTimeAttack: true })
-        break
-      default:
-        break
-    }
-  }
-
-  hideComponent(name: string) {
-    switch (name) {
-      case "shouldShowLeaderboardPokemon":
-        this.setState({ shouldShowLeaderboardPokemon: !this.state.shouldShowLeaderboardPokemon })
-        this.setState({ shouldShowLeaderboardReportScore: !this.state.shouldShowLeaderboardReportScore })
-        break
-      case "shouldShowLeaderboardReportScore":
-        this.setState({ shouldShowLeaderboardReportScore: !this.state.shouldShowLeaderboardReportScore })
-        this.setState({ shouldShowLeaderboardReportScore: !this.state.shouldShowLeaderboardReportScore })
-        break
-      default:
-        break
-    }
-  }
-
-  showOtherComponent() {
-    this.setState({ shouldShowLeaderboardPokemon: !this.state.shouldShowLeaderboardPokemon })
-    this.setState({ shouldShowLeaderboardReportScore: !this.state.shouldShowLeaderboardReportScore })
+  showComponent(type: LeaderboardType) {
+    this.setState({
+      shouldShowLeaderboardPokemon: LeaderboardType.POKEMON === type,
+      shouldShowLeaderboardCourse: LeaderboardType.COURSE === type,
+      shouldShowLeaderboardChallenge: LeaderboardType.CHALLENGE === type,
+      shouldShowLeaderboardReportScore: LeaderboardType.REPORT_SCORE === type,
+      shouldShowLeaderboardSiteReportScore: LeaderboardType.SITE_REPORT_SCORE === type,
+      shouldShowLeaderboardTimeAttack: LeaderboardType.TIME_ATTACK === type
+    })
   }
 
   resizeFunction = () => {
@@ -188,23 +124,19 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
         backgroundSize: "cover",
         height: "200%",
         backgroundRepeat: "repeat"
-      }}
-      >
+      }}>
         <Navbar/>
         <div>
           <Grid container alignItems="center" style={{marginTop: "3%"}}>
             <Grid item xs={2}/>
             <Grid item xs={6}>
-              <ButtonGroup
-                style={{
-                }}
-                aria-label="simple tabs example">
-                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(0)}}>Pokemon</Button>
-                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(1)}}>Report Score</Button>
-                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(2)}}>Course</Button>
-                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(3)}}>Challenge</Button>
-                <Button disabled size="small" style={buttonStyle} onClick={() => {this.handleChange(4)}}>Site Report</Button>
-                <Button disabled size="small" style={buttonStyle} onClick={() => {this.handleChange(5)}}>Time Attack</Button>
+              <ButtonGroup aria-label="button group">
+                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
+                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
+                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(LeaderboardType.COURSE)}}>Course</Button>
+                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
+                <Button disabled size="small" style={buttonStyle} onClick={() => {this.handleChange(LeaderboardType.SITE_REPORT_SCORE)}}>Site Report</Button>
+                <Button disabled size="small" style={buttonStyle} onClick={() => {this.handleChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
               </ButtonGroup>
             </Grid>
             <Grid item xs={4}/>
