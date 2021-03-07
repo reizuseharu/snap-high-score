@@ -35,7 +35,7 @@ const scoreAttacks: Array<ScoreAttack> = [
   { attacker: "reizu", score: 12000, submittedOn: "2021-03-06", platform: "NTSC-J • N64", proofLink: null, isVerified: false },
 ]
 
-class PokemonLeaderboard extends React.Component<Props & RouteComponentProps, State> {
+class SiteReportLeaderboard extends React.Component<Props & RouteComponentProps, State> {
   constructor(props: Props) {
     super(props)
 
@@ -80,32 +80,32 @@ class PokemonLeaderboard extends React.Component<Props & RouteComponentProps, St
 
   render() {
     return (
-      <Table size="small" aria-label="a dense table">
-        <TableHead style={{backgroundColor: "#000000", opacity: 0.7}}>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Rank</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Attacker</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Score</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Submission Date</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Platform</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Proof</strong></TableCell>
-          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Verified</strong></TableCell>
-        </TableHead>
-        <TableBody>
-          {this.state.scoreAttacks.map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
-            return <TableRow style={rankBackgroundColor(index)}>
-              <TableCell align="center" style={rankColor(index)}><img src={rankImage(index)} alt=""/>{ordinal_suffix_of(index + 1)}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>{attacker}</strong></TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{score}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{submittedOn}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{platform}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayProof(proofLink) || "--"}</TableCell>
-              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayVerified(isVerified)}</TableCell>
-            </TableRow>
-          })}
-        </TableBody>
-      </Table>
+        <Table size="small" aria-label="a dense table">
+          <TableHead style={{backgroundColor: "#000000", opacity: 0.7}}>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Rank</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Attacker</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Score</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Submission Date</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Platform</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Proof</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Verified</strong></TableCell>
+          </TableHead>
+          <TableBody>
+            {this.state.scoreAttacks.map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
+              return <TableRow style={rankBackgroundColor(index)}>
+                <TableCell align="center" style={rankColor(index)}><img src={rankImage(index)} alt=""/>{ordinal_suffix_of(index + 1)}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>{attacker}</strong></TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{score}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{submittedOn}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{platform}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayProof(proofLink) || "--"}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayVerified(isVerified)}</TableCell>
+              </TableRow>
+            })}
+          </TableBody>
+        </Table>
     )
   }
 }
 
-export default PokemonLeaderboard
+export default SiteReportLeaderboard

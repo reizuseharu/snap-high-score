@@ -1,16 +1,18 @@
 /* eslint-disable */
 import background from "../assets/img/background.png"
-import {AppBar, Tab, TableHead, Tabs} from "@material-ui/core"
+import {Button, ButtonGroup, Grid} from "@material-ui/core"
 import React from 'react'
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'perfect-scrollbar/css/perfect-scrollbar.css'
 
 import image from '../assets/img/sidebar-2.jpg'
-import { ChallengeLeaderboard } from "./ChallengeLeaderboard"
+import ChallengeLeaderboard from "./ChallengeLeaderboard"
 import CourseLeaderboard from "./CourseLeaderboard"
 import PokemonLeaderboard from "./PokemonLeaderboard"
-import { ReportLeaderboard } from "./ReportLeaderboard"
+import ReportLeaderboard from "./ReportLeaderboard"
+import SiteReportLeaderboard from "./SiteReportLeaderboard"
+import TimeAttackLeaderboard from "./TimeAttackLeaderboard"
 import {RouteComponentProps} from "react-router"
 import Navbar from "./Navbar"
 
@@ -34,6 +36,10 @@ interface State {
   shouldShowLeaderboardChallenge: boolean
   shouldShowLeaderboardSiteReportScore: boolean
   shouldShowLeaderboardTimeAttack: boolean
+}
+
+const buttonStyle = {
+  minWidth: 50
 }
 
 class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
@@ -157,7 +163,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
     window.removeEventListener('resize', this.resizeFunction)
   }
 
-  handleChange = (event: React.ChangeEvent<{}>, value: number) => {
+  handleChange = (value: number) => {
     this.setState({ value: value })
     this.showComponent(value)
     // this.showOtherComponent()
@@ -174,8 +180,6 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
       shouldShowLeaderboardTimeAttack
     } = this.state
 
-    const width = 600
-
     return (
       <div id="container" style={{
         backgroundImage: `url(${background})`,
@@ -188,35 +192,36 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
       >
         <Navbar/>
         <div>
-        <Tabs
-          value={this.state.value}
-          style={{
-            backgroundColor: "#FFFFFF",
-            opacity: 0.7,
-            marginLeft: "10%",
-            marginRight: "10%",
-            width: "80%"
-          }}
-          variant="scrollable"
-          scrollButtons="off"
-          textColor="inherit"
-          onChange={this.handleChange}
-          aria-label="simple tabs example">
-          <Tab label="Pokemon" />
-          <Tab label="Report Score" />
-          <Tab label="Course" />
-          <Tab label="Challenge" />
-          <Tab label="Site Report" disabled />
-          <Tab label="Time Attack" disabled />
-        </Tabs>
-        { shouldShowLeaderboardPokemon &&
-          <PokemonLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/>
-        }
-        { shouldShowLeaderboardReportScore && <ReportLeaderboard/> }
-        { shouldShowLeaderboardCourse && <CourseLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/> }
-        { shouldShowLeaderboardChallenge && <ChallengeLeaderboard/> }
-        { shouldShowLeaderboardSiteReportScore && <ReportLeaderboard/> }
-        { shouldShowLeaderboardTimeAttack && <ReportLeaderboard/> }
+          <Grid container alignItems="center" style={{marginTop: "3%"}}>
+            <Grid item xs={2}/>
+            <Grid item xs={6}>
+              <ButtonGroup
+                style={{
+                }}
+                aria-label="simple tabs example">
+                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(0)}}>Pokemon</Button>
+                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(1)}}>Report Score</Button>
+                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(2)}}>Course</Button>
+                <Button size="small" style={buttonStyle} onClick={() => {this.handleChange(3)}}>Challenge</Button>
+                <Button disabled size="small" style={buttonStyle} onClick={() => {this.handleChange(4)}}>Site Report</Button>
+                <Button disabled size="small" style={buttonStyle} onClick={() => {this.handleChange(5)}}>Time Attack</Button>
+              </ButtonGroup>
+            </Grid>
+            <Grid item xs={4}/>
+          </Grid>
+
+          <Grid container alignItems="center">
+            <Grid item xs={2}/>
+            <Grid item xs={8}>
+              { shouldShowLeaderboardPokemon && <PokemonLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/> }
+              { shouldShowLeaderboardReportScore && <ReportLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/> }
+              { shouldShowLeaderboardCourse && <CourseLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/> }
+              { shouldShowLeaderboardChallenge && <ChallengeLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/> }
+              { shouldShowLeaderboardSiteReportScore && <SiteReportLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/> }
+              { shouldShowLeaderboardTimeAttack && <TimeAttackLeaderboard location={this.props.location} history={this.props.history} match={this.props.match}/> }
+            </Grid>
+            <Grid item xs={2}/>
+          </Grid>
       </div>
       </div>
     )

@@ -1,97 +1,33 @@
-// @ts-nocheck
-import background from "../assets/img/background.png"
-import { green } from '@material-ui/core/colors'
-import {IconButton} from "@material-ui/core"
-import { Image, YouTube, CheckCircle, Cancel } from '@material-ui/icons'
+import {green} from "@material-ui/core/colors"
+import {Cancel, CheckCircle, Image, YouTube} from "@material-ui/icons"
+import {OptionalString} from "../utilities/constants"
 import {rankBackgroundColor, rankColor, rankImage} from "../services/rank"
-import {isURLImage, isURLVideo, ordinal_suffix_of} from "../services/utility"
-import React from "react"
-import MUIDataTable from "mui-datatables"
+import {ScoreAttack} from "../services/ScoreAttack"
+import React from 'react'
+import { RouteComponentProps } from 'react-router';
+
 import {
-  createMuiTheme,
-  MuiThemeProvider
-} from "@material-ui/core/styles"
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from "@material-ui/core"
+import {isURLImage, isURLVideo, ordinal_suffix_of} from "../services/utility"
 
-const columns = [
-  {
-    name: "rank",
-    label: "Rank",
-    options: {
-      filter: false,
-      customBodyRender : (value, tableMeta, update) => {
-        const rowIndex = tableMeta.rowIndex
-        return ( <span style={rankColor(rowIndex)}><img src={rankImage(rowIndex)} alt=""/>{ordinal_suffix_of(rowIndex + 1)}</span>)
-      }
-    },
-  },
-  {
-    name: "attacker",
-    label: "Attacker",
-    options: {
-      filter: true
-    }
-  },
-  {
-    name: "score",
-    label: "Score",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "submittedOn",
-    label: "Submission Date",
-    options: {
-      filter: false,
-      sort: true
-    }
-  },
-  {
-    name: "platform",
-    label: "Platform",
-    options: {
-      filter: true
-    }
-  },
-  {
-    name: "proofLink",
-    label: "Proof",
-    options: {
-      filter: true,
-      sort: false,
-      customBodyRender : (value: string, tableMeta, update) => {
-        const isImage: boolean = value ? isURLImage(value) : false
-        const isVideo: boolean = value ? isURLVideo(value) : false
-        return (
-          <IconButton href={value} aria-label="link">
-            { isImage && <Image /> }
-            { isVideo && <YouTube /> }
-          </IconButton>
-        )
-      }
-    }
-  },
-  {
-    name: "isVerified",
-    label: "Verified",
-    options: {
-      filter: true,
-      sort: false,
-      customBodyRender : (value: boolean, tableMeta, update) => {
-        const isVerified: boolean = value
-        return (
-          <div>
-            { isVerified && <CheckCircle style={{ color: green[500] }}/> }
-            { !isVerified && <Cancel color="secondary" /> }
-          </div>
-        )
-      }
-    }
-  }
-]
+interface Props {
+  location: any
+  history: any
+  match: any
+}
 
-const data = [
+
+interface State {
+  scoreAttacks: Array<ScoreAttack>
+}
+
+const scoreAttacks: Array<ScoreAttack> = [
   { attacker: "quo", score: 10000, submittedOn: "2021-01-16", platform: "NTSC-J • N64", proofLink: "https://youtu.be/5QfAKkI1pq4", isVerified: true },
   { attacker: "aKaFuKu", score: 10000, submittedOn: "2017-01-30", platform: "NTSC-J • N64", proofLink: "https://s3.eu-west-2.amazonaws.com/cyberscoreproofs/Proofs/25450/1306266.jpg", isVerified: true },
   { attacker: "packattack", score: 10000, submittedOn: "2005-04-15", platform: "NTSC-U • N64", proofLink: null, isVerified: true },
@@ -99,59 +35,77 @@ const data = [
   { attacker: "reizu", score: 12000, submittedOn: "2021-03-06", platform: "NTSC-J • N64", proofLink: null, isVerified: false },
 ]
 
-const options = {
-  filter: true,
-  filterType: "dropdown",
-  responsive: "vertical",
-  selectableRows: "none",
-  sort: false,
-  downloadCsv: false,
-  pagination: false,
-  print: false,
-  serverSide: true,
-  setRowProps: (row, dataIndex, rowIndex) => {
-    return {
-      style: rankBackgroundColor(rowIndex)
+class ChallengeLeaderboard extends React.Component<Props & RouteComponentProps, State> {
+  constructor(props: Props) {
+    super(props)
+
+    this.state = {
+      scoreAttacks: scoreAttacks
     }
-  },
-  setCellHeaderProps: () => ({ style: {display: 'flex', textAlign: 'center', justifyContent: 'center', flexDirection: 'row-reverse', borderBottom: 'none'}}),
-  fixedHeader: true,
-  fixedSelectColumn: true
-}
 
-export class ChallengeLeaderboard extends React.Component {
-  getMuiTheme = () =>
-    createMuiTheme({
-      overrides: {
-        MUIDataTable: {
-          root: {
-            backgroundColor: "#CBC3E3"
-          },
-          paper: {
-            boxShadow: "none"
-          }
-        }
-      }
-    })
+    this.handleChange = this.handleChange.bind(this)
+    this.displayProof = this.displayProof.bind(this)
+    this.displayVerified = this.displayVerified.bind(this)
+  }
 
-  render() {
+  handleChange = () => {}
+
+  async componentWillMount() {
+    this.setState({})
+
+    console.dir(this.state)
+    return Promise.resolve()
+  }
+
+  displayProof(proofLink: OptionalString) {
+    const isImage: boolean = proofLink ? isURLImage(proofLink) : false
+    const isVideo: boolean = proofLink ? isURLVideo(proofLink) : false
     return (
-      <div style={{
-      height:"100vh",
-      backgroundColor: "#99CCFF",
-      backgroundImage: `url(${background})`,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"}}>
-      <MuiThemeProvider theme={this.getMuiTheme()}>
-        <MUIDataTable
-          title={"Challenge Leaderboard"}
-          data={data}
-          columns={columns}
-          options={options}
-        />
-      </MuiThemeProvider>
+      /* @ts-ignore */
+      <IconButton href={proofLink} target="_blank" aria-label="link">
+        { isImage && <Image /> }
+        { isVideo && <YouTube color={"secondary"}/> }
+      </IconButton>
+    )
+  }
+
+  displayVerified(isVerified: boolean) {
+    return (
+      <div>
+        { isVerified && <CheckCircle style={{ color: green[500] }} /> }
+        { !isVerified && <Cancel color="secondary" /> }
       </div>
     )
   }
+
+  render() {
+    return (
+      <Table size="small" aria-label="a dense table">
+        <TableHead style={{backgroundColor: "#000000", opacity: 0.7}}>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Rank</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Attacker</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Score</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Submission Date</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Platform</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Proof</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Verified</strong></TableCell>
+        </TableHead>
+        <TableBody>
+          {this.state.scoreAttacks.map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
+            return <TableRow style={rankBackgroundColor(index)}>
+              <TableCell align="center" style={rankColor(index)}><img src={rankImage(index)} alt=""/>{ordinal_suffix_of(index + 1)}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>{attacker}</strong></TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{score}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{submittedOn}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{platform}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayProof(proofLink) || "--"}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayVerified(isVerified)}</TableCell>
+            </TableRow>
+          })}
+        </TableBody>
+      </Table>
+    )
+  }
 }
+
+export default ChallengeLeaderboard

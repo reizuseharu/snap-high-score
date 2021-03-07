@@ -1,134 +1,111 @@
-// @ts-nocheck
-import React from "react"
-import MUIDataTable from "mui-datatables"
+import {green} from "@material-ui/core/colors"
+import {Cancel, CheckCircle, Image, YouTube} from "@material-ui/icons"
+import {OptionalString} from "../utilities/constants"
+import {rankBackgroundColor, rankColor, rankImage} from "../services/rank"
+import {ScoreAttack} from "../services/ScoreAttack"
+import React from 'react'
+import { RouteComponentProps } from 'react-router';
+
 import {
-  createMuiTheme,
-  MuiThemeProvider
-} from "@material-ui/core/styles"
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from "@material-ui/core"
+import {isURLImage, isURLVideo, ordinal_suffix_of} from "../services/utility"
 
-const columns = [
-  {
-    name: "Name",
-    options: {
-      filter: true
-    }
-  },
-  {
-    name: "Title",
-    options: {
-      filter: true
-    }
-  },
-  {
-    name: "Location",
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: "Age",
-    options: {
-      filter: true
-    }
-  },
-  {
-    name: "Salary",
-    options: {
-      filter: true,
-      sort: false
-    }
-  }
-]
-
-const data = [
-  ["Gabby George", "Business Analyst", "Minneapolis", 30, 100000],
-  ["Aiden Lloyd", "Business Consultant", "Dallas", 55, 200000],
-  ["Jaden Collins", "Attorney", "Santa Ana", 27, 500000],
-  ["Franky Rees", "Business Analyst", "St. Petersburg", 22, 50000],
-  ["Aaren Rose", "Business Consultant", "Toledo", 28, 75000],
-  ["Blake Duncan", "Business Management Analyst", "San Diego", 65, 94000],
-  ["Frankie Parry", "Agency Legal Counsel", "Jacksonville", 71, 210000],
-  ["Lane Wilson", "Commercial Specialist", "Omaha", 19, 65000],
-  ["Robin Duncan", "Business Analyst", "Los Angeles", 20, 77000],
-  ["Mel Brooks", "Business Consultant", "Oklahoma City", 37, 135000],
-  ["Harper White", "Attorney", "Pittsburgh", 52, 420000],
-  ["Kris Humphrey", "Agency Legal Counsel", "Laredo", 30, 150000],
-  ["Frankie Long", "Industrial Analyst", "Austin", 31, 170000],
-  ["Brynn Robbins", "Business Analyst", "Norfolk", 22, 90000],
-  ["Justice Mann", "Business Consultant", "Chicago", 24, 133000],
-  [
-    "Addison Navarro",
-    "Business Management Analyst",
-    "New York",
-    50,
-    295000
-  ],
-  ["Jesse Welch", "Agency Legal Counsel", "Seattle", 28, 200000],
-  ["Eli Mejia", "Commercial Specialist", "Long Beach", 65, 400000],
-  ["Gene Leblanc", "Industrial Analyst", "Hartford", 34, 110000],
-  ["Danny Leon", "Computer Scientist", "Newark", 60, 220000],
-  ["Lane Lee", "Corporate Counselor", "Cincinnati", 52, 180000],
-  ["Jesse Hall", "Business Analyst", "Baltimore", 44, 99000],
-  ["Danni Hudson", "Agency Legal Counsel", "Tampa", 37, 90000],
-  ["Terry Macdonald", "Commercial Specialist", "Miami", 39, 140000],
-  ["Justice Mccarthy", "Attorney", "Tucson", 26, 330000],
-  ["Silver Carey", "Computer Scientist", "Memphis", 47, 250000],
-  ["Franky Miles", "Industrial Analyst", "Buffalo", 49, 190000],
-  ["Glen Nixon", "Corporate Counselor", "Arlington", 44, 80000],
-  [
-    "Gabby Strickland",
-    "Business Process Consultant",
-    "Scottsdale",
-    26,
-    45000
-  ],
-  ["Mason Ray", "Computer Scientist", "San Francisco", 39, 142000]
-]
-
-const options = {
-  filter: true,
-  filterType: "dropdown",
-  responsive: "vertical",
-  selectableRows: "none",
-  downloadCsv: false,
-  print: false,
-  serverSide: true,
-  setRowProps: row => {
-    if (row[0] === "Gabby George") {
-      return {
-        style: { backgroundColor: "#FFC3E3" }
-      };
-    }
-  },
-  fixedHeader: false,
-  fixedSelectColumn: true
+interface Props {
+  location: any
+  history: any
+  match: any
 }
 
-export class ReportLeaderboard extends React.Component {
-  getMuiTheme = () =>
-    createMuiTheme({
-      overrides: {
-        MUIDataTable: {
-          root: {
-            backgroundColor: "#CBC3E3"
-          },
-          paper: {
-            boxShadow: "none"
-          }
-        }
-      }
-    })
+
+interface State {
+  scoreAttacks: Array<ScoreAttack>
+}
+
+const scoreAttacks: Array<ScoreAttack> = [
+  { attacker: "quo", score: 10000, submittedOn: "2021-01-16", platform: "NTSC-J • N64", proofLink: "https://youtu.be/5QfAKkI1pq4", isVerified: true },
+  { attacker: "aKaFuKu", score: 10000, submittedOn: "2017-01-30", platform: "NTSC-J • N64", proofLink: "https://s3.eu-west-2.amazonaws.com/cyberscoreproofs/Proofs/25450/1306266.jpg", isVerified: true },
+  { attacker: "packattack", score: 10000, submittedOn: "2005-04-15", platform: "NTSC-U • N64", proofLink: null, isVerified: true },
+  { attacker: "feketerigo", score: 10000, submittedOn: "2018-12-01", platform: "NTSC-U • N64", proofLink: "/proofs/32216/1478993.jpg", isVerified: true },
+  { attacker: "reizu", score: 12000, submittedOn: "2021-03-06", platform: "NTSC-J • N64", proofLink: null, isVerified: false },
+]
+
+class ReportLeaderboard extends React.Component<Props & RouteComponentProps, State> {
+  constructor(props: Props) {
+    super(props)
+
+    this.state = {
+      scoreAttacks: scoreAttacks
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.displayProof = this.displayProof.bind(this)
+    this.displayVerified = this.displayVerified.bind(this)
+  }
+
+  handleChange = () => {}
+
+  async componentWillMount() {
+    this.setState({})
+
+    console.dir(this.state)
+    return Promise.resolve()
+  }
+
+  displayProof(proofLink: OptionalString) {
+    const isImage: boolean = proofLink ? isURLImage(proofLink) : false
+    const isVideo: boolean = proofLink ? isURLVideo(proofLink) : false
+    return (
+      /* @ts-ignore */
+      <IconButton href={proofLink} target="_blank" aria-label="link">
+        { isImage && <Image /> }
+        { isVideo && <YouTube color={"secondary"}/> }
+      </IconButton>
+    )
+  }
+
+  displayVerified(isVerified: boolean) {
+    return (
+      <div>
+        { isVerified && <CheckCircle style={{ color: green[500] }} /> }
+        { !isVerified && <Cancel color="secondary" /> }
+      </div>
+    )
+  }
 
   render() {
     return (
-      <MuiThemeProvider theme={this.getMuiTheme()}>
-        <MUIDataTable
-          title={"Pokémon Snap High Score Leaderboard"}
-          data={data}
-          columns={columns}
-          options={options}
-        />
-      </MuiThemeProvider>
-    );
+      <Table size="small" aria-label="a dense table">
+        <TableHead style={{backgroundColor: "#000000", opacity: 0.7}}>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Rank</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Attacker</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Score</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Submission Date</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Platform</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Proof</strong></TableCell>
+          <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Verified</strong></TableCell>
+        </TableHead>
+        <TableBody>
+          {this.state.scoreAttacks.map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
+            return <TableRow style={rankBackgroundColor(index)}>
+              <TableCell align="center" style={rankColor(index)}><img src={rankImage(index)} alt=""/>{ordinal_suffix_of(index + 1)}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>{attacker}</strong></TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{score}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{submittedOn}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{platform}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayProof(proofLink) || "--"}</TableCell>
+              <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayVerified(isVerified)}</TableCell>
+            </TableRow>
+          })}
+        </TableBody>
+      </Table>
+    )
   }
 }
+
+export default ReportLeaderboard

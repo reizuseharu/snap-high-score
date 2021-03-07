@@ -20,7 +20,8 @@ export function rankColor(index: number) {
     color = "#000000"
   }
   return {
-    color: color
+    color: color,
+    border: 0
   }
 }
 export function rankImage(index: number) {
@@ -44,5 +45,5 @@ export function rankImage(index: number) {
 }
 
 export function rankBackgroundColor(index: number) {
-  if (index % 2 === 1) {return {backgroundColor: "#666666", opacity: 0.9}} else {return {backgroundColor: "#444444", opacity: 0.7}}
+  if (index % 2 === 1) {return {backgroundColor: "#666666", opacity: 0.9, border: 0}} else {return {backgroundColor: "#444444", opacity: 0.7, border: 0}}
 }

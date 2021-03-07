@@ -28,11 +28,11 @@ interface State {
 }
 
 const scoreAttacks: Array<ScoreAttack> = [
-  { attacker: "quo", score: 10000, submittedOn: "2021-01-16", platform: "NTSC-J • N64", proofLink: "https://youtu.be/5QfAKkI1pq4", isVerified: true },
-  { attacker: "aKaFuKu", score: 10000, submittedOn: "2017-01-30", platform: "NTSC-J • N64", proofLink: "https://s3.eu-west-2.amazonaws.com/cyberscoreproofs/Proofs/25450/1306266.jpg", isVerified: true },
-  { attacker: "packattack", score: 10000, submittedOn: "2005-04-15", platform: "NTSC-U • N64", proofLink: null, isVerified: true },
-  { attacker: "feketerigo", score: 10000, submittedOn: "2018-12-01", platform: "NTSC-U • N64", proofLink: "/proofs/32216/1478993.jpg", isVerified: true },
-  { attacker: "reizu", score: 12000, submittedOn: "2021-03-06", platform: "NTSC-J • N64", proofLink: null, isVerified: false },
+  { attacker: "kuwhoa", score: 10000, submittedOn: "2021-01-16", platform: "NTSC-J • N64", proofLink: "https://youtu.be/5QfAKkI1pq4", isVerified: true },
+  { attacker: "aKaFuShoo", score: 10000, submittedOn: "2017-01-30", platform: "NTSC-J • N64", proofLink: "https://s3.eu-west-2.amazonaws.com/cyberscoreproofs/Proofs/25450/1306266.jpg", isVerified: true },
+  { attacker: "packaquack", score: 10000, submittedOn: "2005-04-15", platform: "NTSC-U • N64", proofLink: null, isVerified: true },
+  { attacker: "federerigo", score: 10000, submittedOn: "2018-12-01", platform: "NTSC-U • N64", proofLink: "/proofs/32216/1478993.jpg", isVerified: true },
+  { attacker: "rayzoo", score: 12000, submittedOn: "2021-03-06", platform: "NTSC-J • N64", proofLink: null, isVerified: false },
 ]
 
 class CourseLeaderboard extends React.Component<Props & RouteComponentProps, State> {
@@ -62,7 +62,7 @@ class CourseLeaderboard extends React.Component<Props & RouteComponentProps, Sta
     const isVideo: boolean = proofLink ? isURLVideo(proofLink) : false
     return (
       /* @ts-ignore */
-      <IconButton href={proofLink} aria-label="link">
+      <IconButton href={proofLink} target="_blank" aria-label="link">
         { isImage && <Image /> }
         { isVideo && <YouTube color={"secondary"}/> }
       </IconButton>
@@ -80,31 +80,26 @@ class CourseLeaderboard extends React.Component<Props & RouteComponentProps, Sta
 
   render() {
     return (
-        <Table size="small" aria-label="a dense table" style={{
-          marginTop: "5%",
-          marginLeft: "10%",
-          marginRight: "10%",
-          width: "80%"
-        }}>
+        <Table size="small" aria-label="a dense table">
           <TableHead style={{backgroundColor: "#000000", opacity: 0.7}}>
-            <TableCell align="center" style={{color: "#FFFFFF"}}><strong>Rank</strong></TableCell>
-            <TableCell align="center" style={{color: "#FFFFFF"}}><strong>Attacker</strong></TableCell>
-            <TableCell align="center" style={{color: "#FFFFFF"}}><strong>Score</strong></TableCell>
-            <TableCell align="center" style={{color: "#FFFFFF"}}><strong>Submission Date</strong></TableCell>
-            <TableCell align="center" style={{color: "#FFFFFF"}}><strong>Platform</strong></TableCell>
-            <TableCell align="center" style={{color: "#FFFFFF"}}><strong>Proof</strong></TableCell>
-            <TableCell align="center" style={{color: "#FFFFFF"}}><strong>Verified</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Rank</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Attacker</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Score</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Submission Date</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Platform</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Proof</strong></TableCell>
+            <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>Verified</strong></TableCell>
           </TableHead>
           <TableBody>
             {this.state.scoreAttacks.map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
               return <TableRow style={rankBackgroundColor(index)}>
                 <TableCell align="center" style={rankColor(index)}><img src={rankImage(index)} alt=""/>{ordinal_suffix_of(index + 1)}</TableCell>
-                <TableCell align="center" style={{color: "#FFFFFF"}}><strong>{attacker}</strong></TableCell>
-                <TableCell align="center" style={{color: "#FFFFFF"}}>{score}</TableCell>
-                <TableCell align="center" style={{color: "#FFFFFF"}}>{submittedOn}</TableCell>
-                <TableCell align="center" style={{color: "#FFFFFF"}}>{platform}</TableCell>
-                <TableCell align="center" style={{color: "#FFFFFF"}}>{this.displayProof(proofLink) || "--"}</TableCell>
-                <TableCell align="center" style={{color: "#FFFFFF"}}>{this.displayVerified(isVerified)}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}><strong>{attacker}</strong></TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{score}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{submittedOn}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{platform}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayProof(proofLink) || "--"}</TableCell>
+                <TableCell align="center" style={{color: "#FFFFFF", border: 0}}>{this.displayVerified(isVerified)}</TableCell>
               </TableRow>
             })}
           </TableBody>
