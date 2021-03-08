@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {toBase64} from "../services/utility"
+import {toBase64, convertDateToLocalString} from "../services/utility"
 import background from "../assets/img/background.png"
 import {PhotoCamera} from "@material-ui/icons"
 import React, { useState }  from 'react'
@@ -89,8 +89,13 @@ export function InputForm() {
   }
 
   const gatherAllData = (values) => {
-    values.imageData = imageFile
-    return JSON.stringify(values, 0, 2)
+
+    const formValues = {
+      ...values,
+      imageData: imageFile,
+      takenOn: convertDateToLocalString(values.takenOn)
+    }
+    return JSON.stringify(formValues, 0, 2)
   }
 
   return (
@@ -113,7 +118,7 @@ export function InputForm() {
           isEmulated: false,
           console: 'N64',
           region: 'NTSC-JPN',
-          takenOn: '2020-01-02',
+          takenOn: new Date(),
         }}
         validate={validate}
         render={({ handleSubmit, reset, submitting, pristine, values }) => (

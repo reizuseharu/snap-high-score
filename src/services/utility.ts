@@ -32,4 +32,21 @@ export const toBase64 = (file: File) => new Promise((resolve, reject) => {
   reader.readAsDataURL(file)
   reader.onload = () => resolve(reader.result)
   reader.onerror = error => reject(error)
-});
+})
+
+export const convertDateToUTC = (date: Date) => {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  )
+}
+
+export const convertDateToLocalString = (date: Date) => {
+  const offset = date.getTimezoneOffset()
+  const localDate = new Date(date.getTime() - (offset * 60 * 1000))
+  return localDate.toISOString().split('T')[0]
+}
