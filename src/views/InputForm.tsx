@@ -1,4 +1,5 @@
 // @ts-nocheck
+import {ATTACK_VARIANTS} from "../services/LeaderboardAttack"
 import {toBase64, convertDateToLocalString} from "../services/utility"
 import background from "../assets/img/background.png"
 import {PhotoCamera} from "@material-ui/icons"
@@ -22,24 +23,8 @@ import {
 import Navbar from "./Navbar"
 
 import DateFnsUtils from '@date-io/date-fns'
-// ! Date pulls UTC but shows EST on selection
 
-const pokemon = [
-  { name: 'Metapod', stage: 'RIVER' },
-  { name: 'Poliwag', stage: 'RIVER' },
-  { name: 'Magikarp', stage: 'VALLEY' },
-  { name: 'Magikarp', stage: 'VOLCANO' },
-  { name: 'Pikachu', stage: 'BEACH' },
-]
-const options = pokemon.map((option) => {
-  const stage = option.stage[0]
-  return {
-    stage,
-    ...option,
-  }
-})
-
-const   onSubmit = async (values) => {
+const onSubmit = async (values) => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
   await sleep(300)
   window.alert(JSON.stringify(values, 0, 2))
@@ -77,10 +62,14 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
+const attackVariants = Array.from(ATTACK_VARIANTS.keys())
+
 export function InputForm() {
   const classes = useStyles()
   const { register } = useForm()
   const [imageFile, setImageFile] = useState("")
+  const [attackVariant, setAttackVariant] = useState(attackVariants[0])
+  const [boardVariants, setBoardVariants] = useState(ATTACK_VARIANTS.get(attackVariant))
 
   const onChange = async (e) => {
     const file = e.target.files[0]
@@ -88,8 +77,12 @@ export function InputForm() {
     setImageFile(fileData)
   }
 
-  const gatherAllData = (values) => {
+  const onVariantChange = (e, attackVariant) => {
+    setAttackVariant(attackVariant)
+    setBoardVariants(ATTACK_VARIANTS.get(attackVariant))
+  }
 
+  const gatherAllData = (values) => {
     const formValues = {
       ...values,
       imageData: imageFile,
@@ -137,23 +130,29 @@ export function InputForm() {
                         label="Username"
                       />
                     </Grid>
-                    <Grid item xs={7}>
+                    <Grid item xs={5}>
                       <Autocomplete
-                        name="pokemon"
-                        label="Pokemon"
+                        name="leaderboard"
+                        label="Leaderboard"
                         multiple={false}
                         required={true}
-                        options={options.sort(
-                          (a, b) => -b.stage.localeCompare(a.stage),
-                        )}
-                        groupBy={(option) => option.stage}
-                        getOptionLabel={(option) => option.name}
-                        getOptionValue={(option) => option.name}
-                        style={{ width: 200 }}
-                        renderOption={(option) => option.name}
+                        options={attackVariants}
+                        onChange={onVariantChange}
+                        getOptionLabel={(option) => option}
+                        getOptionValue={(option) => option}
+                        renderOption={(option) => option}
                       />
                     </Grid>
                     <Grid item xs={5}>
+                      <Autocomplete
+                        name="variant"
+                        label="Variant"
+                        multiple={false}
+                        required={true}
+                        options={boardVariants}
+                      />
+                    </Grid>
+                    <Grid item xs={2}>
                       <TextField
                         fullWidth
                         required

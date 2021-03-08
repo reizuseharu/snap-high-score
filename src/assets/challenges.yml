@@ -1,0 +1,55 @@
+---
+- name: Surfing Pikachu
+  pokemon: Pikachu
+  stage: BEACH
+- name: Stump Pikachu
+  pokemon: Pikachu
+  stage: BEACH
+- name: Pikachu on a Ball
+  pokemon: Pikachu
+  stage: TUNNEL
+- name: Speed Pikachu
+  pokemon: Pikachu
+  stage: RIVER
+- name: Balloon Pikachu
+  pokemon: Pikachu
+  stage: CAVE
+- name: Flying Pikachu
+  pokemon: Pikachu
+  stage: CAVE
+- name: Gust-using Pidgey
+  pokemon: Pidgey
+  stage: BEACH
+- name: Beach Magikarp
+  pokemon: Magikarp
+  stage: BEACH
+- name: Tunnel Magikarp
+  pokemon: Magikarp
+  stage: TUNNEL
+- name: Volcano Magikarp
+  pokemon: Magikarp
+  stage: VOLCANO
+- name: River Magikarp
+  pokemon: Magikarp
+  stage: RIVER
+- name: Cave Magikarp
+  pokemon: Magikarp
+  stage: CAVE
+- name: Valley Magikarp
+  pokemon: Magikarp
+  stage: VALLEY
+- name: Fighting Magmar
+  pokemon: Magmar
+  stage: VOLCANO
+- name: Jigglypuff on Stage
+  pokemon: Jigglypuff
+  stage: CAVE
+- name: Jigglypuff Trio on Stage
+  pokemon: Jigglypuff
+  stage: CAVE
+- name: Graveler Group Dance
+  pokemon: Graveler
+  stage: VALLEY
+- name: The rare Pokemon Mew
+  pokemon: Mew
+  stage: RAINBOW_CLOUD

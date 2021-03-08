@@ -21,7 +21,7 @@ interface Props {
 }
 
 interface State {
-  value: number
+  value: LeaderboardType
   shouldShowLeaderboardPokemon: boolean
   shouldShowLeaderboardReportScore: boolean
   shouldShowLeaderboardCourse: boolean
@@ -39,7 +39,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      value: 0,
+      value: LeaderboardType.POKEMON,
       shouldShowLeaderboardPokemon: true,
       shouldShowLeaderboardReportScore: false,
       shouldShowLeaderboardCourse: false,
@@ -68,7 +68,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
     }
   }
 
-  handleChange = (value: number) => {
+  handleChange = (value: LeaderboardType) => {
     this.setState({ value: value })
     this.showComponent(value)
   }
