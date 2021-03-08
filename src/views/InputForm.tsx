@@ -1,8 +1,10 @@
 // @ts-nocheck
+import {toBase64} from "../services/utility"
 import background from "../assets/img/background.png"
 import {PhotoCamera} from "@material-ui/icons"
-import React from 'react'
+import React, { useState }  from 'react'
 import { Form } from 'react-final-form'
+import { useForm } from 'react-hook-form'
 import {
   Autocomplete,
   Checkboxes,
@@ -37,7 +39,7 @@ const options = pokemon.map((option) => {
   }
 })
 
-const onSubmit = async (values) => {
+const   onSubmit = async (values) => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
   await sleep(300)
   window.alert(JSON.stringify(values, 0, 2))
@@ -76,8 +78,21 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export function InputForm() {
-
   const classes = useStyles()
+  const { register } = useForm()
+  const [imageFile, setImageFile] = useState("")
+
+  const onChange = async (e) => {
+    const file = e.target.files[0]
+    const fileData = await toBase64(file)
+    setImageFile(fileData)
+  }
+
+  const gatherAllData = (values) => {
+    values.imageData = imageFile
+    return JSON.stringify(values, 0, 2)
+  }
+
   return (
     <div id="container" style={{
       backgroundImage: `url(${background})`,
@@ -146,7 +161,13 @@ export function InputForm() {
                       <TextField name="videoLink" label="Video Link" />
                     </Grid>
                     <Grid item xs={2}>
-                      <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+                      <input accept="image/*"
+                             name={"proofImage"}
+                             ref={register}
+                             key="fileInput"
+                             className={classes.input}
+                             onChange={onChange}
+                             id="icon-button-file" type="file" />
                       <label htmlFor="icon-button-file">
                         <IconButton color="primary" aria-label="upload picture" component="span">
                           <PhotoCamera />
@@ -232,7 +253,7 @@ export function InputForm() {
                 </Grid>
               </Grid>
             </Paper>
-            <pre><span style={{color: "#FFFFFF"}}>{JSON.stringify(values, 0, 2)}</span></pre>
+            <pre><span style={{color: "#FFFFFF"}}>{gatherAllData(values)}</span></pre>
           </form>
         )}
       />

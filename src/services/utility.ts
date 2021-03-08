@@ -26,3 +26,10 @@ export function isURLImage(url: string): boolean {
 export function isURLVideo(url: string): boolean {
   return url.match(/(mp4|mkv|mov|wmv|avi|webm|html5|youtube|youtu.be)/) !== null
 }
+
+export const toBase64 = (file: File) => new Promise((resolve, reject) => {
+  const reader = new FileReader()
+  reader.readAsDataURL(file)
+  reader.onload = () => resolve(reader.result)
+  reader.onerror = error => reject(error)
+});
