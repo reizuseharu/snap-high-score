@@ -1,3 +1,4 @@
+import {Box} from "@material-ui/core"
 import React from 'react'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -27,7 +28,7 @@ export default function Navbar() {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <AppBar position="static">
         <Toolbar variant="dense">
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -44,6 +45,6 @@ export default function Navbar() {
           </Button>
         </Toolbar>
       </AppBar>
-    </div>
+    </Box>
   )
 }

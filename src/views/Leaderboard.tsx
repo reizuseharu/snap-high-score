@@ -1,7 +1,7 @@
 /* eslint-disable */
 import {LeaderboardType} from "../services/LeaderboardType"
 import background from "../assets/img/background.png"
-import {Button, ButtonGroup, Grid} from "@material-ui/core"
+import {Box, Button, ButtonGroup, Grid} from "@material-ui/core"
 import React from 'react'
 
 import ChallengeLeaderboard from "./ChallengeLeaderboard"
@@ -84,7 +84,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
     } = this.state
 
     return (
-      <div id="container" style={{
+      <Box id="container" style={{
         backgroundImage: `url(${background})`,
         backgroundAttachment: "fixed",
         backgroundPosition: "center",
@@ -93,7 +93,7 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
         backgroundRepeat: "repeat"
       }}>
         <Navbar/>
-        <div>
+        <Box>
           <Grid container alignItems="center" style={{marginTop: "3%"}}>
             <Grid item xs={2}/>
             <Grid item xs={6}>
@@ -121,8 +121,8 @@ class Leaderboard extends React.Component<Props & RouteComponentProps, State> {
             </Grid>
             <Grid item xs={2}/>
           </Grid>
-      </div>
-      </div>
+        </Box>
+      </Box>
     )
   }
 }

@@ -18,7 +18,7 @@ import {
   Paper,
   Grid,
   Button,
-  CssBaseline, IconButton, makeStyles, Theme, createStyles,
+  CssBaseline, IconButton, makeStyles, Theme, createStyles, Box,
 } from "@material-ui/core"
 import Navbar from "./Navbar"
 
@@ -92,7 +92,7 @@ export function InputForm() {
   }
 
   return (
-    <div id="container" style={{
+    <Box id="container" style={{
       backgroundImage: `url(${background})`,
       backgroundAttachment: "fixed",
       height: "200%",
@@ -100,7 +100,7 @@ export function InputForm() {
     }}
     >
     <Navbar/>
-    <div style={{ padding: 16, margin: 'auto', maxWidth: "80%" }}>
+    <Box style={{ padding: 16, margin: 'auto', maxWidth: "80%" }}>
       <CssBaseline />
       <Typography variant="h5" align="center" component="h1" gutterBottom>
         High Score Submission
@@ -261,7 +261,7 @@ export function InputForm() {
           </form>
         )}
       />
-    </div>
-  </div>
+    </Box>
+  </Box>
   )
 }

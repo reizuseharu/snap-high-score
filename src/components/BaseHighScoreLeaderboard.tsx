@@ -13,6 +13,7 @@ import { RouteComponentProps } from 'react-router'
 import {tableHeadStyle} from "../utilities/leaderboardHelpers"
 
 import {
+  Box,
   IconButton,
   Table,
   TableBody,
@@ -60,10 +61,10 @@ class BaseHighScoreLeaderboard extends React.Component<LeaderboardProps & RouteC
 
   displayVerified(isVerified: boolean) {
     return (
-      <div>
+      <Box>
         { isVerified && <CheckCircle style={{ color: green[500] }} /> }
         { !isVerified && <Cancel color="secondary" /> }
-      </div>
+      </Box>
     )
   }
 
