@@ -31,8 +31,8 @@ const onSubmit = async (values) => {
 }
 const validate = (values) => {
   const errors = {}
-  if (!values.username) {
-    errors.username = 'Required'
+  if (!values.attacker) {
+    errors.attacker = 'Required'
   }
   if (!values.pokemon) {
     errors.pokemon = 'Required'
@@ -123,11 +123,11 @@ export function InputForm() {
                   <Grid xs={12} container alignItems="flex-start" spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        name="username"
+                        name="attacker"
                         fullWidth
                         required
                         type="text"
-                        label="Username"
+                        label="Attacker"
                       />
                     </Grid>
                     <Grid item xs={5}>
