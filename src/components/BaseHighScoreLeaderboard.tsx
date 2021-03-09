@@ -8,6 +8,7 @@ import {rankBackgroundColor} from "../services/rank"
 import {ScoreAttack} from "../services/ScoreAttack"
 import React from 'react'
 import {tableHeadStyle} from "../utilities/leaderboardHelpers"
+import {LeaderboardInfo} from "./LeaderboardInfo"
 
 import {
   Box,
@@ -43,7 +44,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
       </Box>
     )
   }
-
+  // <LeaderboardInfo text={"what"} label={"Stuff"}/>
   return (
     <Table size="small" aria-label="a dense table">
       <TableHead style={tableHeadStyle}>
@@ -64,7 +65,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
             <LeaderboardTableRowCell name={<strong>{attacker}</strong>}/>
             <LeaderboardTableRowCell name={score}/>
             <LeaderboardTableRowCell name={submittedOn}/>
-            <LeaderboardTableRowCell name={platform}/>
+            <LeaderboardTableRowCell name={<LeaderboardInfo text={"This is a platform"} label={platform}/>}/>
             <LeaderboardTableRowCell name={displayProof(proofLink) || "—"}/>
             <LeaderboardTableRowCell name={displayVerified(isVerified)}/>
           </TableRow>

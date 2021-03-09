@@ -1,10 +1,18 @@
 /* eslint-disable */
 import {LeaderboardType} from "../services/LeaderboardType"
 import background from "../assets/img/background.png"
-import {Box, Button, ButtonGroup, Grid} from "@material-ui/core"
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid
+} from "@material-ui/core"
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
-import React, {Props, useState} from "react"
-import Popover from '@material-ui/core/Popover'
+import React, {useState} from "react"
 import Typography from '@material-ui/core/Typography'
 
 import {ChallengeLeaderboard} from "./ChallengeLeaderboard"
@@ -30,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Leaderboard = () => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const [open, setOpen] = useState(false)
   const [type, setType] = useState(LeaderboardType.POKEMON)
   const [shouldShowLeaderboardPokemon, setShouldShowLeaderboardPokemon] = useState(true)
   const [shouldShowLeaderboardReportScore, setShouldShowLeaderboardReportScore] = useState(false)
@@ -38,16 +47,24 @@ export const Leaderboard = () => {
   const [shouldShowLeaderboardSiteReportScore, setShouldShowLeaderboardSiteReportScore] = useState(false)
   const [shouldShowLeaderboardTimeAttack, setShouldShowLeaderboardTimeAttack] = useState(false)
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true)
   }
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false)
   }
 
-  const open = Boolean(anchorEl)
-  const id = open ? 'simple-popover' : undefined
+  const popOpen = Boolean(anchorEl)
+  const id = popOpen ? 'simple-popover' : undefined
 
   const showLeaderboardVariant = (type: LeaderboardType) => {
     setShouldShowLeaderboardPokemon(LeaderboardType.POKEMON === type)
@@ -63,30 +80,6 @@ export const Leaderboard = () => {
     showLeaderboardVariant(type)
   }
 
-  // return (
-  //   <Box>
-  //     <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
-  //       Open Popover
-  //     </Button>
-  //     <Popover
-  //       id={id}
-  //       open={open}
-  //       anchorEl={anchorEl}
-  //       onClose={handleClose}
-  //       anchorOrigin={{
-  //         vertical: 'bottom',
-  //         horizontal: 'center',
-  //       }}
-  //       transformOrigin={{
-  //         vertical: 'top',
-  //         horizontal: 'center',
-  //       }}
-  //     >
-  //       <Typography className={classes.typography}>The content of the Popover.</Typography>
-  //     </Popover>
-  //   </Box>
-  // )
-
   return (
     <Box id="container" style={{
       backgroundImage: `url(${background})`,
@@ -100,7 +93,7 @@ export const Leaderboard = () => {
       <Box>
         <Grid container alignItems="center" style={{marginTop: "3%"}}>
           <Grid item xs={2}/>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <ButtonGroup aria-label="button group">
               <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
               <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
@@ -108,9 +101,38 @@ export const Leaderboard = () => {
               <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
               <Button disabled size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.SITE_REPORT_SCORE)}}>Site Report</Button>
               <Button disabled size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
+              <Button variant="contained" size="small" style={buttonStyle} color="primary" onClick={handleClickOpen}>Rules</Button>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">{"Rules"}</DialogTitle>
+                <DialogContent dividers>
+                  <Typography gutterBottom>
+                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+                    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                  </Typography>
+                  <Typography gutterBottom>
+                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+                    lacus vel augue laoreet rutrum faucibus dolor auctor.
+                  </Typography>
+                  <Typography gutterBottom>
+                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+                    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+                    auctor fringilla.
+                  </Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </ButtonGroup>
           </Grid>
-          <Grid item xs={4}/>
+          <Grid item xs={2}/>
         </Grid>
 
         <Grid container alignItems="center">
