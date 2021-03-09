@@ -1,8 +1,7 @@
 import {ScoreAttack} from "../services/ScoreAttack"
-import {LeaderboardProps} from "../services/LeaderboardProps"
-import BaseHighScoreLeaderboard from "../components/BaseHighScoreLeaderboard"
+import {BaseHighScoreLeaderboard} from "../components/BaseHighScoreLeaderboard"
 
-const scoreAttacks: Array<ScoreAttack> = [
+const scoreAttacks: ScoreAttack[] = [
   { attacker: "quo", score: 10000, submittedOn: "2021-01-16", platform: "NTSC-J • N64", proofLink: "https://youtu.be/5QfAKkI1pq4", isVerified: true },
   { attacker: "aKaFuKu", score: 10000, submittedOn: "2017-01-30", platform: "NTSC-J • N64", proofLink: "https://s3.eu-west-2.amazonaws.com/cyberscoreproofs/Proofs/25450/1306266.jpg", isVerified: true },
   { attacker: "packattack", score: 10000, submittedOn: "2005-04-15", platform: "NTSC-U • N64", proofLink: null, isVerified: true },
@@ -11,10 +10,6 @@ const scoreAttacks: Array<ScoreAttack> = [
   { attacker: "CJItsAllGewd_", score: 9999, submittedOn: "2020-01-01", platform: "NTSC-J • N64", proofLink: null, isVerified: true },
 ]
 
-class PokemonLeaderboard extends BaseHighScoreLeaderboard {
-  constructor(props: LeaderboardProps) {
-    super(props, scoreAttacks)
-  }
+export const PokemonLeaderboard = () => {
+  return BaseHighScoreLeaderboard(scoreAttacks)
 }
-
-export default PokemonLeaderboard
