@@ -145,8 +145,8 @@ export function InputForm() {
                     </Grid>
                     <Grid item xs={5}>
                       <Autocomplete
-                        name="variant"
-                        label="Variant"
+                        name="challenge"
+                        label="Challenge"
                         multiple={false}
                         required={true}
                         options={boardVariants}
