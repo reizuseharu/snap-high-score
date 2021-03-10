@@ -19,6 +19,7 @@ import {ChallengeLeaderboard} from "./ChallengeLeaderboard"
 import {CourseLeaderboard} from "./CourseLeaderboard"
 import {PokemonLeaderboard} from "./PokemonLeaderboard"
 import {ReportLeaderboard} from "./ReportLeaderboard"
+import {SiteCourseLeaderboard} from "./SiteCourseLeaderboard"
 import {SiteReportLeaderboard} from "./SiteReportLeaderboard"
 import {TimeAttackLeaderboard} from "./TimeAttackLeaderboard"
 import {Navbar} from "./Navbar"
@@ -44,7 +45,8 @@ export const Leaderboard = () => {
   const [shouldShowLeaderboardReportScore, setShouldShowLeaderboardReportScore] = useState(false)
   const [shouldShowLeaderboardCourse, setShouldShowLeaderboardCourse] = useState(false)
   const [shouldShowLeaderboardChallenge, setShouldShowLeaderboardChallenge] = useState(false)
-  const [shouldShowLeaderboardSiteReportScore, setShouldShowLeaderboardSiteReportScore] = useState(false)
+  const [shouldShowLeaderboardSiteCourse, setShouldShowLeaderboardSiteCourse] = useState(false)
+  const [shouldShowLeaderboardSiteReport, setShouldShowLeaderboardSiteReport] = useState(false)
   const [shouldShowLeaderboardTimeAttack, setShouldShowLeaderboardTimeAttack] = useState(false)
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -71,7 +73,8 @@ export const Leaderboard = () => {
     setShouldShowLeaderboardCourse(LeaderboardType.COURSE === type)
     setShouldShowLeaderboardChallenge(LeaderboardType.CHALLENGE === type)
     setShouldShowLeaderboardReportScore(LeaderboardType.REPORT_SCORE === type)
-    setShouldShowLeaderboardSiteReportScore(LeaderboardType.SITE_REPORT_SCORE === type)
+    setShouldShowLeaderboardSiteCourse(LeaderboardType.SITE_COURSE_SCORE === type)
+    setShouldShowLeaderboardSiteReport(LeaderboardType.SITE_REPORT_SCORE === type)
     setShouldShowLeaderboardTimeAttack(LeaderboardType.TIME_ATTACK === type)
   }
 
@@ -99,6 +102,7 @@ export const Leaderboard = () => {
               <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
               <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.COURSE)}}>Course</Button>
               <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
+              <Button disabled size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.SITE_COURSE_SCORE)}}>Site Course</Button>
               <Button disabled size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.SITE_REPORT_SCORE)}}>Site Report</Button>
               <Button disabled size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
               <Button variant="contained" size="small" style={buttonStyle} color="primary" onClick={handleClickOpen}>Rules</Button>
@@ -142,7 +146,8 @@ export const Leaderboard = () => {
             { shouldShowLeaderboardReportScore && <ReportLeaderboard/> }
             { shouldShowLeaderboardCourse && <CourseLeaderboard/> }
             { shouldShowLeaderboardChallenge && <ChallengeLeaderboard/> }
-            { shouldShowLeaderboardSiteReportScore && <SiteReportLeaderboard/> }
+            { shouldShowLeaderboardSiteCourse && <SiteCourseLeaderboard/> }
+            { shouldShowLeaderboardSiteReport && <SiteReportLeaderboard/> }
             { shouldShowLeaderboardTimeAttack && <TimeAttackLeaderboard/> }
           </Grid>
           <Grid item xs={2}/>
