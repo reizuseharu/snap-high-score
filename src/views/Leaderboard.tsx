@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Leaderboard = () => {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const [open, setOpen] = useState(false)
   const [type, setType] = useState(LeaderboardType.POKEMON)
   const [shouldShowLeaderboardPokemon, setShouldShowLeaderboardPokemon] = useState(true)
@@ -49,14 +48,6 @@ export const Leaderboard = () => {
   const [shouldShowLeaderboardSiteReport, setShouldShowLeaderboardSiteReport] = useState(false)
   const [shouldShowLeaderboardTimeAttack, setShouldShowLeaderboardTimeAttack] = useState(false)
 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null)
-  }
-
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -65,20 +56,17 @@ export const Leaderboard = () => {
     setOpen(false)
   }
 
-  const popOpen = Boolean(anchorEl)
-  const id = popOpen ? 'simple-popover' : undefined
-
   const showLeaderboardVariant = (type: LeaderboardType) => {
     setShouldShowLeaderboardPokemon(LeaderboardType.POKEMON === type)
     setShouldShowLeaderboardCourse(LeaderboardType.COURSE === type)
     setShouldShowLeaderboardChallenge(LeaderboardType.CHALLENGE === type)
     setShouldShowLeaderboardReportScore(LeaderboardType.REPORT_SCORE === type)
-    setShouldShowLeaderboardSiteCourse(LeaderboardType.SITE_COURSE_SCORE === type)
-    setShouldShowLeaderboardSiteReport(LeaderboardType.SITE_REPORT_SCORE === type)
+    setShouldShowLeaderboardSiteCourse(LeaderboardType.SITE_COURSE === type)
+    setShouldShowLeaderboardSiteReport(LeaderboardType.SITE_REPORT === type)
     setShouldShowLeaderboardTimeAttack(LeaderboardType.TIME_ATTACK === type)
   }
 
-  const handleChange = (type: LeaderboardType) => {
+  const handleLeaderboardChange = (type: LeaderboardType) => {
     setType(type)
     showLeaderboardVariant(type)
   }
@@ -98,13 +86,13 @@ export const Leaderboard = () => {
           <Grid item xs={2}/>
           <Grid item xs={8}>
             <ButtonGroup aria-label="button group">
-              <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
-              <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
-              <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.COURSE)}}>Course</Button>
-              <Button size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
-              <Button disabled size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.SITE_COURSE_SCORE)}}>Site Course</Button>
-              <Button disabled size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.SITE_REPORT_SCORE)}}>Site Report</Button>
-              <Button disabled size="small" style={buttonStyle} onClick={() => {handleChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
+              <Button size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
+              <Button size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
+              <Button size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.COURSE)}}>Course</Button>
+              <Button size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
+              <Button disabled size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_COURSE)}}>Site Course</Button>
+              <Button disabled size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_REPORT)}}>Site Report</Button>
+              <Button disabled size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
               <Button variant="contained" size="small" style={buttonStyle} color="primary" onClick={handleClickOpen}>Rules</Button>
               <Dialog
                 open={open}
@@ -130,7 +118,10 @@ export const Leaderboard = () => {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose} color="primary">
-                    Close
+                    General
+                  </Button>
+                  <Button onClick={handleClose} color="secondary">
+                    Category
                   </Button>
                 </DialogActions>
               </Dialog>
