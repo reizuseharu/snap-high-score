@@ -40,13 +40,6 @@ export const Leaderboard = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [type, setType] = useState(LeaderboardType.POKEMON)
-  const [shouldShowLeaderboardPokemon, setShouldShowLeaderboardPokemon] = useState(true)
-  const [shouldShowLeaderboardReportScore, setShouldShowLeaderboardReportScore] = useState(false)
-  const [shouldShowLeaderboardCourse, setShouldShowLeaderboardCourse] = useState(false)
-  const [shouldShowLeaderboardChallenge, setShouldShowLeaderboardChallenge] = useState(false)
-  const [shouldShowLeaderboardSiteCourse, setShouldShowLeaderboardSiteCourse] = useState(false)
-  const [shouldShowLeaderboardSiteReport, setShouldShowLeaderboardSiteReport] = useState(false)
-  const [shouldShowLeaderboardTimeAttack, setShouldShowLeaderboardTimeAttack] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -56,19 +49,8 @@ export const Leaderboard = () => {
     setOpen(false)
   }
 
-  const showLeaderboardVariant = (type: LeaderboardType) => {
-    setShouldShowLeaderboardPokemon(LeaderboardType.POKEMON === type)
-    setShouldShowLeaderboardCourse(LeaderboardType.COURSE === type)
-    setShouldShowLeaderboardChallenge(LeaderboardType.CHALLENGE === type)
-    setShouldShowLeaderboardReportScore(LeaderboardType.REPORT_SCORE === type)
-    setShouldShowLeaderboardSiteCourse(LeaderboardType.SITE_COURSE === type)
-    setShouldShowLeaderboardSiteReport(LeaderboardType.SITE_REPORT === type)
-    setShouldShowLeaderboardTimeAttack(LeaderboardType.TIME_ATTACK === type)
-  }
-
   const handleLeaderboardChange = (type: LeaderboardType) => {
     setType(type)
-    showLeaderboardVariant(type)
   }
 
   return (
@@ -136,13 +118,13 @@ export const Leaderboard = () => {
         <Grid container alignItems="center">
           <Grid item xs={2}/>
           <Grid item xs={8}>
-            { shouldShowLeaderboardPokemon && <PokemonLeaderboard/> }
-            { shouldShowLeaderboardReportScore && <ReportLeaderboard/> }
-            { shouldShowLeaderboardCourse && <CourseLeaderboard/> }
-            { shouldShowLeaderboardChallenge && <ChallengeLeaderboard/> }
-            { shouldShowLeaderboardSiteCourse && <SiteCourseLeaderboard/> }
-            { shouldShowLeaderboardSiteReport && <SiteReportLeaderboard/> }
-            { shouldShowLeaderboardTimeAttack && <TimeAttackLeaderboard/> }
+            { LeaderboardType.POKEMON === type && <PokemonLeaderboard/> }
+            { LeaderboardType.REPORT_SCORE === type && <ReportLeaderboard/> }
+            { LeaderboardType.COURSE === type && <CourseLeaderboard/> }
+            { LeaderboardType.CHALLENGE === type && <ChallengeLeaderboard/> }
+            { LeaderboardType.SITE_COURSE === type && <SiteCourseLeaderboard/> }
+            { LeaderboardType.SITE_REPORT === type && <SiteReportLeaderboard/> }
+            { LeaderboardType.TIME_ATTACK === type && <TimeAttackLeaderboard/> }
           </Grid>
           <Grid item xs={2}/>
         </Grid>
