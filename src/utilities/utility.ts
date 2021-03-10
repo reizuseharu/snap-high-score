@@ -13,7 +13,7 @@ export function ordinal_suffix_of(i: number) {
   }
 }
 
-export function endsWithAny(suffixes: Array<string>, word: string) {
+export function endsWithAny(suffixes: string[], word: string) {
   return suffixes.some(function (suffix) {
     return word.endsWith(suffix)
   })

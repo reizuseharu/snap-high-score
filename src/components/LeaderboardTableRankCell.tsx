@@ -5,7 +5,7 @@ import {ordinal_suffix_of} from "../utilities/utility"
 
 interface LeaderboardTableRankCellProps {
   index: number
-  ranks: Array<number>
+  ranks: number[]
   score: number
 }
 

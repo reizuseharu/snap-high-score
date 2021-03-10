@@ -1,11 +1,6 @@
 import {Course} from "../models/Course"
 import {LeaderboardType} from "../models/LeaderboardType"
 
-export interface LeaderboardAttack {
-  type: LeaderboardType
-  variants: Array<string>
-}
-
 export const ATTACK_VARIANTS = new Map([
   [
     LeaderboardType.POKEMON, [

@@ -4,17 +4,17 @@ import second from "../assets/img/2nd.png"
 import third from "../assets/img/3rd.png"
 import fourth from "../assets/img/4th.png"
 
-function scoresToRanks(scores: Array<number>): Map<number, number> {
+function scoresToRanks(scores: number[]): Map<number, number> {
   let sorted = scores.slice().sort((a: number, b: number) => { return b - a })
   return new Map(scores.map((score: number) => { return [score, sorted.indexOf(score) + 1]}))
 }
 
-export function scoreToRank(score: number, scores: Array<number>) {
+export function scoreToRank(score: number, scores: number[]) {
   let ranks = scoresToRanks(scores)
   return ranks.get(score)
 }
 
-export function scoreToRankColor(score: number, scores: Array<number>) {
+export function scoreToRankColor(score: number, scores: number[]) {
   let rank = scoreToRank(score, scores)
   return rankColor(rank)
 }
@@ -39,7 +39,7 @@ export function rankColor(rank: OptionalNumber) {
   }
 }
 
-export function scoreToRankImage(score: number, scores: Array<number>) {
+export function scoreToRankImage(score: number, scores: number[]) {
   let rank = scoreToRank(score, scores)
   return rankImage(rank)
 }
