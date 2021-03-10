@@ -12,7 +12,7 @@ import {
   Grid
 } from "@material-ui/core"
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import Typography from '@material-ui/core/Typography'
 
 import {ChallengeLeaderboard} from "./ChallengeLeaderboard"
@@ -40,6 +40,20 @@ export const Leaderboard = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [type, setType] = useState(LeaderboardType.POKEMON)
+  const [generalRules, setGeneralRules] = useState<Map<String, String[]>>(new Map())
+  const [allCategoryRules, setAllCategoryRules] = useState<Map<String, String[]>>(new Map())
+
+  useEffect(() => {
+    fetch('data/generalRules.json')
+      .then(result => result.json())
+      .then(generalRules_ => {setGeneralRules(new Map(Object.entries(generalRules_)))})
+  }, [])
+
+  useEffect(() => {
+    fetch('data/categoryRules.json')
+      .then(result => result.json())
+      .then(allCategoryRules_ => {setAllCategoryRules(new Map(Object.entries(allCategoryRules_)))})
+  }, [])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -74,7 +88,7 @@ export const Leaderboard = () => {
               <Button size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
               <Button disabled size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_COURSE)}}>Site Course</Button>
               <Button disabled size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_REPORT)}}>Site Report</Button>
-              <Button disabled size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
+              <Button size="small" style={buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
               <Button variant="contained" size="small" style={buttonStyle} color="primary" onClick={handleClickOpen}>Rules</Button>
               <Dialog
                 open={open}
@@ -84,29 +98,27 @@ export const Leaderboard = () => {
               >
                 <DialogTitle id="alert-dialog-title">{"General"}</DialogTitle>
                 <DialogContent dividers>
-                  <Typography gutterBottom>
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-                  </Typography>
+                  {generalRules.get("rules")?.map(rule => {
+                    return (
+                      <Typography gutterBottom>
+                        {rule}
+                      </Typography>
+                    )
+                  })}
                 </DialogContent>
                 <DialogTitle id="alert-dialog-title">{"Category"}</DialogTitle>
                 <DialogContent dividers>
-                  <Typography gutterBottom>
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-                    lacus vel augue laoreet rutrum faucibus dolor auctor.
-                  </Typography>
-                  <Typography gutterBottom>
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-                    auctor fringilla.
-                  </Typography>
+                  {allCategoryRules.get(type)?.map(rule => {
+                    return (
+                      <Typography gutterBottom>
+                        {rule}
+                      </Typography>
+                    )
+                  })}
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose} color="primary">
-                    General
-                  </Button>
-                  <Button onClick={handleClose} color="secondary">
-                    Category
+                    Close
                   </Button>
                 </DialogActions>
               </Dialog>
