@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {LeaderboardType} from "../services/LeaderboardType"
+import {LeaderboardType} from "../models/LeaderboardType"
 import background from "../assets/img/background.png"
 import {
   Box,

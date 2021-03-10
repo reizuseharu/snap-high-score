@@ -5,7 +5,7 @@ import {green} from "@material-ui/core/colors"
 import {Cancel, CheckCircle, Error, Image, YouTube} from "@material-ui/icons"
 import {OptionalString} from "../utilities/constants"
 import {rankBackgroundColor} from "../services/rank"
-import {ScoreAttack} from "../services/ScoreAttack"
+import {ScoreAttack} from "../models/ScoreAttack"
 import React from 'react'
 import {tableHeadStyle} from "../utilities/leaderboardHelpers"
 import {LeaderboardInfo} from "./LeaderboardInfo"
@@ -18,7 +18,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core"
-import {isURLImage, isURLVideo} from "../services/utility"
+import {isURLImage, isURLVideo} from "../utilities/utility"
 
 export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
   const displayProof = (proofLink: OptionalString) => {

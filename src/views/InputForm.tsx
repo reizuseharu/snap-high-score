@@ -1,6 +1,6 @@
 // @ts-nocheck
 import {ATTACK_VARIANTS} from "../services/LeaderboardAttack"
-import {toBase64, convertDateToLocalString} from "../services/utility"
+import {toBase64, convertDateToLocalString} from "../utilities/utility"
 import background from "../assets/img/background.png"
 import {PhotoCamera} from "@material-ui/icons"
 import React, { useState }  from 'react'

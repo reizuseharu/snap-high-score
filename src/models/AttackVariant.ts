@@ -1,4 +1,4 @@
-import {Course} from "../components/Course"
+import {Course} from "../models/Course"
 
 type OptionalCourse = Course | null | undefined
 

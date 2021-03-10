@@ -1,5 +1,5 @@
-import {Course} from "../components/Course"
-import {LeaderboardType} from "../services/LeaderboardType"
+import {Course} from "../models/Course"
+import {LeaderboardType} from "../models/LeaderboardType"
 
 export interface LeaderboardAttack {
   type: LeaderboardType
