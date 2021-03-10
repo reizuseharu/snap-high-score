@@ -9,7 +9,7 @@ interface LeaderboardTableRankCellProps {
   score: number
 }
 
-export function LeaderboardTableRankCell(props: TableCellProps & LeaderboardTableRankCellProps) {
+export const LeaderboardTableRankCell = (props: TableCellProps & LeaderboardTableRankCellProps) => {
   let rank = scoreToRank(props.score, props.ranks)
   let rankColorStyle = rankColor(rank)
   let rankImageSource = rankImage(rank)

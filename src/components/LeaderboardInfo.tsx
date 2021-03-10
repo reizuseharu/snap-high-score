@@ -3,7 +3,7 @@ import {
   Box,
 } from "@material-ui/core"
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
-import React, {useState} from "react"
+import React, {Attributes, useState} from "react"
 import Popover from '@material-ui/core/Popover'
 import Typography from '@material-ui/core/Typography'
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   text: string
-  label: string
+  label: string | number | Attributes
 }
 
 export const LeaderboardInfo = (props: Props) => {
@@ -33,7 +33,6 @@ export const LeaderboardInfo = (props: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log(event)
     setAnchorEl(event.currentTarget)
   }
 

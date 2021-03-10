@@ -7,7 +7,7 @@ interface LeaderboardTableHeaderCellProps {
   name: string
 }
 
-export function LeaderboardTableHeaderCell(props: TableCellProps & LeaderboardTableHeaderCellProps) {
+export const LeaderboardTableHeaderCell = (props: TableCellProps & LeaderboardTableHeaderCellProps) => {
   return (
     <TableCell {...props} align="center" style={tableCellStyle}><strong>{props.name}</strong></TableCell>
   )

@@ -20,7 +20,7 @@ import {
   Button,
   CssBaseline, IconButton, makeStyles, Theme, createStyles, Box,
 } from "@material-ui/core"
-import Navbar from "./Navbar"
+import {Navbar} from "./Navbar"
 
 import DateFnsUtils from '@date-io/date-fns'
 
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const attackVariants = Array.from(ATTACK_VARIANTS.keys())
 
-export function InputForm() {
+export const InputForm = () => {
   const classes = useStyles()
   const { register } = useForm()
   const [imageFile, setImageFile] = useState("")

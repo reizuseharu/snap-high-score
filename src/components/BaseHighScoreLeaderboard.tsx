@@ -62,7 +62,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
           .map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
           return <TableRow style={rankBackgroundColor(index)}>
             <LeaderboardTableRankCell index={index} score={score} ranks={scoreAttacks.map(({score}, _) => {return score})}/>
-            <LeaderboardTableRowCell name={<strong>{attacker}</strong>}/>
+            <LeaderboardTableRowCell name={<LeaderboardInfo text={"This is a platform"} label={<strong>{attacker}</strong>}/>}/>
             <LeaderboardTableRowCell name={score}/>
             <LeaderboardTableRowCell name={submittedOn}/>
             <LeaderboardTableRowCell name={<LeaderboardInfo text={"This is a platform"} label={platform}/>}/>

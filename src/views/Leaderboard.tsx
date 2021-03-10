@@ -21,7 +21,7 @@ import {PokemonLeaderboard} from "./PokemonLeaderboard"
 import {ReportLeaderboard} from "./ReportLeaderboard"
 import {SiteReportLeaderboard} from "./SiteReportLeaderboard"
 import {TimeAttackLeaderboard} from "./TimeAttackLeaderboard"
-import Navbar from "./Navbar"
+import {Navbar} from "./Navbar"
 
 const buttonStyle = {
   minWidth: 50

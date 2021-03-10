@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-export default function Navbar() {
+export const Navbar = () => {
   const classes = useStyles()
 
   return (
