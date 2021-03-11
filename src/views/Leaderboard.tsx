@@ -1,4 +1,5 @@
 /* eslint-disable */
+import {toCamelCase} from "../utilities/utility"
 import {LeaderboardType} from "../models/LeaderboardType"
 import background from "../assets/img/background.png"
 import {
@@ -18,7 +19,7 @@ import Typography from '@material-ui/core/Typography'
 import {ChallengeLeaderboard} from "./ChallengeLeaderboard"
 import {CourseLeaderboard} from "./CourseLeaderboard"
 import {PokemonLeaderboard} from "./PokemonLeaderboard"
-import {ReportLeaderboard} from "./ReportLeaderboard"
+import {ReportScoreLeaderboard} from "./ReportScoreLeaderboard"
 import {SiteCourseLeaderboard} from "./SiteCourseLeaderboard"
 import {SiteReportLeaderboard} from "./SiteReportLeaderboard"
 import {TimeAttackLeaderboard} from "./TimeAttackLeaderboard"
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Leaderboard = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-  const [type, setType] = useState(LeaderboardType.POKEMON)
+  const [type, setType] = useState<LeaderboardType>(LeaderboardType.POKEMON)
   const [generalRules, setGeneralRules] = useState<Map<String, String[]>>(new Map())
   const [allCategoryRules, setAllCategoryRules] = useState<Map<String, String[]>>(new Map())
 
@@ -54,6 +55,15 @@ export const Leaderboard = () => {
       .then(result => result.json())
       .then(allCategoryRules_ => {setAllCategoryRules(new Map(Object.entries(allCategoryRules_)))})
   }, [])
+
+  const [scoreAttacks, setScoreAttacks] = useState([])
+
+  useEffect(() => {
+    const typeName = toCamelCase(type)
+    fetch(`data/${typeName}Leaderboard.json`)
+      .then(result => result.json())
+      .then(leaderboard => setScoreAttacks(leaderboard))
+  }, [type])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -130,13 +140,13 @@ export const Leaderboard = () => {
         <Grid container alignItems="center">
           <Grid item xs={2}/>
           <Grid item xs={8}>
-            { LeaderboardType.POKEMON === type && <PokemonLeaderboard/> }
-            { LeaderboardType.REPORT_SCORE === type && <ReportLeaderboard/> }
-            { LeaderboardType.COURSE === type && <CourseLeaderboard/> }
-            { LeaderboardType.CHALLENGE === type && <ChallengeLeaderboard/> }
-            { LeaderboardType.SITE_COURSE === type && <SiteCourseLeaderboard/> }
-            { LeaderboardType.SITE_REPORT === type && <SiteReportLeaderboard/> }
-            { LeaderboardType.TIME_ATTACK === type && <TimeAttackLeaderboard/> }
+            { LeaderboardType.POKEMON === type && <PokemonLeaderboard scoreAttacks={scoreAttacks}/> }
+            { LeaderboardType.REPORT_SCORE === type && <ReportScoreLeaderboard scoreAttacks={scoreAttacks}/> }
+            { LeaderboardType.COURSE === type && <CourseLeaderboard scoreAttacks={scoreAttacks}/> }
+            { LeaderboardType.CHALLENGE === type && <ChallengeLeaderboard scoreAttacks={scoreAttacks}/> }
+            { LeaderboardType.SITE_COURSE === type && <SiteCourseLeaderboard scoreAttacks={scoreAttacks}/> }
+            { LeaderboardType.SITE_REPORT === type && <SiteReportLeaderboard scoreAttacks={scoreAttacks}/> }
+            { LeaderboardType.TIME_ATTACK === type && <TimeAttackLeaderboard scoreAttacks={scoreAttacks}/> }
           </Grid>
           <Grid item xs={2}/>
         </Grid>

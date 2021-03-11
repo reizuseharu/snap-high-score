@@ -19,6 +19,10 @@ export function endsWithAny(suffixes: string[], word: string) {
   })
 }
 
+export function toCamelCase(fullWord: string) {
+  return fullWord.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+}
+
 export function isURLImage(url: string): boolean {
   return url.match(/\.(jpeg|jpg|gif|png)$/) !== null
 }

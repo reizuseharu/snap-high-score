@@ -1,14 +1,6 @@
-import {useEffect, useState} from "react"
+import {LeaderboardProps} from "../models/LeaderboardProps"
 import {BaseHighScoreLeaderboard} from "../components/BaseHighScoreLeaderboard"
 
-export const PokemonLeaderboard = () => {
-  const [scoreAttacks, setScoreAttacks] = useState([])
-
-  useEffect(() => {
-    fetch('data/pokemonLeaderboard.json')
-      .then(result => result.json())
-      .then(pokemonLeaderboard => setScoreAttacks(pokemonLeaderboard))
-  }, [])
-
-  return BaseHighScoreLeaderboard(scoreAttacks)
+export const PokemonLeaderboard = (props: LeaderboardProps) => {
+  return BaseHighScoreLeaderboard(props.scoreAttacks)
 }
