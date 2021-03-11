@@ -1,4 +1,5 @@
 /* eslint-disable */
+import {Autocomplete} from "@material-ui/lab"
 import {toCamelCase} from "../utilities/utility"
 import {LeaderboardType} from "../models/LeaderboardType"
 import background from "../assets/img/background.png"
@@ -10,7 +11,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid
+  Grid, TextField
 } from "@material-ui/core"
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import React, {useEffect, useState} from "react"
@@ -27,16 +28,24 @@ import {Navbar} from "./Navbar"
 
 const buttonStyle = {
   minWidth: 50,
+  maxHeight: 30,
   backgroundColor: "transparent"
 }
 
 const activeButtonStyle = {
   minWidth: 50,
+  maxHeight: 30,
   backgroundColor: "rgba(250, 0, 0, 0.7)"
 }
 
 const rulesButtonStyle = {
-  minWidth: 50
+  minWidth: 50,
+  maxHeight: 30
+}
+
+const autocompleteStyle = {
+  minWidth: 200,
+  height: 30
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -51,8 +60,12 @@ export const Leaderboard = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [type, setType] = useState<LeaderboardType>(LeaderboardType.POKEMON)
-  const [generalRules, setGeneralRules] = useState<Map<String, String[]>>(new Map())
-  const [allCategoryRules, setAllCategoryRules] = useState<Map<String, String[]>>(new Map())
+  const [generalRules, setGeneralRules] = useState<Map<string, string[]>>(new Map())
+  const [allCategoryRules, setAllCategoryRules] = useState<Map<string, string[]>>(new Map())
+  const [scoreAttacks, setScoreAttacks] = useState([])
+  const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
+  const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
+  const [value, setValue] = React.useState<string | null>(null)
 
   useEffect(() => {
     fetch('data/generalRules.json')
@@ -66,13 +79,25 @@ export const Leaderboard = () => {
       .then(allCategoryRules_ => {setAllCategoryRules(new Map(Object.entries(allCategoryRules_)))})
   }, [])
 
-  const [scoreAttacks, setScoreAttacks] = useState([])
-
   useEffect(() => {
     const typeName = toCamelCase(type)
     fetch(`data/${typeName}Leaderboard.json`)
       .then(result => result.json())
       .then(leaderboard => setScoreAttacks(leaderboard))
+  }, [type])
+
+  useEffect(() => {
+    fetch('data/attackVariants.json')
+      .then(result => result.json())
+      .then(attackVariants_ => setAttackVariants(new Map<string, string[]>(Object.entries(attackVariants_))))
+  }, [])
+
+  useEffect(() => {
+    console.log(value)
+  }, [value])
+
+  useEffect(() => {
+    setAttackSubVariants(attackVariants.get(type) ?? [])
   }, [type])
 
   const handleClickOpen = () => {
@@ -101,7 +126,7 @@ export const Leaderboard = () => {
         <Grid container alignItems="center" style={{marginTop: "3%"}}>
           <Grid item xs={2}/>
           <Grid item xs={8}>
-            <ButtonGroup aria-label="button group">
+          <ButtonGroup aria-label="button group">
               <Button size="small" style={type == LeaderboardType.POKEMON ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
               <Button size="small" style={type == LeaderboardType.REPORT_SCORE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
               <Button size="small" style={type == LeaderboardType.COURSE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.COURSE)}}>Course</Button>
@@ -144,7 +169,18 @@ export const Leaderboard = () => {
               </Dialog>
             </ButtonGroup>
           </Grid>
-          <Grid item xs={2}/>
+          <Grid item xs={2}>
+            <Autocomplete
+              id="combo-box-demo"
+              onChange={(event: any, newValue: string | null) => {
+                setValue(newValue)
+              }}
+              options={attackSubVariants}
+              getOptionLabel={(option) => option}
+              style={autocompleteStyle}
+              renderInput={(params) => <TextField {...params} size="small" label="SubVariant" variant="outlined" />}
+            />
+          </Grid>
         </Grid>
 
         <Grid container alignItems="center">

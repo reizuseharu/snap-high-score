@@ -65,13 +65,13 @@
     "Mew"
 ],
   "COURSE": [
-    "BEACH",
-    "TUNNEL",
-    "VOLCANO",
-    "RIVER",
-    "CAVE",
-    "VALLEY",
-    "RAINBOW_CLOUD"
+    "Beach",
+    "Tunnel",
+    "Volcano",
+    "River",
+    "Cave",
+    "Valley",
+    "Rainbow Cloud"
   ],
   "CHALLENGE": [
     "Surfing Pikachu",
