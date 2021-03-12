@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const AttackForm = () => {
   const classes = useStyles()
-  const { register, handleSubmit, control, errors: fieldsErrors, reset, getValues } = useForm()
+  const { handleSubmit, control, reset, getValues } = useForm()
   const [imageFile, setImageFile] = useState("")
   const [type, setType] = useState<string>(LeaderboardType.POKEMON)
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())

@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import {Redirect, Route, Router, Switch} from "react-router"
 import {AttackForm} from "./views/AttackForm"
-import {InputForm} from "./views/InputForm"
 
 let history = createBrowserHistory()
 
@@ -14,10 +13,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Router history={history}>
       <Switch>
-        <Route path="/input" component={InputForm} />
         <Route path="/attack" component={AttackForm} />
         <Route path="/leaderboard" component={Leaderboard} />
-        <Redirect exact={true} from="/" to="/input" />
+        <Redirect exact={true} from="/" to="/attack" />
       </Switch>
     </Router>,
   </React.StrictMode>,
