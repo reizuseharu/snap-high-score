@@ -2,7 +2,7 @@
 import {Autocomplete} from "@material-ui/lab"
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers"
 import {LeaderboardType} from "../models/LeaderboardType"
-import {toBase64, convertDateToLocalString, toCamelCase, toTitleCase} from "../utilities/utility"
+import {toBase64, convertDateToLocalString, toTitleCase} from "../utilities/utility"
 import background from "../assets/img/background.png"
 import {PhotoCamera} from "@material-ui/icons"
 import React, {useEffect, useState} from "react"
@@ -138,7 +138,7 @@ export const AttackForm = () => {
                           />
                         )}
                         onChange={([, data]) => data}
-                        defaultValue={"POKEMON"}
+                        defaultValue={""}
                         name={"leaderboard"}
                         control={control}
                       />
@@ -158,7 +158,7 @@ export const AttackForm = () => {
                           />
                         )}
                         onChange={([, data]) => data}
-                        defaultValue={"Bulbasaur"}
+                        defaultValue={""}
                         name={"challenge"}
                         control={control}
                       />
