@@ -205,7 +205,7 @@ export const AttackForm = () => {
                                    key="fileInput"
                                    className={classes.input}
                                    type="file" />
-                            <label htmlFor="icon-button-file">
+                            <label htmlFor="proofImage">
                               <IconButton color="primary" aria-label="upload picture" component="span">
                                 <PhotoCamera />
                               </IconButton>
