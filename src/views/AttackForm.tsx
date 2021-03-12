@@ -74,6 +74,12 @@ export const AttackForm = () => {
     setGameConsole((event.target as HTMLInputElement).value)
   }
 
+  const onImageUpload = (e) => {
+    const file: File = e.target.files[0]
+
+    console.log(`Uploaded a file: ${file.name}`)
+  }
+
   return (
     <Box id="container" style={{
       backgroundImage: `url(${background})`,
@@ -201,9 +207,9 @@ export const AttackForm = () => {
                             <input accept="image/*"
                                    id="proofImage"
                                    name="proofImage"
-                                   ref={register}
                                    key="fileInput"
                                    className={classes.input}
+                                   onChange={onImageUpload}
                                    type="file" />
                             <label htmlFor="proofImage">
                               <IconButton color="primary" aria-label="upload picture" component="span">
