@@ -44,11 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const AttackForm = () => {
   const classes = useStyles()
   const { register, handleSubmit, control, errors: fieldsErrors, reset, getValues } = useForm()
-  const onSubmit = (data) => {
-    console.log("submit")
-    console.log(getValues())
-    console.log(data)
-  }
   const [imageFile, setImageFile] = useState("")
   const [type, setType] = useState<string>(LeaderboardType.POKEMON)
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
@@ -80,6 +75,20 @@ export const AttackForm = () => {
     toBase64(file).then(imageData => setImageFile(imageData))
 
     console.log(`Uploaded a file: ${file.name}`)
+  }
+
+  const onSubmit = (data) => {
+    console.log("submit")
+    console.log(getValues())
+    console.log(data)
+  }
+
+  const handleSubmitScoreAttack = () => {
+    let values = getValues()
+    console.log(values)
+    values.takenOn = convertDateToLocalString(values.takenOn)
+
+    console.log(values)
   }
 
   return (
@@ -306,28 +315,26 @@ export const AttackForm = () => {
                     <FormControl fullWidth variant="outlined">
                       <Controller
                         name="takenOn"
-                        as={
-                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                              margin="normal"
-                              id="takenOn"
-                              label="Picture/Video Taken On"
-                              format="yyyy-MM-dd"
-                              variant="inline"
-                              onChange={(e, data) => data}
-                              KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                              }}
-                            />
-                          </MuiPickersUtilsProvider>
-                        }
-                        control={control}
-                        // Set the seconds to zero - https://github.com/mui-org/material-ui-pickers/issues/1825
-                        onChange={date => date && new Date(date.setSeconds(0))}
-                        defaultValue=""
-                        rules={{
-                          required: 'Required'
+                        render={(props) => {
+                          return (
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                              <KeyboardDatePicker
+                                autoOk
+                                margin="normal"
+                                id="takenOn"
+                                label="Picture/Video Taken On"
+                                variant="inline"
+                                format="yyyy-MM-dd"
+                                onChange={props.onChange}
+                                selected={props.selected}
+                                value={props.value}
+                              />
+                            </MuiPickersUtilsProvider>
+                          )
                         }}
+                        onChange={(date) => date}
+                        control={control}
+                        defaultValue="2020-01-01"
                       />
                     </FormControl>
                   </Grid>
@@ -363,7 +370,7 @@ export const AttackForm = () => {
                   variant="contained"
                   color="primary"
                   type="submit"
-                  onClick={() => console.log(getValues())}>
+                  onClick={handleSubmitScoreAttack}>
                   Submit
                 </Button>
               </Grid>
