@@ -23,6 +23,13 @@ export function toCamelCase(fullWord: string) {
   return fullWord.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
 }
 
+export function toTitleCase(fullWord: string) {
+  return fullWord.replace("_", " ").replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  )
+}
+
 export function isURLImage(url: string): boolean {
   return url.match(/\.(jpeg|jpg|gif|png)$/) !== null
 }

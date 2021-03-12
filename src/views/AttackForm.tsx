@@ -2,7 +2,7 @@
 import {Autocomplete} from "@material-ui/lab"
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers"
 import {LeaderboardType} from "../models/LeaderboardType"
-import {toBase64, convertDateToLocalString, toCamelCase} from "../utilities/utility"
+import {toBase64, convertDateToLocalString, toCamelCase, toTitleCase} from "../utilities/utility"
 import background from "../assets/img/background.png"
 import {PhotoCamera} from "@material-ui/icons"
 import React, {useEffect, useState} from "react"
@@ -45,14 +45,16 @@ export const AttackForm = () => {
   const classes = useStyles()
   const { register, handleSubmit, control, errors: fieldsErrors, reset, getValues } = useForm()
   const onSubmit = (data) => {
+    console.log("submit")
     console.log(getValues())
     console.log(data)
   }
   const [imageFile, setImageFile] = useState("")
-  const [type, setType] = useState<LeaderboardType>(LeaderboardType.POKEMON)
+  const [type, setType] = useState<string>(LeaderboardType.POKEMON)
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
-  const [value, setValue] = React.useState<string | null>(null)
+  const [region, setRegion] = useState("NTSC_JPN")
+  const [gameConsole, setGameConsole] = useState("N64")
 
   useEffect(() => {
     fetch('data/attackVariants.json')
@@ -61,12 +63,16 @@ export const AttackForm = () => {
   }, [])
 
   useEffect(() => {
-    console.log(value)
-  }, [value])
-
-  useEffect(() => {
     setAttackSubVariants(attackVariants.get(type) ?? [])
-  }, [type])
+  }, [attackVariants, type])
+
+  const handleChangeRegion = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRegion((event.target as HTMLInputElement).value)
+  }
+
+  const handleChangeGameConsole = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGameConsole((event.target as HTMLInputElement).value)
+  }
 
   return (
     <Box id="container" style={{
@@ -111,43 +117,42 @@ export const AttackForm = () => {
                   <Grid item xs={5}>
                     <FormControl fullWidth variant="outlined">
                       <Controller
-                        name="leaderboard"
-                        as={
+                        as={({ onChange, ...props }) => (
                           <Autocomplete
-                            id="leaderboard"
-                            label="Leaderboard"
-                            multiple={false}
-                            required={true}
                             options={Array.from(attackVariants.keys())}
-                            renderInput={params => <TextField {...params} label="Leaderboard" />}
+                            getOptionLabel={(option) => toTitleCase(`${option}`)}
+                            renderInput={(params) => <TextField {...params} label="Leaderboard"/>}
+                            onChange={(e, type_) => {
+                              onChange(type_)
+                              setType(type_)
+                            }}
+                            {...props}
                           />
-                        }
+                        )}
+                        onChange={([, data]) => data}
+                        defaultValue={"POKEMON"}
+                        name={"leaderboard"}
                         control={control}
-                        defaultValue="POKEMON"
-                        rules={{
-                          required: 'Required'
-                        }}
                       />
                     </FormControl>
                   </Grid>
                   <Grid item xs={5}>
                     <FormControl fullWidth variant="outlined">
                       <Controller
-                        name="challenge"
-                        as={
+                        as={({ onChange, ...props }) => (
                           <Autocomplete
-                            label="Challenge"
-                            multiple={false}
-                            required={true}
+                            key={type}
                             options={attackSubVariants}
-                            renderInput={params => <TextField {...params} label="Challenge" />}
+                            getOptionLabel={(option) => toTitleCase(`${option}`)}
+                            renderInput={(params) => <TextField {...params} label="Challenge"/>}
+                            onChange={(e, data) => onChange(data)}
+                            {...props}
                           />
-                        }
+                        )}
+                        onChange={([, data]) => data}
+                        defaultValue={"Bulbasaur"}
+                        name={"challenge"}
                         control={control}
-                        defaultValue="Bulbasaur" // ! Fix
-                        rules={{
-                          required: 'Required'
-                        }}
                       />
                     </FormControl>
                   </Grid>
@@ -195,6 +200,7 @@ export const AttackForm = () => {
                           <Box>
                             <input accept="image/*"
                                    id="proofImage"
+                                   name="proofImage"
                                    ref={register}
                                    key="fileInput"
                                    className={classes.input}
@@ -225,7 +231,7 @@ export const AttackForm = () => {
                         as={
                           <Box>
                             <FormLabel component="legend">Region</FormLabel>
-                            <RadioGroup row aria-label="region" id="region" value={value}>
+                            <RadioGroup row aria-label="region" id="region" value={region} onChange={handleChangeRegion}>
                               <FormControlLabel value="NTSC_USA" control={<Radio />} label="NTSC-USA" />
                               <FormControlLabel value="NTSC_JPN" control={<Radio />} label="NTSC-JPN" />
                               <FormControlLabel value="PAL" control={<Radio />} label="PAL" />
@@ -234,7 +240,7 @@ export const AttackForm = () => {
                           </Box>
                         }
                         control={control}
-                        defaultValue=""
+                        defaultValue="NTSC_JPN"
                         rules={{
                           required: 'Required'
                         }}
@@ -250,7 +256,7 @@ export const AttackForm = () => {
                         as={
                           <Box>
                             <FormLabel component="legend">Console</FormLabel>
-                            <RadioGroup row aria-label="region" id="console" value={value}>
+                            <RadioGroup row aria-label="region" id="console" value={gameConsole} onChange={handleChangeGameConsole}>
                               <FormControlLabel value="N64" control={<Radio />} label="Nintendo 64" />
                               <FormControlLabel value="WII_VC" control={<Radio />} label="Wii VC" />
                               <FormControlLabel value="WII_U_VC" control={<Radio />} label="Wii U VC" />
@@ -258,7 +264,7 @@ export const AttackForm = () => {
                           </Box>
                         }
                         control={control}
-                        defaultValue=""
+                        defaultValue="N64"
                         rules={{
                           required: 'Required'
                         }}
@@ -279,7 +285,7 @@ export const AttackForm = () => {
                           </Box>
                         }
                         control={control}
-                        defaultValue=""
+                        defaultValue="false"
                         rules={{
                           required: 'Required'
                         }}
@@ -299,6 +305,8 @@ export const AttackForm = () => {
                               id="takenOn"
                               label="Picture/Video Taken On"
                               format="yyyy-MM-dd"
+                              variant="inline"
+                              onChange={(e, data) => data}
                               KeyboardButtonProps={{
                                 'aria-label': 'change date',
                               }}
@@ -306,6 +314,8 @@ export const AttackForm = () => {
                           </MuiPickersUtilsProvider>
                         }
                         control={control}
+                        // Set the seconds to zero - https://github.com/mui-org/material-ui-pickers/issues/1825
+                        onChange={date => date && new Date(date.setSeconds(0))}
                         defaultValue=""
                         rules={{
                           required: 'Required'
@@ -331,46 +341,23 @@ export const AttackForm = () => {
                 </FormControl>
               </Grid>
               <Grid item style={{ marginTop: 16 }}>
-                <FormControl fullWidth variant="outlined">
-                  <Controller
-                    name="reset"
-                    as={
-                      <Button
-                        id="reset"
-                        type="button"
-                        variant="contained"
-                        onClick={reset}>
-                        Reset
-                      </Button>
-                    }
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      required: 'Required'
-                    }}
-                  />
-                </FormControl>
+                <Button
+                  id="reset"
+                  type="button"
+                  variant="contained"
+                  onClick={reset}>
+                  Reset
+                </Button>
               </Grid>
               <Grid item style={{ marginTop: 16 }}>
-                <FormControl fullWidth variant="outlined">
-                  <Controller
-                    name="submit"
-                    as={
-                      <Button
-                        id="submit"
-                        variant="contained"
-                        color="primary"
-                        type="submit">
-                        Submit
-                      </Button>
-                    }
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      required: 'Required'
-                    }}
-                  />
-                </FormControl>
+                <Button
+                  id="submit"
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  onClick={() => console.log(getValues())}>
+                  Submit
+                </Button>
               </Grid>
             </Grid>
           </form>
