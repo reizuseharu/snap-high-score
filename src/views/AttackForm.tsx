@@ -77,6 +77,8 @@ export const AttackForm = () => {
   const onImageUpload = (e) => {
     const file: File = e.target.files[0]
 
+    toBase64(file).then(imageData => setImageFile(imageData))
+
     console.log(`Uploaded a file: ${file.name}`)
   }
 
@@ -369,6 +371,13 @@ export const AttackForm = () => {
           </form>
         </Paper>
       </Box>
+      <Grid container alignItems="center" justify="center">
+        <Grid xs={4}/>
+        <Grid xs={2}>
+          <img src={imageFile} alt={"Submission Pic"} width="400" height="300"/>
+        </Grid>
+        <Grid xs={6}/>
+      </Grid>
     </Box>
   )
 }
