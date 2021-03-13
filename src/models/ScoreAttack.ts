@@ -9,4 +9,5 @@ export interface ScoreAttack {
   platform: string
   proofLink?: OptionalString
   isVerified: boolean
+  notes?: OptionalString
 }
