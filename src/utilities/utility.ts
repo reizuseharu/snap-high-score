@@ -36,6 +36,10 @@ export function isURLImage(url: string): boolean {
   return url.match(/\.(jpeg|jpg|gif|png)$/) !== null
 }
 
+export function isURLDataImage(url: string): boolean {
+  return url.match(/^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i) !== null
+}
+
 export function isURLVideo(url: string): boolean {
   return url.match(/(mp4|mkv|mov|wmv|avi|webm|html5|youtube|youtu.be)/) !== null
 }

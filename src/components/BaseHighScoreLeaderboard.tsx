@@ -6,33 +6,77 @@ import {Cancel, CheckCircle, Error, Image, YouTube} from "@material-ui/icons"
 import {OptionalString} from "../utilities/constants"
 import {rankBackgroundColor} from "../services/rank"
 import {ScoreAttack} from "../models/ScoreAttack"
-import React from 'react'
+import React, {useState} from "react"
 import {tableHeadStyle} from "../utilities/leaderboardHelpers"
 import {LeaderboardInfo} from "./LeaderboardInfo"
 
 import {
-  Box, CircularProgress, Fab,
+  Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Fab,
   IconButton,
   Table,
   TableBody,
   TableHead,
   TableRow
 } from "@material-ui/core"
-import {isURLImage, isURLVideo, prettyPrintScoreParts} from "../utilities/utility"
+import {isURLDataImage, isURLImage, isURLVideo, prettyPrintScoreParts} from "../utilities/utility"
 
 export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading: boolean) => {
+  const [open, setOpen] = useState<boolean>(false)
   const displayProof = (proofLink: OptionalString) => {
-    const isImage: boolean = proofLink ? isURLImage(proofLink) : false
+    const isDataUrl = isURLDataImage(proofLink ?? "")
+
+    const isImage: boolean = proofLink ? (isURLImage(proofLink) || isDataUrl) : false
     const isVideo: boolean = proofLink ? isURLVideo(proofLink) : false
 
     if (!isImage && !isVideo) { return <IconButton disabled><Error/></IconButton> }
 
+    const handleClickOpen = () => {
+      setOpen(true)
+    }
+
+    const handleClose = () => {
+      setOpen(false)
+    }
+
     return (
-      /* @ts-ignore */
-      <IconButton href={proofLink} target="_blank" aria-label="link">
-        { isImage && <Image style={{ color: green[500]}}/> }
-        { isVideo && <YouTube style={{ color: green[500]}}/> }
-      </IconButton>
+      <>
+      {isImage && isDataUrl &&
+        /* @ts-ignore */
+        <>
+        <IconButton onClick={handleClickOpen} aria-label="link">
+          {isImage && <Image style={{color: green[500]}}/>}
+        </IconButton>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Proof Pic"}</DialogTitle>
+          <DialogContent dividers>
+            <img src={proofLink ?? ""} alt={"Proof Pic"} width="400" height="300"/>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+        </>
+      }
+      {isImage && !isDataUrl &&
+        /* @ts-ignore */
+        <IconButton href={proofLink} target="_blank" aria-label="link">
+          <Image style={{color: green[500]}}/>
+        </IconButton>
+      }
+      {isVideo &&
+        /* @ts-ignore */
+        <IconButton href={proofLink} target="_blank" aria-label="link">
+          <YouTube style={{color: green[500]}}/>
+        </IconButton>
+      }
+      </>
     )
   }
 
