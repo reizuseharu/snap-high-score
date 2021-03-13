@@ -37,7 +37,7 @@ export function isURLImage(url: string): boolean {
 }
 
 export function isURLDataImage(url: string): boolean {
-  return url.match(/^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i) !== null
+  return url.match(/^\s*data:([a-z]+\/[a-z]+(;[a-z-]+=[a-z-]+)?)?(;base64)?,[a-z0-9!$&',()*+,;=\-._~:@/?%\s]*\s*$/i) !== null
 }
 
 export function isURLVideo(url: string): boolean {
@@ -69,7 +69,7 @@ export const convertDateToLocalString = (date: Date) => {
 }
 
 export const prettyPrintScoreParts = (scoreParts: ScoreParts | undefined): string[] => {
-  return Object.entries(scoreParts ?? {}).map(([key, value], index) => {
+  return Object.entries(scoreParts ?? {}).map(([key, value], _) => {
     return `${key}: ${value}`
   })
 }
