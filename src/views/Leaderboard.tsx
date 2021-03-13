@@ -1,16 +1,17 @@
 /* eslint-disable */
 import {Autocomplete} from "@material-ui/lab"
+import {ScoreAttack} from "../models/ScoreAttack"
 import {toCamelCase} from "../utilities/utility"
 import {LeaderboardType} from "../models/LeaderboardType"
 import background from "../assets/img/background.png"
 import {
   Box,
   Button,
-  ButtonGroup,
+  ButtonGroup, CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  DialogTitle, Fab,
   Grid, TextField
 } from "@material-ui/core"
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
@@ -58,14 +59,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Leaderboard = () => {
   const classes = useStyles()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState<boolean>(false)
   const [type, setType] = useState<LeaderboardType>(LeaderboardType.POKEMON)
   const [generalRules, setGeneralRules] = useState<Map<string, string[]>>(new Map())
   const [allCategoryRules, setAllCategoryRules] = useState<Map<string, string[]>>(new Map())
-  const [scoreAttacks, setScoreAttacks] = useState([])
+  const [scoreAttacks, setScoreAttacks] = useState<ScoreAttack[]>([])
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
-  const [value, setValue] = React.useState<string | null>(null)
+  const [value, setValue] = useState<string | null>(null) // - Fix naming for this
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetch('data/generalRules.json')
@@ -84,6 +86,7 @@ export const Leaderboard = () => {
     fetch(`data/${typeName}Leaderboard.json`)
       .then(result => result.json())
       .then(leaderboard => setScoreAttacks(leaderboard))
+      .finally(() => setIsLoading(false))
   }, [type])
 
   useEffect(() => {
@@ -110,6 +113,7 @@ export const Leaderboard = () => {
 
   const handleLeaderboardChange = (type: LeaderboardType) => {
     setType(type)
+    setIsLoading(true)
   }
 
   return (
@@ -126,7 +130,7 @@ export const Leaderboard = () => {
         <Grid container alignItems="center" style={{marginTop: "3%"}}>
           <Grid item xs={2}/>
           <Grid item xs={8}>
-          <ButtonGroup aria-label="button group">
+            <ButtonGroup aria-label="button group">
               <Button size="small" style={type == LeaderboardType.POKEMON ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
               <Button size="small" style={type == LeaderboardType.REPORT_SCORE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
               <Button size="small" style={type == LeaderboardType.COURSE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.COURSE)}}>Course</Button>
@@ -186,13 +190,13 @@ export const Leaderboard = () => {
         <Grid container alignItems="center">
           <Grid item xs={2}/>
           <Grid item xs={8}>
-            { LeaderboardType.POKEMON === type && <PokemonLeaderboard scoreAttacks={scoreAttacks}/> }
-            { LeaderboardType.REPORT_SCORE === type && <ReportScoreLeaderboard scoreAttacks={scoreAttacks}/> }
-            { LeaderboardType.COURSE === type && <CourseLeaderboard scoreAttacks={scoreAttacks}/> }
-            { LeaderboardType.CHALLENGE === type && <ChallengeLeaderboard scoreAttacks={scoreAttacks}/> }
-            { LeaderboardType.SITE_COURSE === type && <SiteCourseLeaderboard scoreAttacks={scoreAttacks}/> }
-            { LeaderboardType.SITE_REPORT === type && <SiteReportLeaderboard scoreAttacks={scoreAttacks}/> }
-            { LeaderboardType.TIME_ATTACK === type && <TimeAttackLeaderboard scoreAttacks={scoreAttacks}/> }
+            { LeaderboardType.POKEMON === type && <PokemonLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
+            { LeaderboardType.REPORT_SCORE === type && <ReportScoreLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
+            { LeaderboardType.COURSE === type && <CourseLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
+            { LeaderboardType.CHALLENGE === type && <ChallengeLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
+            { LeaderboardType.SITE_COURSE === type && <SiteCourseLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
+            { LeaderboardType.SITE_REPORT === type && <SiteReportLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
+            { LeaderboardType.TIME_ATTACK === type && <TimeAttackLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
           </Grid>
           <Grid item xs={2}/>
         </Grid>

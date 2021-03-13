@@ -1,7 +1,7 @@
 import {LeaderboardTableRankCell} from "./LeaderboardTableRankCell"
 import {LeaderboardTableHeaderCell} from "./LeaderboardTableHeaderCell"
 import {LeaderboardTableRowCell} from "./LeaderboardTableRowCell"
-import {green} from "@material-ui/core/colors"
+import {green, red} from "@material-ui/core/colors"
 import {Cancel, CheckCircle, Error, Image, YouTube} from "@material-ui/icons"
 import {OptionalString} from "../utilities/constants"
 import {rankBackgroundColor} from "../services/rank"
@@ -11,7 +11,7 @@ import {tableHeadStyle} from "../utilities/leaderboardHelpers"
 import {LeaderboardInfo} from "./LeaderboardInfo"
 
 import {
-  Box,
+  Box, CircularProgress, Fab,
   IconButton,
   Table,
   TableBody,
@@ -20,7 +20,7 @@ import {
 } from "@material-ui/core"
 import {isURLImage, isURLVideo, prettyPrintScoreParts} from "../utilities/utility"
 
-export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
+export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading: boolean) => {
   const displayProof = (proofLink: OptionalString) => {
     const isImage: boolean = proofLink ? isURLImage(proofLink) : false
     const isVideo: boolean = proofLink ? isURLVideo(proofLink) : false
@@ -57,7 +57,16 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
         <LeaderboardTableHeaderCell name={"Verified"}/>
       </TableHead>
       <TableBody>
-        {scoreAttacks
+        {isLoading &&
+          <TableRow style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)'}}>
+            <Fab style={{backgroundColor: "transparent"}} aria-label="loading" size="large" disabled>
+              <CircularProgress size={50} style={{color: red[700]}} disableShrink/>
+            </Fab>
+          </TableRow>
+        }
+        { !isLoading && scoreAttacks
           .sort((sA, sB) => {return sB.score - sA.score})
           .map(({attacker, score, scoreParts, submittedOn, platform, proofLink, isVerified, notes}, index) => {
           return <TableRow style={rankBackgroundColor(index)}>
