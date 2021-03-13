@@ -194,49 +194,6 @@ export const AttackForm = () => {
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={10}>
-                    <FormControl fullWidth variant="outlined">
-                      <Controller
-                        name="videoLink"
-                        as={
-                          <TextField id="videoLink" label="Video Link" />
-                        }
-                        control={control}
-                        defaultValue=""
-                        rules={{
-                          required: 'Required'
-                        }}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <FormControl fullWidth variant="outlined">
-                      <Controller
-                        name="proofImage"
-                        as={
-                          <Box>
-                            <input accept="image/*"
-                                   id="proofImage"
-                                   name="proofImage"
-                                   key="fileInput"
-                                   className={classes.input}
-                                   onChange={onImageUpload}
-                                   type="file" />
-                            <label htmlFor="proofImage">
-                              <IconButton color="primary" aria-label="upload picture" component="span">
-                                <PhotoCamera />
-                              </IconButton>
-                            </label>
-                          </Box>
-                        }
-                        control={control}
-                        defaultValue=""
-                        rules={{
-                          required: 'Required'
-                        }}
-                      />
-                    </FormControl>
-                  </Grid>
                 </Grid>
               </Grid>
               <Grid container xs={6} direction="column">
@@ -266,7 +223,7 @@ export const AttackForm = () => {
                   </Grid>
                 </Grid>
                 <Grid container spacing={1}>
-                  <Grid item>
+                  <Grid item style={{height: "100%", paddingTop: 10}}>
                     <FormControl fullWidth variant="outlined">
                       <Controller
                         name="console"
@@ -291,6 +248,7 @@ export const AttackForm = () => {
                   <Grid item>
                     <FormControl fullWidth variant="outlined">
                       <FormControlLabel
+                        style={{height: "100%", paddingTop: 20}}
                         control={
                           <Controller
                             name="isEmulated"
@@ -314,40 +272,11 @@ export const AttackForm = () => {
                     </FormControl>
                   </Grid>
                 </Grid>
-                <Grid container spacing={0} alignItems="center">
-                  <Grid item xs={12}>
-                    <FormControl fullWidth variant="outlined">
-                      <Controller
-                        name="takenOn"
-                        render={(props) => {
-                          return (
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                              <KeyboardDatePicker
-                                autoOk
-                                margin="normal"
-                                id="takenOn"
-                                label="Picture/Video Taken On"
-                                variant="inline"
-                                format="yyyy-MM-dd"
-                                onChange={props.onChange}
-                                selected={props.selected}
-                                value={props.value}
-                              />
-                            </MuiPickersUtilsProvider>
-                          )
-                        }}
-                        onChange={(date) => date}
-                        control={control}
-                        defaultValue={new Date(2020, 0, 1)}
-                      />
-                    </FormControl>
-                  </Grid>
-                </Grid>
               </Grid>
-              <FormControl fullWidth variant="outlined">
+              <FormControl fullWidth variant="outlined" style={{height: "100%", paddingTop: 5}}>
                 <FormLabel component="legend">Score Parts</FormLabel>
               </FormControl>
-              <Grid container xs={12} direction="row" alignItems="flex-start" spacing={2}>
+              <Grid container xs={12} alignItems="flex-start" spacing={2}>
                 <Grid item xs={2}>
                     <Controller
                       name="special"
@@ -426,6 +355,7 @@ export const AttackForm = () => {
                 </Grid>
                 <Grid item xs={2}>
                   <FormControlLabel
+                    style={{height: "100%", paddingTop: 10}}
                     control={
                       <Controller
                         name="isTechnique"
@@ -446,6 +376,78 @@ export const AttackForm = () => {
                     }
                     label="Technique"
                   />
+                </Grid>
+              </Grid>
+              <Grid container xs={12} alignItems="flex-start" spacing={2}>
+                <Grid item xs={5} style={{height: "100%", paddingTop: 25}}>
+                  <FormControl fullWidth variant="outlined">
+                    <Controller
+                      name="videoLink"
+                      as={
+                        <TextField id="videoLink" label="Video Link" />
+                      }
+                      control={control}
+                      defaultValue=""
+                      rules={{
+                        required: 'Required'
+                      }}
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={1} style={{height: "100%", paddingTop: 25}}>
+                  <FormControl fullWidth variant="outlined">
+                    <Controller
+                      name="proofImage"
+                      as={
+                        <Box>
+                          <input accept="image/*"
+                                 id="proofImage"
+                                 name="proofImage"
+                                 key="fileInput"
+                                 className={classes.input}
+                                 onChange={onImageUpload}
+                                 type="file" />
+                          <label htmlFor="proofImage">
+                            <IconButton color="primary" aria-label="upload picture" component="span">
+                              <PhotoCamera />
+                            </IconButton>
+                          </label>
+                        </Box>
+                      }
+                      control={control}
+                      defaultValue=""
+                      rules={{
+                        required: 'Required'
+                      }}
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl fullWidth variant="outlined">
+                    <Controller
+                      name="takenOn"
+                      render={(props) => {
+                        return (
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                              autoOk
+                              margin="normal"
+                              id="takenOn"
+                              label="Picture/Video Taken On"
+                              variant="inline"
+                              format="yyyy-MM-dd"
+                              onChange={props.onChange}
+                              selected={props.selected}
+                              value={props.value}
+                            />
+                          </MuiPickersUtilsProvider>
+                        )
+                      }}
+                      onChange={(date) => date}
+                      control={control}
+                      defaultValue={new Date(2020, 0, 1)}
+                    />
+                  </FormControl>
                 </Grid>
               </Grid>
               <Grid item xs={12}>
