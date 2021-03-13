@@ -290,22 +290,26 @@ export const AttackForm = () => {
                   </Grid>
                   <Grid item>
                     <FormControl fullWidth variant="outlined">
-                      <Controller
-                        name="isEmulated"
-                        as={
-                          <Box>
-                            <FormControlLabel
-                              id="isEmulated"
-                              control={<Checkbox id="isEmulated" />}
-                              label="Emulated"
-                            />
-                          </Box>
+                      <FormControlLabel
+                        control={
+                          <Controller
+                            name="isEmulated"
+                            control={control}
+                            render={(props) => (
+                              <Checkbox
+                                {...props}
+                                id="isEmulated"
+                                checked={props.value}
+                                onChange={(e) => props.onChange(e.target.checked)}
+                              />
+                            )}
+                            defaultValue={false}
+                            rules={{
+                              required: 'Required'
+                            }}
+                          />
                         }
-                        control={control}
-                        defaultValue="false"
-                        rules={{
-                          required: 'Required'
-                        }}
+                        label="Emulated"
                       />
                     </FormControl>
                   </Grid>
@@ -334,10 +338,114 @@ export const AttackForm = () => {
                         }}
                         onChange={(date) => date}
                         control={control}
-                        defaultValue="2020-01-01"
+                        defaultValue={new Date(2020, 0, 1)}
                       />
                     </FormControl>
                   </Grid>
+                </Grid>
+              </Grid>
+              <FormControl fullWidth variant="outlined">
+                <FormLabel component="legend">Score Parts</FormLabel>
+              </FormControl>
+              <Grid container xs={12} direction="row" alignItems="flex-start" spacing={2}>
+                <Grid item xs={2}>
+                    <Controller
+                      name="special"
+                      as={
+                        <TextField
+                          id="special"
+                          fullWidth
+                          required
+                          type="number"
+                          label="Special"
+                        />
+                      }
+                      control={control}
+                      defaultValue=""
+                      rules={{
+                        required: 'Required'
+                      }}
+                    />
+              </Grid>
+                <Grid item xs={2}>
+                  <Controller
+                    name="size"
+                    as={
+                      <TextField
+                        id="size"
+                        fullWidth
+                        required
+                        type="number"
+                        label="Size"
+                      />
+                    }
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: 'Required'
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <Controller
+                    name="pose"
+                    as={
+                      <TextField
+                        id="pose"
+                        fullWidth
+                        required
+                        type="number"
+                        label="Pose"
+                      />
+                    }
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: 'Required'
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <Controller
+                    name="samePokemon"
+                    as={
+                      <TextField
+                        id="samePokemon"
+                        fullWidth
+                        required
+                        type="number"
+                        label="Same Pokémon"
+                      />
+                    }
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: 'Required'
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <FormControlLabel
+                    control={
+                      <Controller
+                        name="isTechnique"
+                        control={control}
+                        render={(props) => (
+                          <Checkbox
+                            {...props}
+                            id="isTechnique"
+                            checked={props.value}
+                            onChange={(e) => props.onChange(e.target.checked)}
+                          />
+                        )}
+                        defaultValue={false}
+                        rules={{
+                          required: 'Required'
+                        }}
+                      />
+                    }
+                    label="Technique"
+                  />
                 </Grid>
               </Grid>
               <Grid item xs={12}>
