@@ -62,10 +62,10 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
           .map(({attacker, score, scoreParts, submittedOn, platform, proofLink, isVerified, notes}, index) => {
           return <TableRow style={rankBackgroundColor(index)}>
             <LeaderboardTableRankCell index={index} score={score} ranks={scoreAttacks.map(({score}, _) => {return score})}/>
-            <LeaderboardTableRowCell name={<LeaderboardInfo text={"This is a platform"} label={<strong>{attacker}</strong>}/>}/>
-            <LeaderboardTableRowCell name={<LeaderboardInfo text={prettyPrintScoreParts(scoreParts)} label={score}/>}/>
-            <LeaderboardTableRowCell name={<LeaderboardInfo text={notes ?? submittedOn} label={submittedOn}/>}/>
-            <LeaderboardTableRowCell name={<LeaderboardInfo text={"This is a platform"} label={platform}/>}/>
+            <LeaderboardTableRowCell name={<LeaderboardInfo texts={["This is a platform"]} label={<strong>{attacker}</strong>}/>}/>
+            <LeaderboardTableRowCell name={<LeaderboardInfo texts={prettyPrintScoreParts(scoreParts)} label={score}/>}/>
+            <LeaderboardTableRowCell name={<LeaderboardInfo texts={[notes ?? submittedOn]} label={submittedOn}/>}/>
+            <LeaderboardTableRowCell name={<LeaderboardInfo texts={["This is a platform"]} label={platform}/>}/>
             <LeaderboardTableRowCell name={displayProof(proofLink) || "—"}/>
             <LeaderboardTableRowCell name={displayVerified(isVerified)}/>
           </TableRow>

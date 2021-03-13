@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme: Theme) =>
       ...buttonStyle,
     },
     typography: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
     },
   }),
 )
 
 interface Props {
-  text: string
+  texts: string[]
   label: string | number | Attributes
 }
 
@@ -69,7 +69,9 @@ export const LeaderboardInfo = (props: Props) => {
         }}
         disableRestoreFocus
       >
-        <Typography className={classes.typography}>{props.text}</Typography>
+        {props.texts.map((text) => {
+          return <Typography className={classes.typography}>{text}</Typography>
+        })}
       </Popover>
     </Box>
   )

@@ -64,8 +64,8 @@ export const convertDateToLocalString = (date: Date) => {
   return localDate.toISOString().split('T')[0]
 }
 
-export const prettyPrintScoreParts = (scoreParts: ScoreParts | undefined): string => {
-  return JSON.stringify(scoreParts, undefined, 2)
-    ?.replaceAll(/["{}]/g, "")
-    ?.replaceAll(",", " •")
+export const prettyPrintScoreParts = (scoreParts: ScoreParts | undefined): string[] => {
+  return Object.entries(scoreParts ?? {}).map(([key, value], index) => {
+    return `${key}: ${value}`
+  })
 }
