@@ -1,3 +1,5 @@
+import {ScoreParts} from "../models/ScoreParts"
+
 export function ordinal_suffix_of(i: number) {
   const j = i % 10
   const k = i % 100
@@ -60,4 +62,10 @@ export const convertDateToLocalString = (date: Date) => {
   const offset = date.getTimezoneOffset()
   const localDate = new Date(date.getTime() - (offset * 60 * 1000))
   return localDate.toISOString().split('T')[0]
+}
+
+export const prettyPrintScoreParts = (scoreParts: ScoreParts | undefined): string => {
+  return JSON.stringify(scoreParts, undefined, 2)
+    ?.replaceAll(/["{}]/g, "")
+    ?.replaceAll(",", " •")
 }

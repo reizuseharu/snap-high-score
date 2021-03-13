@@ -1,5 +1,5 @@
 [
-  { "attacker": "quo", "score": 10000, "submittedOn": "2021-01-16", "platform": "NTSC-J • N64", "proofLink": "https://youtu.be/5QfAKkI1pq4", "isVerified": true },
+  { "attacker": "quo", "score": 10000, "scoreParts": { "special": 2500, "size": 1000, "pose": 1500, "isTechnique": true, "samePokemon": 0}, "submittedOn": "2021-01-16", "platform": "NTSC-J • N64", "proofLink": "https://youtu.be/5QfAKkI1pq4", "isVerified": true },
   { "attacker": "aKaFuKu", "score": 10000, "submittedOn": "2017-01-30", "platform": "NTSC-J • N64", "proofLink": "https://s3.eu-west-2.amazonaws.com/cyberscoreproofs/Proofs/25450/1306266.jpg", "isVerified": true },
   { "attacker": "packattack", "score": 10000, "submittedOn": "2005-04-15", "platform": "NTSC-U • N64", "proofLink": null, "isVerified": true },
   { "attacker": "feketerigo", "score": 10000, "submittedOn": "2018-12-01", "platform": "NTSC-U • N64", "proofLink": "/proofs/32216/1478993.jpg", "isVerified": true },

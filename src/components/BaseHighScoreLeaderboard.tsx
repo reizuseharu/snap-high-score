@@ -18,7 +18,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core"
-import {isURLImage, isURLVideo} from "../utilities/utility"
+import {isURLImage, isURLVideo, prettyPrintScoreParts} from "../utilities/utility"
 
 export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
   const displayProof = (proofLink: OptionalString) => {
@@ -59,11 +59,11 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[]) => {
       <TableBody>
         {scoreAttacks
           .sort((sA, sB) => {return sB.score - sA.score})
-          .map(({attacker, score, submittedOn, platform, proofLink, isVerified}, index) => {
+          .map(({attacker, score, scoreParts, submittedOn, platform, proofLink, isVerified}, index) => {
           return <TableRow style={rankBackgroundColor(index)}>
             <LeaderboardTableRankCell index={index} score={score} ranks={scoreAttacks.map(({score}, _) => {return score})}/>
             <LeaderboardTableRowCell name={<LeaderboardInfo text={"This is a platform"} label={<strong>{attacker}</strong>}/>}/>
-            <LeaderboardTableRowCell name={score}/>
+            <LeaderboardTableRowCell name={<LeaderboardInfo text={prettyPrintScoreParts(scoreParts)} label={score}/>}/>
             <LeaderboardTableRowCell name={submittedOn}/>
             <LeaderboardTableRowCell name={<LeaderboardInfo text={"This is a platform"} label={platform}/>}/>
             <LeaderboardTableRowCell name={displayProof(proofLink) || "—"}/>
