@@ -1,16 +1,14 @@
 /* eslint-disable */
 import background from "@assets/img/background.png"
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  TextField
-} from "@material-ui/core"
+import Box from "@material-ui/core/Box"
+import Button from "@material-ui/core/Button"
+import ButtonGroup from "@material-ui/core/ButtonGroup"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import Grid from "@material-ui/core/Grid"
+import TextField from "@material-ui/core/TextField"
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
 import {Autocomplete} from "@material-ui/lab"
@@ -18,14 +16,8 @@ import {LeaderboardType} from "@models/LeaderboardType"
 import {ScoreAttack} from "@models/ScoreAttack"
 import {toCamelCase} from "@utils/utility"
 
-import {ChallengeLeaderboard} from "@views/ChallengeLeaderboard"
-import {CourseLeaderboard} from "@views/CourseLeaderboard"
+import {HighScoreLeaderboard} from "@views/HighScoreLeaderboard"
 import {Navbar} from "@views/Navbar"
-import {PokemonLeaderboard} from "@views/PokemonLeaderboard"
-import {ReportScoreLeaderboard} from "@views/ReportScoreLeaderboard"
-import {SiteCourseLeaderboard} from "@views/SiteCourseLeaderboard"
-import {SiteReportLeaderboard} from "@views/SiteReportLeaderboard"
-import {TimeAttackLeaderboard} from "@views/TimeAttackLeaderboard"
 import React, {useEffect, useState} from "react"
 
 const buttonStyle = {
@@ -191,13 +183,7 @@ export const Leaderboard = () => {
         <Grid container alignItems="center">
           <Grid item xs={2}/>
           <Grid item xs={8}>
-            { LeaderboardType.POKEMON === type && <PokemonLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
-            { LeaderboardType.REPORT_SCORE === type && <ReportScoreLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
-            { LeaderboardType.COURSE === type && <CourseLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
-            { LeaderboardType.CHALLENGE === type && <ChallengeLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
-            { LeaderboardType.SITE_COURSE === type && <SiteCourseLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
-            { LeaderboardType.SITE_REPORT === type && <SiteReportLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
-            { LeaderboardType.TIME_ATTACK === type && <TimeAttackLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/> }
+            <HighScoreLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/>
           </Grid>
           <Grid item xs={2}/>
         </Grid>
