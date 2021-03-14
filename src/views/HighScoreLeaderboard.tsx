@@ -1,4 +1,4 @@
-import {BaseHighScoreLeaderboard} from "@components/BaseHighScoreLeaderboard"
+import {BaseHighScoreLeaderboard} from "@components/view/BaseHighScoreLeaderboard"
 import {LeaderboardProps} from "@models/LeaderboardProps"
 
 export const HighScoreLeaderboard = (props: LeaderboardProps) => {
