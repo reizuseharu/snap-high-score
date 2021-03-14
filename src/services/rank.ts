@@ -63,5 +63,9 @@ export function rankImage(rank: OptionalNumber) {
 }
 
 export function rankBackgroundColor(index: number) {
-  if (index % 2 === 1) {return {backgroundColor: "#666666", opacity: 0.9, border: 0}} else {return {backgroundColor: "#444444", opacity: 0.7, border: 0}}
+  if (index % 2 === 1) {
+    return {backgroundColor: "#666666", opacity: 0.9, border: 0}
+  } else {
+    return {backgroundColor: "#444444", opacity: 0.7, border: 0}
+  }
 }
