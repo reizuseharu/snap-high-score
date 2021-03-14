@@ -3,6 +3,7 @@ import background from "@assets/img/background.png"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
+import CssBaseline from "@material-ui/core/CssBaseline"
 import Dialog from "@material-ui/core/Dialog"
 import DialogActions from "@material-ui/core/DialogActions"
 import DialogContent from "@material-ui/core/DialogContent"
@@ -14,7 +15,7 @@ import Typography from "@material-ui/core/Typography"
 import {Autocomplete} from "@material-ui/lab"
 import {LeaderboardType} from "@models/LeaderboardType"
 import {ScoreAttack} from "@models/ScoreAttack"
-import {toCamelCase} from "@utils/utility"
+import {toCamelCase, toTitleCase} from "@utils/utility"
 
 import {HighScoreLeaderboard} from "@views/HighScoreLeaderboard"
 import {Navbar} from "@views/Navbar"
@@ -59,7 +60,7 @@ export const Leaderboard = () => {
   const [scoreAttacks, setScoreAttacks] = useState<ScoreAttack[]>([])
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
-  const [attackSubVariant, setAttackSubVariant] = useState<string | null>(null)
+  const [attackSubVariant, setAttackSubVariant] = useState<string | null>("Bulbasaur")
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -97,12 +98,14 @@ export const Leaderboard = () => {
       .finally(() => setAttackSubVariant(null))
   }, [type, attackVariants])
 
+  // ! Fix silent failure
   useEffect(() => {
     const typeName = toCamelCase(type)
     fetch(`data/${typeName}-${attackSubVariant}-Leaderboard.json`)
       .then(result => result.json())
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
+      .catch((reason) => console.log(reason))
   }, [attackSubVariant])
 
   const handleClickOpen = () => setOpen(true)
@@ -124,8 +127,26 @@ export const Leaderboard = () => {
     }}>
       <Navbar/>
       <Box>
-        <Grid container alignItems="center" style={{marginTop: "3%"}}>
-          <Grid item xs={2}/>
+        <Box display="flex" justifyContent="center" borderRadius={16}>
+          <Typography style={{fontFamily: "Roboto", fontSize: 36, color: "#FFFFFF"}} gutterBottom>
+            <strong>{toTitleCase(type).toUpperCase()} • {attackSubVariant?.toUpperCase()}</strong>
+          </Typography>
+        </Box>
+        <Grid container alignItems="center">
+          <Grid item xs={2}>
+            <Autocomplete
+              id="combo-box-demo"
+              value={attackSubVariant}
+              onChange={(event: any, attackSubVariant_: string | null) => {
+                setAttackSubVariant(attackSubVariant_)
+                setIsLoading(true)
+              }}
+              options={attackSubVariants}
+              getOptionLabel={(option) => option}
+              style={autocompleteStyle}
+              renderInput={(params) => <TextField {...params} size="small" label="SubVariant" variant="outlined" />}
+            />
+          </Grid>
           <Grid item xs={8}>
             <ButtonGroup aria-label="button group">
               <Button size="small" disabled={type === LeaderboardType.POKEMON } style={type === LeaderboardType.POKEMON ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
@@ -170,20 +191,7 @@ export const Leaderboard = () => {
               </Dialog>
             </ButtonGroup>
           </Grid>
-          <Grid item xs={2}>
-            <Autocomplete
-              id="combo-box-demo"
-              value={attackSubVariant}
-              onChange={(event: any, attackSubVariant_: string | null) => {
-                setAttackSubVariant(attackSubVariant_)
-                setIsLoading(true)
-              }}
-              options={attackSubVariants}
-              getOptionLabel={(option) => option}
-              style={autocompleteStyle}
-              renderInput={(params) => <TextField {...params} size="small" label="SubVariant" variant="outlined" />}
-            />
-          </Grid>
+          <Grid item xs={2}/>
         </Grid>
 
         <Grid container alignItems="center">
