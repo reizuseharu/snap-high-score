@@ -12,6 +12,7 @@ import TextField from "@material-ui/core/TextField"
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
 import {Autocomplete} from "@material-ui/lab"
+import {Console} from "@models/Console"
 import {LeaderboardType} from "@models/LeaderboardType"
 import {ScoreAttack} from "@models/ScoreAttack"
 import {toCamelCase, toTitleCase} from "@utils/utility"
@@ -78,7 +79,7 @@ export const Leaderboard = () => {
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
   const [attackSubVariant, setAttackSubVariant] = useState<string | null>(defaultChallenge ?? "Bulbasaur")
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [gameConsole, setGameConsole] = useState<string>(defaultConsole ?? "N64")
+  const [gameConsole, setGameConsole] = useState<Console>(defaultConsole as Console ?? Console.N64)
 
   useEffect(() => {
     fetch('data/generalRules.json')
@@ -119,19 +120,24 @@ export const Leaderboard = () => {
   // ! Fix silent failure
   useEffect(() => {
     const typeName = toCamelCase(type)
-    fetch(`data/${typeName}-${attackSubVariant}-Leaderboard.json`)
+    fetch(`data/${typeName}-${attackSubVariant}-${gameConsole}-Leaderboard.json`)
       .then(result => result.json())
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
       .finally(() => history.replace({ search: `?variant=${type}&challenge=${attackSubVariant}&console=${gameConsole}`}))
       .catch((reason) => console.log(reason))
-  }, [attackSubVariant])
+  }, [attackSubVariant, gameConsole])
 
   const handleClickOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
   const handleLeaderboardChange = (type: LeaderboardType) => {
     setType(type)
+    setIsLoading(true)
+  }
+
+  const handleConsoleChange = (gameConsole: Console) => {
+    setGameConsole(gameConsole)
     setIsLoading(true)
   }
 
@@ -148,7 +154,7 @@ export const Leaderboard = () => {
       <Box>
         <Box display="flex" justifyContent="center" borderRadius={16}>
           <Typography style={{fontFamily: "Roboto", fontSize: 36, color: "#FFFFFF"}} gutterBottom>
-            <strong>{toTitleCase(type).toUpperCase()} • {attackSubVariant?.toUpperCase()} • {gameConsole.toUpperCase()}</strong>
+            <strong>{toTitleCase(type).toUpperCase()} • {attackSubVariant?.toUpperCase()} • {gameConsole}</strong>
           </Typography>
         </Box>
         <Grid container alignItems="center">
@@ -208,6 +214,11 @@ export const Leaderboard = () => {
                   </Button>
                 </DialogActions>
               </Dialog>
+            </ButtonGroup>
+            <ButtonGroup aria-label="button group">
+              <Button size="small" disabled={gameConsole === Console.N64 } style={gameConsole === Console.N64 ? activeButtonStyle: buttonStyle} onClick={() => {handleConsoleChange(Console.N64)}}>N64</Button>
+              <Button size="small" disabled={gameConsole === Console.WII_VC } style={gameConsole === Console.WII_VC ? activeButtonStyle: buttonStyle} onClick={() => {handleConsoleChange(Console.WII_VC)}}>Wii VC</Button>
+              <Button size="small" disabled={gameConsole === Console.WIIU_VC } style={gameConsole === Console.WIIU_VC ? activeButtonStyle: buttonStyle} onClick={() => {handleConsoleChange(Console.WIIU_VC)}}>WiiU VC</Button>
             </ButtonGroup>
           </Grid>
           <Grid item xs={2}/>
