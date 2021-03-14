@@ -79,16 +79,23 @@ export const Leaderboard = () => {
     fetch(`data/${typeName}Leaderboard.json`)
       .then(result => result.json())
       .then(leaderboard => setScoreAttacks(leaderboard))
-      .finally(() => setIsLoading(false))
-      .finally(() => setAttackSubVariants(attackVariants.get(type) ?? []))
-      .finally(() => setAttackSubVariant(null))
-  }, [type])
+  }, [])
 
   useEffect(() => {
     fetch('data/attackVariants.json')
       .then(result => result.json())
       .then(attackVariants_ => setAttackVariants(new Map<string, string[]>(Object.entries(attackVariants_))))
   }, [])
+
+  useEffect(() => {
+    const typeName = toCamelCase(type)
+    fetch(`data/${typeName}Leaderboard.json`)
+      .then(result => result.json())
+      .then(leaderboard => setScoreAttacks(leaderboard))
+      .finally(() => setIsLoading(false))
+      .finally(() => setAttackSubVariants(attackVariants.get(type) ?? []))
+      .finally(() => setAttackSubVariant(null))
+  }, [type, attackVariants])
 
   const handleClickOpen = () => {
     setOpen(true)
