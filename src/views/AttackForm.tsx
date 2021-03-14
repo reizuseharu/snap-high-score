@@ -91,6 +91,11 @@ export const AttackForm = () => {
     let values = getValues()
     console.log(values)
     values.takenOn = convertDateToLocalString(values.takenOn)
+    values.score = parseInt(values.score)
+    values.special = parseInt(values.special)
+    values.size = parseInt(values.size)
+    values.pose = parseInt(values.pose)
+    values.samePokemon = parseInt(values.samePokemon)
 
     console.log(values)
   }
