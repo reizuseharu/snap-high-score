@@ -48,6 +48,7 @@ export const AttackForm = () => {
   const classes = useStyles()
   const { handleSubmit, control, reset, getValues } = useForm()
   const [imageFile, setImageFile] = useState<string>("")
+  const [imageFileName, setImageFileName] = useState<string>("")
   const [open, setOpen] = useState<boolean>(false)
   const [type, setType] = useState<string>(LeaderboardType.POKEMON)
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
@@ -75,6 +76,8 @@ export const AttackForm = () => {
 
   const onImageUpload = (e) => {
     const file: File = e.target.files[0]
+
+    setImageFileName(file.name)
 
     toBase64(file).then(imageData => setImageFile(imageData))
 
@@ -522,6 +525,13 @@ export const AttackForm = () => {
                     </DialogActions>
                   </Dialog>
                 </>
+              </Grid>
+              <Grid item style={{ marginTop: 24, marginLeft: 8 }}>
+                <Typography>
+                  <Box fontWeight="fontWeightBold">
+                    {imageFileName}
+                  </Box>
+                </Typography>
               </Grid>
             </Grid>
           </form>
