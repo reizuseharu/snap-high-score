@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const AttackForm = () => {
   const classes = useStyles()
-  const { handleSubmit, control, reset, getValues } = useForm()
+  const { handleSubmit, control, reset, getValues, setValue } = useForm()
   const [imageFile, setImageFile] = useState<string>("")
   const [imageFileName, setImageFileName] = useState<string>("")
   const [open, setOpen] = useState<boolean>(false)
@@ -162,6 +162,7 @@ export const AttackForm = () => {
                             onChange={(e, type_) => {
                               onChange(type_)
                               setType(type_)
+                              setValue("challenge", null)
                             }}
                             {...props}
                           />
@@ -178,7 +179,7 @@ export const AttackForm = () => {
                       <Controller
                         as={({ onChange, ...props }) => (
                           <Autocomplete
-                            key={type}
+                            value={getValues("challenge")}
                             options={attackSubVariants}
                             getOptionLabel={(option) => toTitleCase(`${option}`)}
                             renderInput={(params) => <TextField {...params} label="Challenge"/>}
