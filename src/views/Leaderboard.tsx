@@ -123,7 +123,7 @@ export const Leaderboard = () => {
       backgroundAttachment: "fixed",
       backgroundPosition: "center",
       backgroundSize: "cover",
-      height: "200%",
+      height: "500vh",
       backgroundRepeat: "repeat"
     }}>
       <Navbar/>
