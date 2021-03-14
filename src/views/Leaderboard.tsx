@@ -80,6 +80,8 @@ export const Leaderboard = () => {
       .then(result => result.json())
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
+      .finally(() => setAttackSubVariants(attackVariants.get(type) ?? []))
+      .finally(() => setAttackSubVariant(null))
   }, [type])
 
   useEffect(() => {
@@ -87,14 +89,6 @@ export const Leaderboard = () => {
       .then(result => result.json())
       .then(attackVariants_ => setAttackVariants(new Map<string, string[]>(Object.entries(attackVariants_))))
   }, [])
-
-  useEffect(() => {
-    console.log(attackSubVariant)
-  }, [attackSubVariant])
-
-  useEffect(() => {
-    setAttackSubVariants(attackVariants.get(type) ?? [])
-  }, [type])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -124,13 +118,13 @@ export const Leaderboard = () => {
           <Grid item xs={2}/>
           <Grid item xs={8}>
             <ButtonGroup aria-label="button group">
-              <Button size="small" style={type == LeaderboardType.POKEMON ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
-              <Button size="small" style={type == LeaderboardType.REPORT_SCORE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
-              <Button size="small" style={type == LeaderboardType.COURSE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.COURSE)}}>Course</Button>
-              <Button size="small" style={type == LeaderboardType.CHALLENGE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
-              <Button disabled size="small" style={type == LeaderboardType.SITE_COURSE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_COURSE)}}>Site Course</Button>
-              <Button disabled size="small" style={type == LeaderboardType.SITE_REPORT ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_REPORT)}}>Site Report</Button>
-              <Button size="small" style={type == LeaderboardType.TIME_ATTACK ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
+              <Button size="small" disabled={type === LeaderboardType.POKEMON } style={type === LeaderboardType.POKEMON ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
+              <Button size="small" disabled={type === LeaderboardType.REPORT_SCORE } style={type === LeaderboardType.REPORT_SCORE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
+              <Button size="small" disabled={type === LeaderboardType.COURSE } style={type === LeaderboardType.COURSE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.COURSE)}}>Course</Button>
+              <Button size="small" disabled={type === LeaderboardType.CHALLENGE } style={type === LeaderboardType.CHALLENGE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
+              <Button disabled size="small" style={type === LeaderboardType.SITE_COURSE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_COURSE)}}>Site Course</Button>
+              <Button disabled size="small" style={type === LeaderboardType.SITE_REPORT ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_REPORT)}}>Site Report</Button>
+              <Button size="small" disabled={type === LeaderboardType.TIME_ATTACK } style={type == LeaderboardType.TIME_ATTACK ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
               <Button variant="contained" size="small" style={rulesButtonStyle} color="primary" onClick={handleClickOpen}>Rules</Button>
               <Dialog
                 open={open}
@@ -169,8 +163,9 @@ export const Leaderboard = () => {
           <Grid item xs={2}>
             <Autocomplete
               id="combo-box-demo"
-              onChange={(event: any, newValue: string | null) => {
-                setAttackSubVariant(newValue)
+              value={attackSubVariant}
+              onChange={(event: any, attackSubVariant_: string | null) => {
+                setAttackSubVariant(attackSubVariant_)
               }}
               options={attackSubVariants}
               getOptionLabel={(option) => option}
