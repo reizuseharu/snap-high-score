@@ -97,13 +97,8 @@ export const Leaderboard = () => {
       .finally(() => setAttackSubVariant(null))
   }, [type, attackVariants])
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
+  const handleClickOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   const handleLeaderboardChange = (type: LeaderboardType) => {
     setType(type)
