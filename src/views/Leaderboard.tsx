@@ -59,8 +59,8 @@ export const Leaderboard = () => {
   const [scoreAttacks, setScoreAttacks] = useState<ScoreAttack[]>([])
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
-  const [value, setValue] = useState<string | null>(null) // - Fix naming for this
-  const [isLoading, setIsLoading] = useState(true)
+  const [attackSubVariant, setAttackSubVariant] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     fetch('data/generalRules.json')
@@ -89,8 +89,8 @@ export const Leaderboard = () => {
   }, [])
 
   useEffect(() => {
-    console.log(value)
-  }, [value])
+    console.log(attackSubVariant)
+  }, [attackSubVariant])
 
   useEffect(() => {
     setAttackSubVariants(attackVariants.get(type) ?? [])
@@ -170,7 +170,7 @@ export const Leaderboard = () => {
             <Autocomplete
               id="combo-box-demo"
               onChange={(event: any, newValue: string | null) => {
-                setValue(newValue)
+                setAttackSubVariant(newValue)
               }}
               options={attackSubVariants}
               getOptionLabel={(option) => option}
