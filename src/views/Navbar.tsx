@@ -1,12 +1,12 @@
-import {Box} from "@material-ui/core"
-import React from 'react'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import AppBar from "@material-ui/core/AppBar"
+import Box from "@material-ui/core/Box"
+import Button from "@material-ui/core/Button"
+import IconButton from "@material-ui/core/IconButton"
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
+import MenuIcon from "@material-ui/icons/Menu"
+import React from "react"
 import {Link} from "react-router-dom"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,7 +37,7 @@ export const Navbar = () => {
           <Typography variant="h6" className={classes.title}>
             Pokémon Snap High Score
           </Typography>
-          <Button component={Link} to="/input" variant="contained" color="primary">
+          <Button component={Link} to="/attack" variant="contained" color="primary">
             Submit
           </Button>
           <Button component={Link} to="/leaderboard" variant="contained" color="primary">

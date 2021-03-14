@@ -1,33 +1,35 @@
 // @ts-nocheck
-import {green} from "@material-ui/core/colors"
-import {Autocomplete} from "@material-ui/lab"
-import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers"
-import {LeaderboardType} from "@models/LeaderboardType"
-import {toBase64, convertDateToLocalString, toTitleCase} from "@utils/utility"
 import background from "@assets/img/background.png"
-import {Image, PhotoCamera} from "@material-ui/icons"
-import React, {useEffect, useState} from "react"
-import { useForm, Controller } from 'react-hook-form'
-import {
-  Typography,
-  Paper,
-  Grid,
-  Button,
-  CssBaseline,
-  IconButton,
-  makeStyles,
-  Theme,
-  createStyles,
-  Box,
-  FormControl,
-  TextField,
-  RadioGroup,
-  FormControlLabel,
-  FormLabel, Radio, Checkbox, Dialog, DialogContent, DialogActions,
-} from "@material-ui/core"
-import {Navbar} from "@views/Navbar"
 
-import DateFnsUtils from '@date-io/date-fns'
+import DateFnsUtils from "@date-io/date-fns"
+import Box from "@material-ui/core/Box"
+import Button from "@material-ui/core/Button"
+import Checkbox from "@material-ui/core/Checkbox"
+import green from "@material-ui/core/colors/green"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import FormControl from "@material-ui/core/FormControl"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import FormLabel from "@material-ui/core/FormLabel"
+import Grid from "@material-ui/core/Grid"
+import IconButton from "@material-ui/core/IconButton"
+import Paper from "@material-ui/core/Paper"
+import Radio from "@material-ui/core/Radio"
+import RadioGroup from "@material-ui/core/RadioGroup"
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
+import TextField from "@material-ui/core/TextField"
+import Typography from "@material-ui/core/Typography"
+import Image from "@material-ui/icons/Image"
+import PhotoCamera from "@material-ui/icons/PhotoCamera"
+import Autocomplete from "@material-ui/lab/Autocomplete"
+import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
+import {LeaderboardType} from "@models/LeaderboardType"
+import {convertDateToLocalString, toBase64, toTitleCase} from "@utils/utility"
+import {Navbar} from "@views/Navbar"
+import React, {useEffect, useState} from "react"
+import {Controller, useForm} from "react-hook-form"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

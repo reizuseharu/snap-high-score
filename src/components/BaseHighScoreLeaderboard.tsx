@@ -1,24 +1,33 @@
-import {LeaderboardTableRankCell} from "@components/LeaderboardTableRankCell"
-import {LeaderboardTableHeaderCell} from "@components/LeaderboardTableHeaderCell"
-import {LeaderboardTableRowCell} from "@components/LeaderboardTableRowCell"
-import {green, red} from "@material-ui/core/colors"
-import {Cancel, CheckCircle, Error, Image, YouTube} from "@material-ui/icons"
-import {OptionalString} from "@utils/constants"
-import {rankBackgroundColor} from "@services/rank"
-import {ScoreAttack} from "@models/ScoreAttack"
-import React, {useState} from "react"
-import {tableHeadStyle} from "@utils/leaderboardHelpers"
 import {LeaderboardInfo} from "@components/LeaderboardInfo"
-
-import {
-  Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Fab,
-  IconButton,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow
-} from "@material-ui/core"
+import {LeaderboardTableHeaderCell} from "@components/LeaderboardTableHeaderCell"
+import {LeaderboardTableRankCell} from "@components/LeaderboardTableRankCell"
+import {LeaderboardTableRowCell} from "@components/LeaderboardTableRowCell"
+import Box from "@material-ui/core/Box"
+import Button from "@material-ui/core/Button"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import green from "@material-ui/core/colors/green"
+import red from "@material-ui/core/colors/red"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import Fab from "@material-ui/core/Fab"
+import IconButton from "@material-ui/core/IconButton"
+import Table from "@material-ui/core/Table"
+import TableBody from "@material-ui/core/TableBody"
+import TableHead from "@material-ui/core/TableHead"
+import TableRow from "@material-ui/core/TableRow"
+import Cancel from "@material-ui/icons/Cancel"
+import CheckCircle from "@material-ui/icons/CheckCircle"
+import Error from "@material-ui/icons/Error"
+import Image from "@material-ui/icons/Image"
+import YouTube from "@material-ui/icons/YouTube"
+import {ScoreAttack} from "@models/ScoreAttack"
+import {rankBackgroundColor} from "@services/rank"
+import {OptionalString} from "@utils/constants"
+import {tableHeadStyle} from "@utils/leaderboardHelpers"
 import {isURLDataImage, isURLImage, isURLVideo, prettyPrintScoreParts} from "@utils/utility"
+import React, {useState} from "react"
 
 export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading: boolean) => {
   const [open, setOpen] = useState<boolean>(false)

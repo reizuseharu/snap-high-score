@@ -1,11 +1,11 @@
 // @ts-nocheck
+import {AttackForm} from "@views/AttackForm"
 import {Leaderboard} from "@views/Leaderboard"
 import {createBrowserHistory} from "history"
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
+import React from "react"
+import ReactDOM from "react-dom"
 import {Redirect, Route, Router, Switch} from "react-router"
-import {AttackForm} from "@views/AttackForm"
+import "./index.css"
 
 let history = createBrowserHistory()
 

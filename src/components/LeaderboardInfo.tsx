@@ -1,11 +1,9 @@
 /* eslint-disable */
-import {
-  Box,
-} from "@material-ui/core"
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+import {Box,} from "@material-ui/core"
+import Popover from "@material-ui/core/Popover"
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
+import Typography from "@material-ui/core/Typography"
 import React, {Attributes, useState} from "react"
-import Popover from '@material-ui/core/Popover'
-import Typography from '@material-ui/core/Typography'
 
 const buttonStyle = {
   minWidth: 50

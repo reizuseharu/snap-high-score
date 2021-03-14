@@ -1,31 +1,32 @@
 /* eslint-disable */
-import {Autocomplete} from "@material-ui/lab"
-import {ScoreAttack} from "@models/ScoreAttack"
-import {toCamelCase} from "@utils/utility"
-import {LeaderboardType} from "@models/LeaderboardType"
 import background from "@assets/img/background.png"
 import {
   Box,
   Button,
-  ButtonGroup, CircularProgress,
+  ButtonGroup,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle, Fab,
-  Grid, TextField
+  DialogTitle,
+  Grid,
+  TextField
 } from "@material-ui/core"
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
-import React, {useEffect, useState} from "react"
-import Typography from '@material-ui/core/Typography'
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
+import Typography from "@material-ui/core/Typography"
+import {Autocomplete} from "@material-ui/lab"
+import {LeaderboardType} from "@models/LeaderboardType"
+import {ScoreAttack} from "@models/ScoreAttack"
+import {toCamelCase} from "@utils/utility"
 
 import {ChallengeLeaderboard} from "@views/ChallengeLeaderboard"
 import {CourseLeaderboard} from "@views/CourseLeaderboard"
+import {Navbar} from "@views/Navbar"
 import {PokemonLeaderboard} from "@views/PokemonLeaderboard"
 import {ReportScoreLeaderboard} from "@views/ReportScoreLeaderboard"
 import {SiteCourseLeaderboard} from "@views/SiteCourseLeaderboard"
 import {SiteReportLeaderboard} from "@views/SiteReportLeaderboard"
 import {TimeAttackLeaderboard} from "@views/TimeAttackLeaderboard"
-import {Navbar} from "@views/Navbar"
+import React, {useEffect, useState} from "react"
 
 const buttonStyle = {
   minWidth: 50,
