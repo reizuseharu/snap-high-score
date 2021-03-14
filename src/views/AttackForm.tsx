@@ -27,7 +27,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete"
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
 import {LeaderboardType} from "@models/LeaderboardType"
 import {convertDateToLocalString, toBase64, toTitleCase} from "@utils/utility"
-import {Navbar} from "@views/Navbar"
+import {Navbar} from "@components/view/Navbar"
 import React, {useEffect, useState} from "react"
 import {Controller, useForm} from "react-hook-form"
 
