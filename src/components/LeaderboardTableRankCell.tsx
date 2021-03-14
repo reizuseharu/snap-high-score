@@ -1,4 +1,4 @@
-import {TableCell} from "@material-ui/core"
+import TableCell from "@material-ui/core/TableCell"
 import {TableCellProps} from "@material-ui/core/TableCell/TableCell"
 import {rankColor, rankImage, scoreToRank} from "@services/rank"
 import {ordinal_suffix_of} from "@utils/utility"

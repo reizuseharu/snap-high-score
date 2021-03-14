@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {Box,} from "@material-ui/core"
+import Box from "@material-ui/core/Box"
 import Popover from "@material-ui/core/Popover"
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
