@@ -97,6 +97,14 @@ export const Leaderboard = () => {
       .finally(() => setAttackSubVariant(null))
   }, [type, attackVariants])
 
+  useEffect(() => {
+    const typeName = toCamelCase(type)
+    fetch(`data/${typeName}-${attackSubVariant}-Leaderboard.json`)
+      .then(result => result.json())
+      .then(leaderboard => setScoreAttacks(leaderboard))
+      .finally(() => setIsLoading(false))
+  }, [attackSubVariant])
+
   const handleClickOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
@@ -168,6 +176,7 @@ export const Leaderboard = () => {
               value={attackSubVariant}
               onChange={(event: any, attackSubVariant_: string | null) => {
                 setAttackSubVariant(attackSubVariant_)
+                setIsLoading(true)
               }}
               options={attackSubVariants}
               getOptionLabel={(option) => option}
