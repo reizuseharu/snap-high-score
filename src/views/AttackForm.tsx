@@ -1,10 +1,11 @@
 // @ts-nocheck
+import {green} from "@material-ui/core/colors"
 import {Autocomplete} from "@material-ui/lab"
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers"
 import {LeaderboardType} from "@models/LeaderboardType"
 import {toBase64, convertDateToLocalString, toTitleCase} from "@utils/utility"
 import background from "@assets/img/background.png"
-import {PhotoCamera} from "@material-ui/icons"
+import {Image, PhotoCamera} from "@material-ui/icons"
 import React, {useEffect, useState} from "react"
 import { useForm, Controller } from 'react-hook-form'
 import {
@@ -22,7 +23,7 @@ import {
   TextField,
   RadioGroup,
   FormControlLabel,
-  FormLabel, Radio, Checkbox,
+  FormLabel, Radio, Checkbox, Dialog, DialogContent, DialogActions,
 } from "@material-ui/core"
 import {Navbar} from "@views/Navbar"
 
@@ -44,12 +45,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export const AttackForm = () => {
   const classes = useStyles()
   const { handleSubmit, control, reset, getValues } = useForm()
-  const [imageFile, setImageFile] = useState("")
+  const [imageFile, setImageFile] = useState<string>("")
+  const [open, setOpen] = useState<boolean>(false)
   const [type, setType] = useState<string>(LeaderboardType.POKEMON)
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
-  const [region, setRegion] = useState("NTSC_JPN")
-  const [gameConsole, setGameConsole] = useState("N64")
+  const [region, setRegion] = useState<string>("NTSC_JPN")
+  const [gameConsole, setGameConsole] = useState<string>("N64")
 
   useEffect(() => {
     fetch('data/attackVariants.json')
@@ -89,6 +91,14 @@ export const AttackForm = () => {
     values.takenOn = convertDateToLocalString(values.takenOn)
 
     console.log(values)
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
   }
 
   return (
@@ -484,17 +494,32 @@ export const AttackForm = () => {
                   Submit
                 </Button>
               </Grid>
+              <Grid item style={{ marginTop: 12, marginLeft: 16 }}>
+                <>
+                  <IconButton onClick={handleClickOpen} aria-label="link">
+                    <Image style={(imageFile === "") ? {} : {color: green[500]}}/>
+                  </IconButton>
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <DialogContent dividers>
+                      <img src={imageFile} alt={"Proof Pic"} width="400" height="300"/>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} color="primary">
+                        Close
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </>
+              </Grid>
             </Grid>
           </form>
         </Paper>
       </Box>
-      <Grid container alignItems="center" justify="center">
-        <Grid xs={4}/>
-        <Grid xs={2}>
-          <img src={imageFile} alt={"Submission Pic"} width="400" height="300"/>
-        </Grid>
-        <Grid xs={6}/>
-      </Grid>
     </Box>
   )
 }
