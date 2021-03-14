@@ -14,7 +14,7 @@
       "@models/*": ["models/*"],
       "@services/*": ["services/*"],
       "@utils/*": ["utilities/*"],
-      "@views/*": ["src/views/*"]
+      "@views/*": ["views/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,

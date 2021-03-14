@@ -1,9 +1,9 @@
 // @ts-nocheck
 import {Autocomplete} from "@material-ui/lab"
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers"
-import {LeaderboardType} from "../models/LeaderboardType"
-import {toBase64, convertDateToLocalString, toTitleCase} from "../utilities/utility"
-import background from "../assets/img/background.png"
+import {LeaderboardType} from "@models/LeaderboardType"
+import {toBase64, convertDateToLocalString, toTitleCase} from "@utils/utility"
+import background from "@assets/img/background.png"
 import {PhotoCamera} from "@material-ui/icons"
 import React, {useEffect, useState} from "react"
 import { useForm, Controller } from 'react-hook-form'
@@ -24,7 +24,7 @@ import {
   FormControlLabel,
   FormLabel, Radio, Checkbox,
 } from "@material-ui/core"
-import {Navbar} from "./Navbar"
+import {Navbar} from "@views/Navbar"
 
 import DateFnsUtils from '@date-io/date-fns'
 

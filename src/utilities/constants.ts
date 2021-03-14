@@ -1,4 +1,4 @@
-import {League} from "../models/league"
+import {League} from "@models/league"
 
 export const leagueToFileTag: Map<any, string> = new Map([
   [League.ALPHA, "b28cec4a99980508c93ada8ea20d119a"],

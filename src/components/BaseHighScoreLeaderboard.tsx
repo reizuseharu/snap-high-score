@@ -1,14 +1,14 @@
-import {LeaderboardTableRankCell} from "./LeaderboardTableRankCell"
-import {LeaderboardTableHeaderCell} from "./LeaderboardTableHeaderCell"
-import {LeaderboardTableRowCell} from "./LeaderboardTableRowCell"
+import {LeaderboardTableRankCell} from "@components/LeaderboardTableRankCell"
+import {LeaderboardTableHeaderCell} from "@components/LeaderboardTableHeaderCell"
+import {LeaderboardTableRowCell} from "@components/LeaderboardTableRowCell"
 import {green, red} from "@material-ui/core/colors"
 import {Cancel, CheckCircle, Error, Image, YouTube} from "@material-ui/icons"
-import {OptionalString} from "../utilities/constants"
-import {rankBackgroundColor} from "../services/rank"
-import {ScoreAttack} from "../models/ScoreAttack"
+import {OptionalString} from "@utils/constants"
+import {rankBackgroundColor} from "@services/rank"
+import {ScoreAttack} from "@models/ScoreAttack"
 import React, {useState} from "react"
-import {tableHeadStyle} from "../utilities/leaderboardHelpers"
-import {LeaderboardInfo} from "./LeaderboardInfo"
+import {tableHeadStyle} from "@utils/leaderboardHelpers"
+import {LeaderboardInfo} from "@components/LeaderboardInfo"
 
 import {
   Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Fab,
@@ -18,7 +18,7 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core"
-import {isURLDataImage, isURLImage, isURLVideo, prettyPrintScoreParts} from "../utilities/utility"
+import {isURLDataImage, isURLImage, isURLVideo, prettyPrintScoreParts} from "@utils/utility"
 
 export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading: boolean) => {
   const [open, setOpen] = useState<boolean>(false)

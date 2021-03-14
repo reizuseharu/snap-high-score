@@ -1,6 +1,6 @@
 import {TableCell} from "@material-ui/core"
 import {TableCellProps} from "@material-ui/core/TableCell/TableCell"
-import {tableCellStyle} from "../utilities/leaderboardHelpers"
+import {tableCellStyle} from "@utils/leaderboardHelpers"
 import React from "react"
 
 interface LeaderboardTableHeaderCellProps {

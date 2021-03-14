@@ -1,4 +1,4 @@
-import {ScoreParts} from "../models/ScoreParts"
+import {ScoreParts} from "@models/ScoreParts"
 
 export function ordinal_suffix_of(i: number) {
   const j = i % 10

@@ -1,5 +1,5 @@
-import {ScoreParts} from "./ScoreParts"
-import {OptionalString} from "../utilities/constants"
+import {ScoreParts} from "@models/ScoreParts"
+import {OptionalString} from "@utils/constants"
 
 export interface ScoreAttack {
   attacker: string

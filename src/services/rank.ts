@@ -1,8 +1,8 @@
-import {OptionalNumber} from "../utilities/constants"
-import first from "../assets/img/1st.png"
-import second from "../assets/img/2nd.png"
-import third from "../assets/img/3rd.png"
-import fourth from "../assets/img/4th.png"
+import {OptionalNumber} from "@utils/constants"
+import first from "@assets/img/1st.png"
+import second from "@assets/img/2nd.png"
+import third from "@assets/img/3rd.png"
+import fourth from "@assets/img/4th.png"
 
 function scoresToRanks(scores: number[]): Map<number, number> {
   let sorted = scores.slice().sort((a: number, b: number) => { return b - a })

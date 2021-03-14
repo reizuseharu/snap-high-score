@@ -1,5 +1,5 @@
-import {Course} from "../models/Course"
-import {LeaderboardType} from "../models/LeaderboardType"
+import {Course} from "@models/Course"
+import {LeaderboardType} from "@models/LeaderboardType"
 
 export const ATTACK_VARIANTS = new Map([
   [

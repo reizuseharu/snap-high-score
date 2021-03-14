@@ -1,7 +1,7 @@
 import {TableCell} from "@material-ui/core"
 import {TableCellProps} from "@material-ui/core/TableCell/TableCell"
-import {scoreToRank, rankColor, rankImage} from "../services/rank"
-import {ordinal_suffix_of} from "../utilities/utility"
+import {scoreToRank, rankColor, rankImage} from "@services/rank"
+import {ordinal_suffix_of} from "@utils/utility"
 
 interface LeaderboardTableRankCellProps {
   index: number
