@@ -14,13 +14,7 @@ import {Autocomplete} from "@material-ui/lab"
 import {Console} from "@models/Console"
 import {LeaderboardType} from "@models/LeaderboardType"
 import {ScoreAttack} from "@models/ScoreAttack"
-import {
-  activeButtonStyle,
-  autocompleteStyle, buttonStyle,
-  leaderboardBackgroundStyle,
-  leaderboardTitleStyle,
-  rulesButtonStyle
-} from "@utils/styleHelpers"
+import {Styles} from "@utils/styles"
 import {toCamelCase, toTitleCase} from "@utils/utility"
 
 import {HighScoreLeaderboard} from "@components/view/HighScoreLeaderboard"
@@ -131,11 +125,11 @@ export const Leaderboard = () => {
   }
 
   return (
-    <Box id="container" style={leaderboardBackgroundStyle}>
+    <Box id="container" style={Styles.leaderboardBackground}>
       <Navbar/>
       <>
         <Box display="flex" justifyContent="center" borderRadius={16}>
-          <Typography style={leaderboardTitleStyle} gutterBottom>
+          <Typography style={Styles.leaderboardTitle} gutterBottom>
             <strong>{toTitleCase(type).toUpperCase()} • {attackSubVariant?.toUpperCase()} • {gameConsole}</strong>
           </Typography>
         </Box>
@@ -148,7 +142,7 @@ export const Leaderboard = () => {
               onChange={onSubVariantChange}
               options={attackSubVariants}
               getOptionLabel={(option) => option}
-              style={autocompleteStyle}
+              style={Styles.autocomplete}
               renderInput={(params) => <TextField {...params} size="small" label="SubVariant" variant="outlined" />}
             />
           </Grid>
@@ -162,8 +156,8 @@ export const Leaderboard = () => {
                 [LeaderboardType.SITE_COURSE, "Site Course"],
                 [LeaderboardType.SITE_REPORT, "Site Report"],
                 [LeaderboardType.TIME_ATTACK, "Time Attack"],
-              ].map(([leaderboardType, leaderboardName]) => <Button size="small" disabled={type === leaderboardType } style={type === leaderboardType ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(leaderboardType as LeaderboardType)}}>{leaderboardName}</Button>)}
-              <Button variant="contained" size="small" style={rulesButtonStyle} color="primary" onClick={handleClickOpen}>Rules</Button>
+              ].map(([leaderboardType, leaderboardName]) => <Button size="small" disabled={type === leaderboardType } style={type === leaderboardType ? Styles.activeButton: Styles.button} onClick={() => {handleLeaderboardChange(leaderboardType as LeaderboardType)}}>{leaderboardName}</Button>)}
+              <Button variant="contained" size="small" style={Styles.rulesButton} color="primary" onClick={handleClickOpen}>Rules</Button>
               <Dialog
                 open={open}
                 onClose={handleClose}
@@ -188,7 +182,7 @@ export const Leaderboard = () => {
                 [Console.N64, "N64"],
                 [Console.WII_VC, "Wii VC"],
                 [Console.WIIU_VC, "WiiU VC"],
-              ].map(([consoleType, consoleName]) => <Button size="small" disabled={ gameConsole === consoleType } style={ gameConsole === consoleType ? activeButtonStyle: buttonStyle } onClick={() => {handleConsoleChange(consoleType as Console)}}>{consoleName}</Button>)}
+              ].map(([consoleType, consoleName]) => <Button size="small" disabled={ gameConsole === consoleType } style={ gameConsole === consoleType ? Styles.activeButton: Styles.button } onClick={() => {handleConsoleChange(consoleType as Console)}}>{consoleName}</Button>)}
             </ButtonGroup>
           </Grid>
           <Grid item xs={2}/>

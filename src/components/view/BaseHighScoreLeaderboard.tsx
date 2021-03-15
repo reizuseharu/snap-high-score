@@ -23,7 +23,7 @@ import YouTube from "@material-ui/icons/YouTube"
 import {ScoreAttack} from "@models/ScoreAttack"
 import {rankBackgroundColor} from "@services/rank"
 import {OptionalString} from "@utils/constants"
-import {centerFloatingStyle, darkRedStyle, greenStyle, tableHeadStyle, transparentStyle} from "@utils/styleHelpers"
+import {Styles} from "@utils/styles"
 import {isURLDataImage, isURLImage, isURLVideo, prettyPrintScoreParts} from "@utils/utility"
 import React, {useState} from "react"
 
@@ -51,7 +51,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
         /* @ts-ignore */
         <>
         <IconButton onClick={handleClickOpen} aria-label="link">
-          {isImage && <Image style={greenStyle}/>}
+          {isImage && <Image style={Styles.green}/>}
         </IconButton>
         <Dialog
           open={open}
@@ -74,13 +74,13 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
       {isImage && !isDataUrl &&
         /* @ts-ignore */
         <IconButton href={proofLink} target="_blank" aria-label="link">
-          <Image style={greenStyle}/>
+          <Image style={Styles.green}/>
         </IconButton>
       }
       {isVideo &&
         /* @ts-ignore */
         <IconButton href={proofLink} target="_blank" aria-label="link">
-          <YouTube style={greenStyle}/>
+          <YouTube style={Styles.green}/>
         </IconButton>
       }
       </>
@@ -90,7 +90,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
   const displayVerified = (isVerified: boolean) => {
     return (
       <Box>
-        { isVerified && <CheckCircle style={greenStyle} /> }
+        { isVerified && <CheckCircle style={Styles.green} /> }
         { !isVerified && <Cancel color="secondary" /> }
       </Box>
     )
@@ -98,7 +98,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
   // <LeaderboardInfo text={"what"} label={"Stuff"}/>
   return (
     <Table size="small" aria-label="a dense table">
-      <TableHead style={tableHeadStyle}>
+      <TableHead style={Styles.tableHead}>
         <LeaderboardTableHeaderCell name={"Rank"}/>
         <LeaderboardTableHeaderCell name={"Attacker"}/>
         <LeaderboardTableHeaderCell name={"Score"}/>
@@ -110,9 +110,9 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
       <TableBody>
         {isLoading &&
           // @ts-ignore
-          <TableRow style={centerFloatingStyle}>
-            <Fab style={transparentStyle} aria-label="loading" size="large" disabled>
-              <CircularProgress size={50} style={darkRedStyle} disableShrink/>
+          <TableRow style={Styles.centerFloating}>
+            <Fab style={Styles.transparent} aria-label="loading" size="large" disabled>
+              <CircularProgress size={50} style={Styles.darkRed} disableShrink/>
             </Fab>
           </TableRow>
         }

@@ -24,21 +24,8 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
 import {LeaderboardType} from "@models/LeaderboardType"
-import {
-  attackerRules, consoleRules, emulatedRules,
-  notesRules, poseRules,
-  proofImageRules, regionRules,
-  samePokemonRules, scoreRules, sizeRules, specialRules,
-  techniqueRules,
-  videoLinkRules
-} from "@utils/rulesHelpers"
-import {
-  formBackgroundStyle, formButtonStyle,
-  formEmulatedStyle, formFilenameStyle, formImageStyle,
-  formMultiOptionStyle, formPaperStyle, formProofStyle,
-  formScorePartsStyle,
-  formStyle
-} from "@utils/styleHelpers"
+import {Rules} from "@utils/rules"
+import {Styles} from "@utils/styles"
 import {convertDateToLocalString, toBase64, toTitleCase} from "@utils/utility"
 import {Navbar} from "@components/view/Navbar"
 import React, {useEffect, useState} from "react"
@@ -120,14 +107,14 @@ export const AttackForm = () => {
   const handleClose = () => setOpen(false)
 
   return (
-    <Box id="container" style={formBackgroundStyle}>
+    <Box id="container" style={Styles.formBackground}>
       <Navbar/>
-      <Box style={formStyle}>
+      <Box style={Styles.form}>
         <CssBaseline />
         <Typography variant="h5" align="center" component="h1" gutterBottom>
           High Score Submission
         </Typography>
-        <Paper style={formPaperStyle}>
+        <Paper style={Styles.formPaper}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container>
               <Grid container xs={6} direction="column">
@@ -147,7 +134,7 @@ export const AttackForm = () => {
                         }
                         control={control}
                         defaultValue=""
-                        rules={attackerRules}
+                        rules={Rules.attacker}
                       />
                     </FormControl>
                   </Grid>
@@ -209,7 +196,7 @@ export const AttackForm = () => {
                         }
                         control={control}
                         defaultValue=""
-                        rules={scoreRules}
+                        rules={Rules.score}
                       />
                     </FormControl>
                   </Grid>
@@ -234,13 +221,13 @@ export const AttackForm = () => {
                         }
                         control={control}
                         defaultValue="NTSC_JPN"
-                        rules={regionRules}
+                        rules={Rules.region}
                       />
                     </FormControl>
                   </Grid>
                 </Grid>
                 <Grid container spacing={1}>
-                  <Grid item style={formMultiOptionStyle}>
+                  <Grid item style={Styles.formMultiOption}>
                     <FormControl fullWidth variant="outlined">
                       <Controller
                         name="console"
@@ -256,14 +243,14 @@ export const AttackForm = () => {
                         }
                         control={control}
                         defaultValue="N64"
-                        rules={consoleRules}
+                        rules={Rules.console_}
                       />
                     </FormControl>
                   </Grid>
                   <Grid item>
                     <FormControl fullWidth variant="outlined">
                       <FormControlLabel
-                        style={formEmulatedStyle}
+                        style={Styles.formEmulated}
                         control={
                           <Controller
                             name="isEmulated"
@@ -277,7 +264,7 @@ export const AttackForm = () => {
                               />
                             )}
                             defaultValue={false}
-                            rules={emulatedRules}
+                            rules={Rules.emulated}
                           />
                         }
                         label="Emulated"
@@ -286,7 +273,7 @@ export const AttackForm = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <FormControl fullWidth variant="outlined" style={formScorePartsStyle}>
+              <FormControl fullWidth variant="outlined" style={Styles.formScoreParts}>
                 <FormLabel component="legend">Score Parts</FormLabel>
               </FormControl>
               <Grid container xs={12} alignItems="flex-start" spacing={2}>
@@ -304,7 +291,7 @@ export const AttackForm = () => {
                       }
                       control={control}
                       defaultValue=""
-                      rules={specialRules}
+                      rules={Rules.special}
                     />
               </Grid>
                 <Grid item xs={2}>
@@ -321,7 +308,7 @@ export const AttackForm = () => {
                     }
                     control={control}
                     defaultValue=""
-                    rules={sizeRules}
+                    rules={Rules.size}
                   />
                 </Grid>
                 <Grid item xs={2}>
@@ -338,7 +325,7 @@ export const AttackForm = () => {
                     }
                     control={control}
                     defaultValue=""
-                    rules={poseRules}
+                    rules={Rules.pose}
                   />
                 </Grid>
                 <Grid item xs={2}>
@@ -355,12 +342,12 @@ export const AttackForm = () => {
                     }
                     control={control}
                     defaultValue=""
-                    rules={samePokemonRules}
+                    rules={Rules.samePokemon}
                   />
                 </Grid>
                 <Grid item xs={2}>
                   <FormControlLabel
-                    style={formMultiOptionStyle}
+                    style={Styles.formMultiOption}
                     control={
                       <Controller
                         name="isTechnique"
@@ -374,7 +361,7 @@ export const AttackForm = () => {
                           />
                         )}
                         defaultValue={false}
-                        rules={techniqueRules}
+                        rules={Rules.technique}
                       />
                     }
                     label="Technique"
@@ -382,7 +369,7 @@ export const AttackForm = () => {
                 </Grid>
               </Grid>
               <Grid container xs={12} alignItems="flex-start" spacing={2}>
-                <Grid item xs={5} style={formProofStyle}>
+                <Grid item xs={5} style={Styles.formProof}>
                   <FormControl fullWidth variant="outlined">
                     <Controller
                       name="videoLink"
@@ -391,11 +378,11 @@ export const AttackForm = () => {
                       }
                       control={control}
                       defaultValue=""
-                      rules={videoLinkRules}
+                      rules={Rules.videoLink}
                     />
                   </FormControl>
                 </Grid>
-                <Grid item xs={1} style={formProofStyle}>
+                <Grid item xs={1} style={Styles.formProof}>
                   <FormControl fullWidth variant="outlined">
                     <Controller
                       name="proofImage"
@@ -417,7 +404,7 @@ export const AttackForm = () => {
                       }
                       control={control}
                       defaultValue=""
-                      rules={proofImageRules}
+                      rules={Rules.proofImage}
                     />
                   </FormControl>
                 </Grid>
@@ -458,11 +445,11 @@ export const AttackForm = () => {
                     }
                     control={control}
                     defaultValue=""
-                    rules={notesRules}
+                    rules={Rules.notes}
                   />
                 </FormControl>
               </Grid>
-              <Grid item style={formButtonStyle}>
+              <Grid item style={Styles.formButton}>
                 <Button
                   id="reset"
                   type="button"
@@ -471,7 +458,7 @@ export const AttackForm = () => {
                   Reset
                 </Button>
               </Grid>
-              <Grid item style={formButtonStyle}>
+              <Grid item style={Styles.formButton}>
                 <Button
                   id="submit"
                   variant="contained"
@@ -481,7 +468,7 @@ export const AttackForm = () => {
                   Submit
                 </Button>
               </Grid>
-              <Grid item style={formImageStyle}>
+              <Grid item style={Styles.formImage}>
                 <>
                   <IconButton onClick={handleClickOpen} aria-label="link">
                     <Image style={(imageFile === "") ? {} : {color: green[500]}}/>
@@ -503,7 +490,7 @@ export const AttackForm = () => {
                   </Dialog>
                 </>
               </Grid>
-              <Grid item style={formFilenameStyle}>
+              <Grid item style={Styles.formFilename}>
                 <Typography>
                   <Box fontWeight="fontWeightBold">
                     {imageFileName}
