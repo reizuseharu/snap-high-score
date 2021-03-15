@@ -7,7 +7,6 @@ import {LeaderboardTitle} from "@components/view/leaderboard/LeaderboardTitle"
 import {SubVariantSearch} from "@components/view/leaderboard/SubVariantSearch"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
 import {Console} from "@models/Console"
 import {LeaderboardType} from "@models/LeaderboardType"
 import {ScoreAttack} from "@models/ScoreAttack"
@@ -22,14 +21,6 @@ import * as qs from "query-string"
 import {useGeneralRules} from "../hooks/leaderboard/useGeneralRules"
 import {useScoreAttacks} from "../hooks/leaderboard/useScoreAttacks"
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    typography: {
-      padding: theme.spacing(2),
-    },
-  }),
-)
-
 interface Query {
   variant?: string
   challenge?: string
@@ -37,8 +28,6 @@ interface Query {
 }
 
 export const Leaderboard = () => {
-  const classes = useStyles()
-
   const history = useHistory()
   const location = useLocation()
 

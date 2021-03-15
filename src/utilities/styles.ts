@@ -63,4 +63,6 @@ export class Styles {
     minWidth: 200,
     height: 30
   }
+
+  static readonly noDisplay = {display: 'none'}
 }
