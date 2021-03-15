@@ -136,6 +136,11 @@ export const Leaderboard = () => {
     setIsLoading(true)
   }
 
+  const onSubVariantChange = (event: any, attackSubVariant_: string | null) => {
+    setAttackSubVariant(attackSubVariant_)
+    setIsLoading(true)
+  }
+
   const handleConsoleChange = (gameConsole: Console) => {
     setGameConsole(gameConsole)
     setIsLoading(true)
@@ -151,21 +156,19 @@ export const Leaderboard = () => {
       backgroundRepeat: "repeat"
     }}>
       <Navbar/>
-      <Box>
+      <>
         <Box display="flex" justifyContent="center" borderRadius={16}>
           <Typography style={{fontFamily: "Roboto", fontSize: 36, color: "#FFFFFF"}} gutterBottom>
             <strong>{toTitleCase(type).toUpperCase()} • {attackSubVariant?.toUpperCase()} • {gameConsole}</strong>
           </Typography>
         </Box>
+
         <Grid container alignItems="center">
           <Grid item xs={2}>
             <Autocomplete
-              id="combo-box-demo"
+              id="subvariant-search"
               value={attackSubVariant}
-              onChange={(event: any, attackSubVariant_: string | null) => {
-                setAttackSubVariant(attackSubVariant_)
-                setIsLoading(true)
-              }}
+              onChange={onSubVariantChange}
               options={attackSubVariants}
               getOptionLabel={(option) => option}
               style={autocompleteStyle}
@@ -174,13 +177,15 @@ export const Leaderboard = () => {
           </Grid>
           <Grid item xs={8}>
             <ButtonGroup aria-label="button group">
-              <Button size="small" disabled={type === LeaderboardType.POKEMON } style={type === LeaderboardType.POKEMON ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.POKEMON)}}>Pokemon</Button>
-              <Button size="small" disabled={type === LeaderboardType.REPORT_SCORE } style={type === LeaderboardType.REPORT_SCORE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.REPORT_SCORE)}}>Report Score</Button>
-              <Button size="small" disabled={type === LeaderboardType.COURSE } style={type === LeaderboardType.COURSE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.COURSE)}}>Course</Button>
-              <Button size="small" disabled={type === LeaderboardType.CHALLENGE } style={type === LeaderboardType.CHALLENGE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.CHALLENGE)}}>Challenge</Button>
-              <Button disabled size="small" style={type === LeaderboardType.SITE_COURSE ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_COURSE)}}>Site Course</Button>
-              <Button disabled size="small" style={type === LeaderboardType.SITE_REPORT ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.SITE_REPORT)}}>Site Report</Button>
-              <Button size="small" disabled={type === LeaderboardType.TIME_ATTACK } style={type == LeaderboardType.TIME_ATTACK ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(LeaderboardType.TIME_ATTACK)}}>Time Attack</Button>
+              {[
+                [LeaderboardType.POKEMON, "Pokémon"],
+                [LeaderboardType.REPORT_SCORE, "Report Score"],
+                [LeaderboardType.COURSE, "Course"],
+                [LeaderboardType.CHALLENGE, "Challenge"],
+                [LeaderboardType.SITE_COURSE, "Site Course"],
+                [LeaderboardType.SITE_REPORT, "Site Report"],
+                [LeaderboardType.TIME_ATTACK, "Time Attack"],
+              ].map(([leaderboardType, leaderboardName]) => <Button size="small" disabled={type === leaderboardType } style={type === leaderboardType ? activeButtonStyle: buttonStyle} onClick={() => {handleLeaderboardChange(leaderboardType as LeaderboardType)}}>{leaderboardName}</Button>)}
               <Button variant="contained" size="small" style={rulesButtonStyle} color="primary" onClick={handleClickOpen}>Rules</Button>
               <Dialog
                 open={open}
@@ -190,35 +195,23 @@ export const Leaderboard = () => {
               >
                 <DialogTitle id="alert-dialog-title">{"General"}</DialogTitle>
                 <DialogContent dividers>
-                  {generalRules.get("rules")?.map(rule => {
-                    return (
-                      <Typography gutterBottom>
-                        {rule}
-                      </Typography>
-                    )
-                  })}
+                  {generalRules.get("rules")?.map(rule => <Typography gutterBottom>{rule}</Typography>)}
                 </DialogContent>
                 <DialogTitle id="alert-dialog-title">{"Category"}</DialogTitle>
                 <DialogContent dividers>
-                  {allCategoryRules.get(type)?.map(rule => {
-                    return (
-                      <Typography gutterBottom>
-                        {rule}
-                      </Typography>
-                    )
-                  })}
+                  {allCategoryRules.get(type)?.map(rule => <Typography gutterBottom>{rule}</Typography>)}
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleClose} color="primary">
-                    Close
-                  </Button>
+                  <Button onClick={handleClose} color="primary">Close</Button>
                 </DialogActions>
               </Dialog>
             </ButtonGroup>
             <ButtonGroup aria-label="button group">
-              <Button size="small" disabled={gameConsole === Console.N64 } style={gameConsole === Console.N64 ? activeButtonStyle: buttonStyle} onClick={() => {handleConsoleChange(Console.N64)}}>N64</Button>
-              <Button size="small" disabled={gameConsole === Console.WII_VC } style={gameConsole === Console.WII_VC ? activeButtonStyle: buttonStyle} onClick={() => {handleConsoleChange(Console.WII_VC)}}>Wii VC</Button>
-              <Button size="small" disabled={gameConsole === Console.WIIU_VC } style={gameConsole === Console.WIIU_VC ? activeButtonStyle: buttonStyle} onClick={() => {handleConsoleChange(Console.WIIU_VC)}}>WiiU VC</Button>
+              {[
+                [Console.N64, "N64"],
+                [Console.WII_VC, "Wii VC"],
+                [Console.WIIU_VC, "WiiU VC"],
+              ].map(([consoleType, consoleName]) => <Button size="small" disabled={gameConsole === consoleType } style={gameConsole === consoleType ? activeButtonStyle: buttonStyle} onClick={() => {handleConsoleChange(consoleType as Console)}}>{consoleName}</Button>)}
             </ButtonGroup>
           </Grid>
           <Grid item xs={2}/>
@@ -231,7 +224,7 @@ export const Leaderboard = () => {
           </Grid>
           <Grid item xs={2}/>
         </Grid>
-      </Box>
+      </>
     </Box>
   )
 }

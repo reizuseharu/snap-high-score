@@ -25,7 +25,7 @@ import YouTube from "@material-ui/icons/YouTube"
 import {ScoreAttack} from "@models/ScoreAttack"
 import {rankBackgroundColor} from "@services/rank"
 import {OptionalString} from "@utils/constants"
-import {tableHeadStyle} from "@utils/leaderboardHelpers"
+import {tableHeadStyle} from "@utils/styleHelpers"
 import {isURLDataImage, isURLImage, isURLVideo, prettyPrintScoreParts} from "@utils/utility"
 import React, {useState} from "react"
 
