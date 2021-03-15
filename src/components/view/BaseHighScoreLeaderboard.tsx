@@ -5,8 +5,6 @@ import {LeaderboardTableRowCell} from "@components/table/LeaderboardTableRowCell
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import CircularProgress from "@material-ui/core/CircularProgress"
-import green from "@material-ui/core/colors/green"
-import red from "@material-ui/core/colors/red"
 import Dialog from "@material-ui/core/Dialog"
 import DialogActions from "@material-ui/core/DialogActions"
 import DialogContent from "@material-ui/core/DialogContent"
@@ -25,7 +23,7 @@ import YouTube from "@material-ui/icons/YouTube"
 import {ScoreAttack} from "@models/ScoreAttack"
 import {rankBackgroundColor} from "@services/rank"
 import {OptionalString} from "@utils/constants"
-import {tableHeadStyle} from "@utils/styleHelpers"
+import {centerFloatingStyle, darkRedStyle, greenStyle, tableHeadStyle, transparentStyle} from "@utils/styleHelpers"
 import {isURLDataImage, isURLImage, isURLVideo, prettyPrintScoreParts} from "@utils/utility"
 import React, {useState} from "react"
 
@@ -53,7 +51,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
         /* @ts-ignore */
         <>
         <IconButton onClick={handleClickOpen} aria-label="link">
-          {isImage && <Image style={{color: green[500]}}/>}
+          {isImage && <Image style={greenStyle}/>}
         </IconButton>
         <Dialog
           open={open}
@@ -76,13 +74,13 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
       {isImage && !isDataUrl &&
         /* @ts-ignore */
         <IconButton href={proofLink} target="_blank" aria-label="link">
-          <Image style={{color: green[500]}}/>
+          <Image style={greenStyle}/>
         </IconButton>
       }
       {isVideo &&
         /* @ts-ignore */
         <IconButton href={proofLink} target="_blank" aria-label="link">
-          <YouTube style={{color: green[500]}}/>
+          <YouTube style={greenStyle}/>
         </IconButton>
       }
       </>
@@ -92,7 +90,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
   const displayVerified = (isVerified: boolean) => {
     return (
       <Box>
-        { isVerified && <CheckCircle style={{ color: green[500] }} /> }
+        { isVerified && <CheckCircle style={greenStyle} /> }
         { !isVerified && <Cancel color="secondary" /> }
       </Box>
     )
@@ -111,11 +109,10 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
       </TableHead>
       <TableBody>
         {isLoading &&
-          <TableRow style={{
-            position: 'absolute', left: '50%', top: '50%',
-            transform: 'translate(-50%, -50%)'}}>
-            <Fab style={{backgroundColor: "transparent"}} aria-label="loading" size="large" disabled>
-              <CircularProgress size={50} style={{color: red[700]}} disableShrink/>
+          // @ts-ignore
+          <TableRow style={centerFloatingStyle}>
+            <Fab style={transparentStyle} aria-label="loading" size="large" disabled>
+              <CircularProgress size={50} style={darkRedStyle} disableShrink/>
             </Fab>
           </TableRow>
         }
@@ -136,5 +133,3 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
     </Table>
   )
 }
-
-export default BaseHighScoreLeaderboard

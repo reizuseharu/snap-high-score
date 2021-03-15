@@ -1,6 +1,4 @@
 // @ts-nocheck
-import background from "@assets/img/background.png"
-
 import DateFnsUtils from "@date-io/date-fns"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
@@ -26,6 +24,21 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
 import {LeaderboardType} from "@models/LeaderboardType"
+import {
+  attackerRules, consoleRules, emulatedRules,
+  notesRules, poseRules,
+  proofImageRules, regionRules,
+  samePokemonRules, scoreRules, sizeRules, specialRules,
+  techniqueRules,
+  videoLinkRules
+} from "@utils/rulesHelpers"
+import {
+  formBackgroundStyle, formButtonStyle,
+  formEmulatedStyle, formFilenameStyle, formImageStyle,
+  formMultiOptionStyle, formPaperStyle, formProofStyle,
+  formScorePartsStyle,
+  formStyle
+} from "@utils/styleHelpers"
 import {convertDateToLocalString, toBase64, toTitleCase} from "@utils/utility"
 import {Navbar} from "@components/view/Navbar"
 import React, {useEffect, useState} from "react"
@@ -107,20 +120,14 @@ export const AttackForm = () => {
   const handleClose = () => setOpen(false)
 
   return (
-    <Box id="container" style={{
-      backgroundImage: `url(${background})`,
-      backgroundAttachment: "fixed",
-      height: "200%",
-      backgroundRepeat: "repeat"
-    }}
-    >
+    <Box id="container" style={formBackgroundStyle}>
       <Navbar/>
-      <Box style={{ padding: 16, margin: 'auto', maxWidth: "80%", opacity: 0.7 }}>
+      <Box style={formStyle}>
         <CssBaseline />
         <Typography variant="h5" align="center" component="h1" gutterBottom>
           High Score Submission
         </Typography>
-        <Paper style={{ padding: 16 }}>
+        <Paper style={formPaperStyle}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container>
               <Grid container xs={6} direction="column">
@@ -140,9 +147,7 @@ export const AttackForm = () => {
                         }
                         control={control}
                         defaultValue=""
-                        rules={{
-                          required: 'Required'
-                        }}
+                        rules={attackerRules}
                       />
                     </FormControl>
                   </Grid>
@@ -204,9 +209,7 @@ export const AttackForm = () => {
                         }
                         control={control}
                         defaultValue=""
-                        rules={{
-                          required: 'Required'
-                        }}
+                        rules={scoreRules}
                       />
                     </FormControl>
                   </Grid>
@@ -231,15 +234,13 @@ export const AttackForm = () => {
                         }
                         control={control}
                         defaultValue="NTSC_JPN"
-                        rules={{
-                          required: 'Required'
-                        }}
+                        rules={regionRules}
                       />
                     </FormControl>
                   </Grid>
                 </Grid>
                 <Grid container spacing={1}>
-                  <Grid item style={{height: "100%", paddingTop: 10}}>
+                  <Grid item style={formMultiOptionStyle}>
                     <FormControl fullWidth variant="outlined">
                       <Controller
                         name="console"
@@ -255,16 +256,14 @@ export const AttackForm = () => {
                         }
                         control={control}
                         defaultValue="N64"
-                        rules={{
-                          required: 'Required'
-                        }}
+                        rules={consoleRules}
                       />
                     </FormControl>
                   </Grid>
                   <Grid item>
                     <FormControl fullWidth variant="outlined">
                       <FormControlLabel
-                        style={{height: "100%", paddingTop: 20}}
+                        style={formEmulatedStyle}
                         control={
                           <Controller
                             name="isEmulated"
@@ -278,9 +277,7 @@ export const AttackForm = () => {
                               />
                             )}
                             defaultValue={false}
-                            rules={{
-                              required: 'Required'
-                            }}
+                            rules={emulatedRules}
                           />
                         }
                         label="Emulated"
@@ -289,7 +286,7 @@ export const AttackForm = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <FormControl fullWidth variant="outlined" style={{height: "100%", paddingTop: 5}}>
+              <FormControl fullWidth variant="outlined" style={formScorePartsStyle}>
                 <FormLabel component="legend">Score Parts</FormLabel>
               </FormControl>
               <Grid container xs={12} alignItems="flex-start" spacing={2}>
@@ -307,9 +304,7 @@ export const AttackForm = () => {
                       }
                       control={control}
                       defaultValue=""
-                      rules={{
-                        required: 'Required'
-                      }}
+                      rules={specialRules}
                     />
               </Grid>
                 <Grid item xs={2}>
@@ -326,9 +321,7 @@ export const AttackForm = () => {
                     }
                     control={control}
                     defaultValue=""
-                    rules={{
-                      required: 'Required'
-                    }}
+                    rules={sizeRules}
                   />
                 </Grid>
                 <Grid item xs={2}>
@@ -345,9 +338,7 @@ export const AttackForm = () => {
                     }
                     control={control}
                     defaultValue=""
-                    rules={{
-                      required: 'Required'
-                    }}
+                    rules={poseRules}
                   />
                 </Grid>
                 <Grid item xs={2}>
@@ -364,14 +355,12 @@ export const AttackForm = () => {
                     }
                     control={control}
                     defaultValue=""
-                    rules={{
-                      required: 'Required'
-                    }}
+                    rules={samePokemonRules}
                   />
                 </Grid>
                 <Grid item xs={2}>
                   <FormControlLabel
-                    style={{height: "100%", paddingTop: 10}}
+                    style={formMultiOptionStyle}
                     control={
                       <Controller
                         name="isTechnique"
@@ -385,9 +374,7 @@ export const AttackForm = () => {
                           />
                         )}
                         defaultValue={false}
-                        rules={{
-                          required: 'Required'
-                        }}
+                        rules={techniqueRules}
                       />
                     }
                     label="Technique"
@@ -395,7 +382,7 @@ export const AttackForm = () => {
                 </Grid>
               </Grid>
               <Grid container xs={12} alignItems="flex-start" spacing={2}>
-                <Grid item xs={5} style={{height: "100%", paddingTop: 25}}>
+                <Grid item xs={5} style={formProofStyle}>
                   <FormControl fullWidth variant="outlined">
                     <Controller
                       name="videoLink"
@@ -404,13 +391,11 @@ export const AttackForm = () => {
                       }
                       control={control}
                       defaultValue=""
-                      rules={{
-                        required: 'Required'
-                      }}
+                      rules={videoLinkRules}
                     />
                   </FormControl>
                 </Grid>
-                <Grid item xs={1} style={{height: "100%", paddingTop: 25}}>
+                <Grid item xs={1} style={formProofStyle}>
                   <FormControl fullWidth variant="outlined">
                     <Controller
                       name="proofImage"
@@ -432,9 +417,7 @@ export const AttackForm = () => {
                       }
                       control={control}
                       defaultValue=""
-                      rules={{
-                        required: 'Required'
-                      }}
+                      rules={proofImageRules}
                     />
                   </FormControl>
                 </Grid>
@@ -475,13 +458,11 @@ export const AttackForm = () => {
                     }
                     control={control}
                     defaultValue=""
-                    rules={{
-                      required: 'Required'
-                    }}
+                    rules={notesRules}
                   />
                 </FormControl>
               </Grid>
-              <Grid item style={{ marginTop: 16 }}>
+              <Grid item style={formButtonStyle}>
                 <Button
                   id="reset"
                   type="button"
@@ -490,7 +471,7 @@ export const AttackForm = () => {
                   Reset
                 </Button>
               </Grid>
-              <Grid item style={{ marginTop: 16 }}>
+              <Grid item style={formButtonStyle}>
                 <Button
                   id="submit"
                   variant="contained"
@@ -500,7 +481,7 @@ export const AttackForm = () => {
                   Submit
                 </Button>
               </Grid>
-              <Grid item style={{ marginTop: 12, marginLeft: 16 }}>
+              <Grid item style={formImageStyle}>
                 <>
                   <IconButton onClick={handleClickOpen} aria-label="link">
                     <Image style={(imageFile === "") ? {} : {color: green[500]}}/>
@@ -522,7 +503,7 @@ export const AttackForm = () => {
                   </Dialog>
                 </>
               </Grid>
-              <Grid item style={{ marginTop: 24, marginLeft: 8 }}>
+              <Grid item style={formFilenameStyle}>
                 <Typography>
                   <Box fontWeight="fontWeightBold">
                     {imageFileName}

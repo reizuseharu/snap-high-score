@@ -1,5 +1,4 @@
 /* eslint-disable */
-import background from "@assets/img/background.png"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
@@ -15,6 +14,13 @@ import {Autocomplete} from "@material-ui/lab"
 import {Console} from "@models/Console"
 import {LeaderboardType} from "@models/LeaderboardType"
 import {ScoreAttack} from "@models/ScoreAttack"
+import {
+  activeButtonStyle,
+  autocompleteStyle, buttonStyle,
+  leaderboardBackgroundStyle,
+  leaderboardTitleStyle,
+  rulesButtonStyle
+} from "@utils/styleHelpers"
 import {toCamelCase, toTitleCase} from "@utils/utility"
 
 import {HighScoreLeaderboard} from "@components/view/HighScoreLeaderboard"
@@ -22,28 +28,6 @@ import {Navbar} from "@components/view/Navbar"
 import React, {useEffect, useState} from "react"
 import {useHistory, useLocation} from "react-router"
 import * as qs from "query-string"
-
-const buttonStyle = {
-  minWidth: 50,
-  maxHeight: 30,
-  backgroundColor: "transparent"
-}
-
-const activeButtonStyle = {
-  minWidth: 50,
-  maxHeight: 30,
-  backgroundColor: "rgba(250, 0, 0, 0.7)"
-}
-
-const rulesButtonStyle = {
-  minWidth: 50,
-  maxHeight: 30
-}
-
-const autocompleteStyle = {
-  minWidth: 200,
-  height: 30
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -147,18 +131,11 @@ export const Leaderboard = () => {
   }
 
   return (
-    <Box id="container" style={{
-      backgroundImage: `url(${background})`,
-      backgroundAttachment: "fixed",
-      backgroundPosition: "center",
-      backgroundSize: "cover",
-      height: "500vh",
-      backgroundRepeat: "repeat"
-    }}>
+    <Box id="container" style={leaderboardBackgroundStyle}>
       <Navbar/>
       <>
         <Box display="flex" justifyContent="center" borderRadius={16}>
-          <Typography style={{fontFamily: "Roboto", fontSize: 36, color: "#FFFFFF"}} gutterBottom>
+          <Typography style={leaderboardTitleStyle} gutterBottom>
             <strong>{toTitleCase(type).toUpperCase()} • {attackSubVariant?.toUpperCase()} • {gameConsole}</strong>
           </Typography>
         </Box>
@@ -211,7 +188,7 @@ export const Leaderboard = () => {
                 [Console.N64, "N64"],
                 [Console.WII_VC, "Wii VC"],
                 [Console.WIIU_VC, "WiiU VC"],
-              ].map(([consoleType, consoleName]) => <Button size="small" disabled={gameConsole === consoleType } style={gameConsole === consoleType ? activeButtonStyle: buttonStyle} onClick={() => {handleConsoleChange(consoleType as Console)}}>{consoleName}</Button>)}
+              ].map(([consoleType, consoleName]) => <Button size="small" disabled={ gameConsole === consoleType } style={ gameConsole === consoleType ? activeButtonStyle: buttonStyle } onClick={() => {handleConsoleChange(consoleType as Console)}}>{consoleName}</Button>)}
             </ButtonGroup>
           </Grid>
           <Grid item xs={2}/>
