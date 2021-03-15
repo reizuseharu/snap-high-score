@@ -1,4 +1,6 @@
 /* eslint-disable */
+import {CategoryButtonGroup} from "@components/view/CategoryButtonGroup"
+import {ConsoleButtonGroup} from "@components/view/ConsoleButtonGroup"
 import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import ButtonGroup from "@material-ui/core/ButtonGroup"
@@ -147,43 +149,8 @@ export const Leaderboard = () => {
             />
           </Grid>
           <Grid item xs={8}>
-            <ButtonGroup aria-label="button group">
-              {[
-                [LeaderboardType.POKEMON, "Pokémon"],
-                [LeaderboardType.REPORT_SCORE, "Report Score"],
-                [LeaderboardType.COURSE, "Course"],
-                [LeaderboardType.CHALLENGE, "Challenge"],
-                [LeaderboardType.SITE_COURSE, "Site Course"],
-                [LeaderboardType.SITE_REPORT, "Site Report"],
-                [LeaderboardType.TIME_ATTACK, "Time Attack"],
-              ].map(([leaderboardType, leaderboardName]) => <Button size="small" disabled={type === leaderboardType } style={type === leaderboardType ? Styles.activeButton: Styles.button} onClick={() => {handleLeaderboardChange(leaderboardType as LeaderboardType)}}>{leaderboardName}</Button>)}
-              <Button variant="contained" size="small" style={Styles.rulesButton} color="primary" onClick={handleClickOpen}>Rules</Button>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">{"General"}</DialogTitle>
-                <DialogContent dividers>
-                  {generalRules.get("rules")?.map(rule => <Typography gutterBottom>{rule}</Typography>)}
-                </DialogContent>
-                <DialogTitle id="alert-dialog-title">{"Category"}</DialogTitle>
-                <DialogContent dividers>
-                  {allCategoryRules.get(type)?.map(rule => <Typography gutterBottom>{rule}</Typography>)}
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose} color="primary">Close</Button>
-                </DialogActions>
-              </Dialog>
-            </ButtonGroup>
-            <ButtonGroup aria-label="button group">
-              {[
-                [Console.N64, "N64"],
-                [Console.WII_VC, "Wii VC"],
-                [Console.WIIU_VC, "WiiU VC"],
-              ].map(([consoleType, consoleName]) => <Button size="small" disabled={ gameConsole === consoleType } style={ gameConsole === consoleType ? Styles.activeButton: Styles.button } onClick={() => {handleConsoleChange(consoleType as Console)}}>{consoleName}</Button>)}
-            </ButtonGroup>
+            <CategoryButtonGroup open={open} type={type} handleLeaderboardChange={handleLeaderboardChange} handleClickOpen={handleClickOpen} handleClose={handleClose} generalRules={generalRules} allCategoryRules={allCategoryRules}/>
+            <ConsoleButtonGroup gameConsole={gameConsole} handleConsoleChange={handleConsoleChange}/>
           </Grid>
           <Grid item xs={2}/>
         </Grid>
