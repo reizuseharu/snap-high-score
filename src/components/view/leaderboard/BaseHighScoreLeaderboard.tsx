@@ -37,13 +37,8 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
 
     if (!isImage && !isVideo) { return <IconButton disabled><Error/></IconButton> }
 
-    const handleClickOpen = () => {
-      setOpen(true)
-    }
-
-    const handleClose = () => {
-      setOpen(false)
-    }
+    const handleClickOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
 
     return (
       <>
@@ -95,7 +90,7 @@ export const BaseHighScoreLeaderboard = (scoreAttacks: ScoreAttack[], isLoading:
       </Box>
     )
   }
-  // <LeaderboardInfo text={"what"} label={"Stuff"}/>
+
   return (
     <Table size="small" aria-label="a dense table">
       <TableHead style={Styles.tableHead}>

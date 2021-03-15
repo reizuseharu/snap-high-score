@@ -1,13 +1,15 @@
 // @ts-nocheck
+import {AttackerInput} from "@components/view/attackForm/AttackerInput"
+import {AttackFormTitle} from "@components/view/attackForm/AttackFormTitle"
+import {LeaderboardInput} from "@components/view/attackForm/LeaderboardInput"
+import {ResetButton} from "@components/view/attackForm/ResetButton"
+import {SubmissionImage} from "@components/view/attackForm/SubmissionImage"
+import {SubmissionImageName} from "@components/view/attackForm/SubmissionImageName"
+import {SubmitButton} from "@components/view/attackForm/SubmitButton"
 import DateFnsUtils from "@date-io/date-fns"
 import Box from "@material-ui/core/Box"
-import Button from "@material-ui/core/Button"
 import Checkbox from "@material-ui/core/Checkbox"
-import green from "@material-ui/core/colors/green"
 import CssBaseline from "@material-ui/core/CssBaseline"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
 import FormControl from "@material-ui/core/FormControl"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import FormLabel from "@material-ui/core/FormLabel"
@@ -18,8 +20,6 @@ import Radio from "@material-ui/core/Radio"
 import RadioGroup from "@material-ui/core/RadioGroup"
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
-import Typography from "@material-ui/core/Typography"
-import Image from "@material-ui/icons/Image"
 import PhotoCamera from "@material-ui/icons/PhotoCamera"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
@@ -30,6 +30,7 @@ import {convertDateToLocalString, toBase64, toTitleCase} from "@utils/utility"
 import {Navbar} from "@components/view/Navbar"
 import React, {useEffect, useState} from "react"
 import {Controller, useForm} from "react-hook-form"
+import {useAttackVariants} from "../hooks/leaderboard/useAttackVariants"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,30 +50,20 @@ export const AttackForm = () => {
   const { handleSubmit, control, reset, getValues, setValue } = useForm()
   const [imageFile, setImageFile] = useState<string>("")
   const [imageFileName, setImageFileName] = useState<string>("")
-  const [open, setOpen] = useState<boolean>(false)
   const [type, setType] = useState<string>(LeaderboardType.POKEMON)
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
   const [region, setRegion] = useState<string>("NTSC_JPN")
   const [gameConsole, setGameConsole] = useState<string>("N64")
 
-  useEffect(() => {
-    fetch('data/attackVariants.json')
-      .then(result => result.json())
-      .then(attackVariants_ => setAttackVariants(new Map<string, string[]>(Object.entries(attackVariants_))))
-  }, [])
+  useAttackVariants(setAttackVariants)
 
   useEffect(() => {
     setAttackSubVariants(attackVariants.get(type) ?? [])
   }, [attackVariants, type])
 
-  const handleChangeRegion = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRegion((event.target as HTMLInputElement).value)
-  }
-
-  const handleChangeGameConsole = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGameConsole((event.target as HTMLInputElement).value)
-  }
+  const handleChangeRegion = (event: React.ChangeEvent<HTMLInputElement>) => setRegion((event.target as HTMLInputElement).value)
+  const handleChangeGameConsole = (event: React.ChangeEvent<HTMLInputElement>) => setGameConsole((event.target as HTMLInputElement).value)
 
   const onImageUpload = (e) => {
     const file: File = e.target.files[0]
@@ -93,6 +84,7 @@ export const AttackForm = () => {
   const handleSubmitScoreAttack = () => {
     let values = getValues()
     console.log(values)
+
     values.takenOn = convertDateToLocalString(values.takenOn)
     values.score = parseInt(values.score)
     values.special = parseInt(values.special)
@@ -103,63 +95,22 @@ export const AttackForm = () => {
     console.log(values)
   }
 
-  const handleClickOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
   return (
     <Box id="container" style={Styles.formBackground}>
       <Navbar/>
       <Box style={Styles.form}>
         <CssBaseline />
-        <Typography variant="h5" align="center" component="h1" gutterBottom>
-          High Score Submission
-        </Typography>
+        <AttackFormTitle title={"High Score Submission"}/>
         <Paper style={Styles.formPaper}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container>
               <Grid container xs={6} direction="column">
                 <Grid xs={12} container alignItems="flex-start" spacing={2}>
                   <Grid item xs={12}>
-                    <FormControl fullWidth variant="outlined">
-                      <Controller
-                        name="attacker"
-                        as={
-                          <TextField
-                            id="attacker"
-                            fullWidth
-                            required
-                            type="text"
-                            label="Attacker"
-                          />
-                        }
-                        control={control}
-                        defaultValue=""
-                        rules={Rules.attacker}
-                      />
-                    </FormControl>
+                    <AttackerInput control={control}/>
                   </Grid>
                   <Grid item xs={5}>
-                    <FormControl fullWidth variant="outlined">
-                      <Controller
-                        as={({ onChange, ...props }) => (
-                          <Autocomplete
-                            options={Array.from(attackVariants.keys())}
-                            getOptionLabel={(option) => toTitleCase(`${option}`)}
-                            renderInput={(params) => <TextField {...params} label="Leaderboard"/>}
-                            onChange={(e, type_) => {
-                              onChange(type_)
-                              setType(type_)
-                              setValue("challenge", null)
-                            }}
-                            {...props}
-                          />
-                        )}
-                        onChange={([, data]) => data}
-                        defaultValue={""}
-                        name={"leaderboard"}
-                        control={control}
-                      />
-                    </FormControl>
+                    <LeaderboardInput control={control} attackVariants={attackVariants} setType={setType} setValue={setValue}/>
                   </Grid>
                   <Grid item xs={5}>
                     <FormControl fullWidth variant="outlined">
@@ -450,52 +401,16 @@ export const AttackForm = () => {
                 </FormControl>
               </Grid>
               <Grid item style={Styles.formButton}>
-                <Button
-                  id="reset"
-                  type="button"
-                  variant="contained"
-                  onClick={reset}>
-                  Reset
-                </Button>
+                <ResetButton handleResetScoreAttack={reset}/>
               </Grid>
               <Grid item style={Styles.formButton}>
-                <Button
-                  id="submit"
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  onClick={handleSubmitScoreAttack}>
-                  Submit
-                </Button>
+                <SubmitButton handleSubmitScoreAttack={handleSubmitScoreAttack}/>
               </Grid>
               <Grid item style={Styles.formImage}>
-                <>
-                  <IconButton onClick={handleClickOpen} aria-label="link">
-                    <Image style={(imageFile === "") ? {} : {color: green[500]}}/>
-                  </IconButton>
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    <DialogContent dividers>
-                      <img src={imageFile} alt={"Proof Pic"} width="400" height="300"/>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleClose} color="primary">
-                        Close
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </>
+                <SubmissionImage imageFile={imageFile}/>
               </Grid>
               <Grid item style={Styles.formFilename}>
-                <Typography>
-                  <Box fontWeight="fontWeightBold">
-                    {imageFileName}
-                  </Box>
-                </Typography>
+                <SubmissionImageName filename={imageFileName}/>
               </Grid>
             </Grid>
           </form>
