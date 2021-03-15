@@ -20,7 +20,7 @@ export const ScoreInput = ({control}: ScoreInputProps) => {
             fullWidth
             required
             type="number"
-            label="Score"
+            label="Total Score"
           />
         }
         control={control}

@@ -1,4 +1,5 @@
 import Typography from "@material-ui/core/Typography"
+import {Styles} from "@utils/styles"
 import React from "react"
 
 interface AttackFormTitleProps {
@@ -7,8 +8,8 @@ interface AttackFormTitleProps {
 
 export const AttackFormTitle = ({title}: AttackFormTitleProps) => {
   return (
-    <Typography variant="h5" align="center" component="h1" gutterBottom>
-      {title}
+    <Typography style={Styles.title} variant="h5" align="center" component="h1" gutterBottom>
+      <strong>{title}</strong>
     </Typography>
   )
 }

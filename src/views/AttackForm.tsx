@@ -91,14 +91,11 @@ export const AttackForm = () => {
                   <Grid item xs={12}>
                     <AttackerInput control={control}/>
                   </Grid>
-                  <Grid item xs={5}>
+                  <Grid item xs={6}>
                     <LeaderboardInput control={control} attackVariants={attackVariants} setType={setType} setValue={setValue}/>
                   </Grid>
-                  <Grid item xs={5}>
+                  <Grid item xs={6}>
                     <ChallengeInput control={control} attackSubVariants={attackSubVariants} challengeValue={getValues("challenge")}/>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <ScoreInput control={control}/>
                   </Grid>
                 </Grid>
               </Grid>
@@ -119,6 +116,9 @@ export const AttackForm = () => {
               </Grid>
               <ScorePartsTitle/>
               <Grid container xs={12} alignItems="flex-start" spacing={2}>
+                <Grid item xs={2}>
+                  <ScoreInput control={control}/>
+                </Grid>
                 <Grid item xs={2}>
                   <ScorePartsSpecialInput control={control}/>
                 </Grid>

@@ -31,7 +31,7 @@ export class Styles {
     backgroundRepeat: "repeat"
   }
 
-  static readonly leaderboardTitle = {fontFamily: "Roboto", fontSize: 36, color: "#FFFFFF"}
+  static readonly title = {fontFamily: "Roboto", fontSize: 36, color: "#FFFFFF"}
 
   static readonly leaderboardBackground = {
     backgroundImage: `url(${background})`,

@@ -15,7 +15,7 @@ interface LeaderboardTitleProps {
 export const LeaderboardTitle = ({type, attackSubVariant, gameConsole}: LeaderboardTitleProps) => {
   return (
     <Box display="flex" justifyContent="center" borderRadius={16}>
-      <Typography style={Styles.leaderboardTitle} gutterBottom>
+      <Typography style={Styles.title} gutterBottom>
         <strong>{toTitleCase(type).toUpperCase()} • {attackSubVariant?.toUpperCase()} • {gameConsole}</strong>
       </Typography>
     </Box>
