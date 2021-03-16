@@ -36,7 +36,6 @@ export const Leaderboard = () => {
   const defaultChallenge = searchParams.challenge
   const defaultConsole = searchParams.gameConsole
 
-  const [open, setOpen] = useState<boolean>(false)
   const [type, setType] = useState<LeaderboardType>(defaultType as LeaderboardType ?? LeaderboardType.POKEMON)
   const [generalRules, setGeneralRules] = useState<Map<string, string[]>>(new Map())
   const [allCategoryRules, setAllCategoryRules] = useState<Map<string, string[]>>(new Map())
@@ -74,9 +73,6 @@ export const Leaderboard = () => {
       .catch((reason) => console.log(reason))
   }, [attackSubVariant, gameConsole])
 
-  const handleClickOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
   const handleLeaderboardChange = (type: LeaderboardType) => {
     setType(type)
     setIsLoading(true)
@@ -103,7 +99,7 @@ export const Leaderboard = () => {
             <SubVariantSearch attackSubVariant={attackSubVariant} attackSubVariants={attackSubVariants} onSubVariantChange={onSubVariantChange}/>
           </Grid>
           <Grid item xs={8}>
-            <CategoryButtonGroup open={open} type={type} handleLeaderboardChange={handleLeaderboardChange} handleClickOpen={handleClickOpen} handleClose={handleClose} generalRules={generalRules} allCategoryRules={allCategoryRules}/>
+            <CategoryButtonGroup type={type} handleLeaderboardChange={handleLeaderboardChange} generalRules={generalRules} allCategoryRules={allCategoryRules}/>
             <ConsoleButtonGroup gameConsole={gameConsole} handleConsoleChange={handleConsoleChange}/>
           </Grid>
           <Grid item xs={2}/>
