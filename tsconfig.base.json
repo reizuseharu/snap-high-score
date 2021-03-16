@@ -10,6 +10,7 @@
     "paths": {
       "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
+      "@helpers/*": ["helpers/*"],
       "@layouts/*": ["layouts/*"],
       "@models/*": ["models/*"],
       "@services/*": ["services/*"],
