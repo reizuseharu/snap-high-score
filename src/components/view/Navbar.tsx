@@ -43,6 +43,9 @@ export const Navbar = () => {
           <Button component={Link} to="/leaderboard" variant="contained" color="primary">
             Leaderboard
           </Button>
+          <Button component={Link} to="/admin" variant="contained" color="primary">
+            Admin
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

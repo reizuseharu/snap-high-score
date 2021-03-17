@@ -1,7 +1,6 @@
 /* eslint-disable */
-import {CategoryButtonGroupWithRules} from "@components/view/leaderboard/CategoryButtonGroupWithRules"
 import {useAttackVariants} from "../hooks/leaderboard/useAttackVariants"
-import {useCategoryRules} from "../hooks/leaderboard/useCategoryRules"
+import {CategoryButtonGroup} from "@components/view/leaderboard/CategoryButtonGroup"
 import {ConsoleButtonGroup} from "@components/view/leaderboard/ConsoleButtonGroup"
 import {LeaderboardTitle} from "@components/view/leaderboard/LeaderboardTitle"
 import {SubVariantSearch} from "@components/view/leaderboard/SubVariantSearch"
@@ -18,7 +17,6 @@ import {Navbar} from "@components/view/Navbar"
 import React, {useEffect, useState} from "react"
 import {useHistory, useLocation} from "react-router"
 import * as qs from "query-string"
-import {useGeneralRules} from "../hooks/leaderboard/useGeneralRules"
 import {useScoreAttacks} from "../hooks/leaderboard/useScoreAttacks"
 
 interface Query {
@@ -27,7 +25,7 @@ interface Query {
   gameConsole?: string
 }
 
-export const Leaderboard = () => {
+export const Admin = () => {
   const history = useHistory()
   const location = useLocation()
 
@@ -37,8 +35,6 @@ export const Leaderboard = () => {
   const defaultConsole = searchParams.gameConsole
 
   const [type, setType] = useState<LeaderboardType>(defaultType as LeaderboardType ?? LeaderboardType.POKEMON)
-  const [generalRules, setGeneralRules] = useState<Map<string, string[]>>(new Map())
-  const [allCategoryRules, setAllCategoryRules] = useState<Map<string, string[]>>(new Map())
   const [scoreAttacks, setScoreAttacks] = useState<ScoreAttack[]>([])
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
@@ -46,8 +42,6 @@ export const Leaderboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [gameConsole, setGameConsole] = useState<Console>(defaultConsole as Console ?? Console.N64)
 
-  useGeneralRules(setGeneralRules)
-  useCategoryRules(setAllCategoryRules)
   useScoreAttacks(type, setScoreAttacks)
   useAttackVariants(setAttackVariants)
 
@@ -99,7 +93,7 @@ export const Leaderboard = () => {
             <SubVariantSearch attackSubVariant={attackSubVariant} attackSubVariants={attackSubVariants} onSubVariantChange={onSubVariantChange}/>
           </Grid>
           <Grid item xs={8}>
-            <CategoryButtonGroupWithRules type={type} handleLeaderboardChange={handleLeaderboardChange} generalRules={generalRules} allCategoryRules={allCategoryRules}/>
+            <CategoryButtonGroup type={type} handleLeaderboardChange={handleLeaderboardChange}/>
             <ConsoleButtonGroup gameConsole={gameConsole} handleConsoleChange={handleConsoleChange}/>
           </Grid>
           <Grid item xs={2}/>

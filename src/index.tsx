@@ -1,4 +1,5 @@
 // @ts-nocheck
+import {Admin} from "@views/Admin"
 import {AttackForm} from "@views/AttackForm"
 import {Leaderboard} from "@views/Leaderboard"
 import {createBrowserHistory} from "history"
@@ -15,7 +16,8 @@ ReactDOM.render(
       <Switch>
         <Route path="/attack" component={AttackForm} />
         <Route path="/leaderboard" component={Leaderboard} />
-        <Redirect exact={true} from="/" to="/attack" />
+        <Route path="/admin" component={Admin} />
+        <Redirect exact={true} from="/" to="/leaderboard" />
       </Switch>
     </Router>,
   </React.StrictMode>,
