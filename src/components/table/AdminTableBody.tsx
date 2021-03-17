@@ -11,10 +11,11 @@ import React from "react"
 
 interface LeaderboardTableBodyProps {
   scoreAttacks: ScoreAttack[]
+  adminUsername: string | undefined
+  adminPassword: string | undefined
 }
 
-
-export const AdminTableBody = ({scoreAttacks}: LeaderboardTableBodyProps) => {
+export const AdminTableBody = ({scoreAttacks, adminUsername, adminPassword}: LeaderboardTableBodyProps) => {
   return (
     <>
       {scoreAttacks
@@ -27,7 +28,7 @@ export const AdminTableBody = ({scoreAttacks}: LeaderboardTableBodyProps) => {
             <LeaderboardTableRowCell name={<LeaderboardInfo texts={[notes ?? submittedOn]} label={submittedOn}/>}/>
             <LeaderboardTableRowCell name={<LeaderboardInfo texts={["This is a platform"]} label={platform}/>}/>
             <LeaderboardTableRowCell name={<DisplayProof proofLink={proofLink}/> || "—"}/>
-            <LeaderboardTableRowCell name={<RadioVerify id={id}/>}/>
+            <LeaderboardTableRowCell name={<RadioVerify id={id} adminUsername={adminUsername} adminPassword={adminPassword}/>}/>
           </TableRow>
         })}
     </>

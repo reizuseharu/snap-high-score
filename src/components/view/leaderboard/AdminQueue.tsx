@@ -11,9 +11,11 @@ import React from "react"
 interface AdminQueueProps {
   scoreAttacks: ScoreAttack[]
   isLoading: boolean
+  adminUsername: string | undefined
+  adminPassword: string | undefined
 }
 
-export const AdminQueue = ({scoreAttacks, isLoading}: AdminQueueProps) => {
+export const AdminQueue = ({scoreAttacks, isLoading, adminUsername, adminPassword}: AdminQueueProps) => {
   return (
     <Table size="small" aria-label="a dense table">
       <TableHead style={Styles.tableHead}>
@@ -21,7 +23,7 @@ export const AdminQueue = ({scoreAttacks, isLoading}: AdminQueueProps) => {
       </TableHead>
       <TableBody>
         { isLoading && <LoadingProgress/> }
-        { !isLoading && <AdminTableBody scoreAttacks={scoreAttacks}/>}
+        { !isLoading && <AdminTableBody scoreAttacks={scoreAttacks} adminUsername={adminUsername} adminPassword={adminPassword}/>}
       </TableBody>
     </Table>
   )

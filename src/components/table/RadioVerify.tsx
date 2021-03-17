@@ -9,13 +9,18 @@ import React, {useState} from "react"
 
 interface RadioVerifyProps {
   id: string | undefined
+  adminUsername: string | undefined
+  adminPassword: string | undefined
 }
 
-export const RadioVerify = ({id}: RadioVerifyProps) => {
+export const RadioVerify = ({id, adminUsername, adminPassword}: RadioVerifyProps) => {
   const [value, setValue] = useState<string>()
   const [disabled, setDisabled] = useState<boolean>(false)
   const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     // - Send to endpoint
+    console.log(id)
+    console.log(adminUsername)
+    console.log(adminPassword)
     setDisabled(true)
   }
 
