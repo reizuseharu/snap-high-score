@@ -1,4 +1,5 @@
 /* eslint-disable */
+import {AdminQueue} from "@components/view/leaderboard/AdminQueue"
 import {useAttackVariants} from "../hooks/leaderboard/useAttackVariants"
 import {CategoryButtonGroup} from "@components/view/leaderboard/CategoryButtonGroup"
 import {ConsoleButtonGroup} from "@components/view/leaderboard/ConsoleButtonGroup"
@@ -12,7 +13,6 @@ import {ScoreAttack} from "@models/ScoreAttack"
 import {Styles} from "@utils/styles"
 import {toCamelCase} from "@utils/utility"
 
-import {HighScoreLeaderboard} from "@components/view/leaderboard/HighScoreLeaderboard"
 import {Navbar} from "@components/view/Navbar"
 import React, {useEffect, useState} from "react"
 import {useHistory, useLocation} from "react-router"
@@ -100,11 +100,11 @@ export const Admin = () => {
         </Grid>
 
         <Grid container alignItems="center">
-          <Grid item xs={2}/>
-          <Grid item xs={8}>
-            <HighScoreLeaderboard scoreAttacks={scoreAttacks} isLoading={isLoading}/>
+          <Grid item xs={1}/>
+          <Grid item xs={10}>
+            <AdminQueue scoreAttacks={scoreAttacks} isLoading={isLoading}/>
           </Grid>
-          <Grid item xs={2}/>
+          <Grid item xs={1}/>
         </Grid>
       </>
     </Box>
