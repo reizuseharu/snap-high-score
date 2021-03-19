@@ -1,5 +1,6 @@
 /* eslint-disable */
 import {CategoryButtonGroupWithRules} from "@components/view/leaderboard/CategoryButtonGroupWithRules"
+import axios from "axios"
 import {useAttackVariants} from "../hooks/leaderboard/useAttackVariants"
 import {useCategoryRules} from "../hooks/leaderboard/useCategoryRules"
 import {ConsoleButtonGroup} from "@components/view/leaderboard/ConsoleButtonGroup"
@@ -53,8 +54,8 @@ export const Leaderboard = () => {
 
   useEffect(() => {
     const typeName = toCamelCase(type)
-    fetch(`data/${typeName}Leaderboard.json`)
-      .then(result => result.json())
+    axios.get(`data/${typeName}Leaderboard.json`)
+      .then(result => result.data)
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
       .finally(() => setAttackSubVariants(attackVariants.get(type) ?? []))
@@ -65,8 +66,8 @@ export const Leaderboard = () => {
   // ! Fix silent failure
   useEffect(() => {
     const typeName = toCamelCase(type)
-    fetch(`data/${typeName}-${attackSubVariant}-${gameConsole}-Leaderboard.json`)
-      .then(result => result.json())
+    axios.get(`data/${typeName}-${attackSubVariant}-${gameConsole}-Leaderboard.json`)
+      .then(result => result.data)
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
       .finally(() => history.replace({ search: `?variant=${type}&challenge=${attackSubVariant}&console=${gameConsole}`}))

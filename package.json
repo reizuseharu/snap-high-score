@@ -18,6 +18,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@craco/craco": "latest",
+    "axios": "latest",
     "date-fns": "next",
     "glob": "latest",
     "global": "^4.4.0",

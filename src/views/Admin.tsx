@@ -14,6 +14,7 @@ import {LeaderboardType} from "@models/LeaderboardType"
 import {ScoreAttack} from "@models/ScoreAttack"
 import {Styles} from "@utils/styles"
 import {toCamelCase} from "@utils/utility"
+import axios from "axios"
 import * as qs from "query-string"
 import React, {ChangeEvent, useEffect, useState} from "react"
 import {useHistory, useLocation} from "react-router"
@@ -51,8 +52,8 @@ export const Admin = () => {
 
   useEffect(() => {
     const typeName = toCamelCase(type)
-    fetch(`data/${typeName}Leaderboard.json`)
-      .then(result => result.json())
+    axios.get(`data/${typeName}Leaderboard.json`)
+      .then(result => result.data)
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
       .finally(() => setAttackSubVariants(attackVariants.get(type) ?? []))
@@ -63,8 +64,8 @@ export const Admin = () => {
   // ! Fix silent failure
   useEffect(() => {
     const typeName = toCamelCase(type)
-    fetch(`data/${typeName}-${attackSubVariant}-${gameConsole}-Leaderboard.json`)
-      .then(result => result.json())
+    axios.get(`data/${typeName}-${attackSubVariant}-${gameConsole}-Leaderboard.json`)
+      .then(result => result.data)
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
       .finally(() => history.replace({ search: `?variant=${type}&challenge=${attackSubVariant}&console=${gameConsole}`}))
