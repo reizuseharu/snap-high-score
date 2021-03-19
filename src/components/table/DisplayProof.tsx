@@ -11,13 +11,15 @@ import {OptionalString} from "@utils/constants"
 import {Styles} from "@utils/styles"
 import {isURLDataImage, isURLImage, isURLVideo} from "@utils/utility"
 import React, {useState} from "react"
+import ReactPlayer from "react-player/lazy"
 
 interface DisplayProofProps {
   proofLink: OptionalString
 }
 
 export const DisplayProof = ({proofLink}: DisplayProofProps) => {
-  const [open, setOpen] = useState<boolean>(false)
+  const [openImage, setOpenImage] = useState<boolean>(false)
+  const [openVideo, setOpenVideo] = useState<boolean>(false)
   const isDataUrl = isURLDataImage(proofLink ?? "")
 
   const isImage: boolean = proofLink ? (isURLImage(proofLink) || isDataUrl) : false
@@ -25,20 +27,25 @@ export const DisplayProof = ({proofLink}: DisplayProofProps) => {
 
   if (!isImage && !isVideo) { return <IconButton disabled><Error/></IconButton> }
 
-  const handleClickOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const handleClickOpenImage = () => setOpenImage(true)
+  const handleCloseImage = () => setOpenImage(false)
+
+  const handleClickOpenVideo = () => setOpenVideo(true)
+  const handleCloseVideo = () => setOpenVideo(false)
+
+  // - Extract Dialog into separate hook
 
   return (
     <>
       {isImage && isDataUrl &&
       /* @ts-ignore */
       <>
-        <IconButton onClick={handleClickOpen} aria-label="link">
+        <IconButton onClick={handleClickOpenImage} aria-label="link">
           {isImage && <Image style={Styles.green}/>}
         </IconButton>
         <Dialog
-          open={open}
-          onClose={handleClose}
+          open={openImage}
+          onClose={handleCloseImage}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -47,7 +54,7 @@ export const DisplayProof = ({proofLink}: DisplayProofProps) => {
             <img src={proofLink ?? ""} alt={"Proof Pic"} width="400" height="300"/>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleCloseImage} color="primary">
               Close
             </Button>
           </DialogActions>
@@ -62,9 +69,28 @@ export const DisplayProof = ({proofLink}: DisplayProofProps) => {
       }
       {isVideo &&
       /* @ts-ignore */
-      <IconButton href={proofLink} target="_blank" aria-label="link">
-        <YouTube style={Styles.green}/>
-      </IconButton>
+        <>
+        <IconButton onClick={handleClickOpenVideo} aria-label="link">
+          <YouTube style={Styles.green}/>
+        </IconButton>
+        <Dialog
+          open={openVideo}
+          onClose={handleCloseVideo}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          maxWidth="md"
+        >
+          <DialogTitle id="alert-dialog-title">{"Proof Video"}</DialogTitle>
+          <DialogContent dividers>
+            <ReactPlayer url={proofLink ?? ""} controls={true}/>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseVideo} color="primary">
+            Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+        </>
       }
     </>
   )
