@@ -14,7 +14,7 @@ interface RegionInputProps {
 }
 
 export const RegionInput = ({control}: RegionInputProps) => {
-  const [region, setRegion] = useState<string>("NTSC_JPN")
+  const [region, setRegion] = useState<string>("NTSC_J")
   const handleChangeRegion = (event: React.ChangeEvent<HTMLInputElement>) => setRegion((event.target as HTMLInputElement).value)
 
   return (
