@@ -54,7 +54,7 @@ export const Leaderboard = () => {
 
   useEffect(() => {
     const typeName = toCamelCase(type)
-    axios.get(`http://hs-pkmnsnap.ngrok.io/scoreAttack/challenge/${attackSubVariant}`)
+    axios.get(`https://hs-pkmnsnap.ngrok.io/scoreAttack/challenge/${attackSubVariant}`)
       .then(result => result.data)
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
@@ -66,7 +66,7 @@ export const Leaderboard = () => {
   // ! Fix silent failure
   useEffect(() => {
     const typeName = toCamelCase(type)
-    axios.get(`http://hs-pkmnsnap.ngrok.io/scoreAttack/challenge/${attackSubVariant}/console/${gameConsole}`)
+    axios.get(`https://hs-pkmnsnap.ngrok.io/scoreAttack/challenge/${attackSubVariant}/console/${gameConsole}`)
       .then(result => result.data)
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))

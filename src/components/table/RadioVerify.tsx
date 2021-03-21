@@ -19,7 +19,7 @@ export const RadioVerify = ({id, adminUsername, adminPassword}: RadioVerifyProps
   const [disabled, setDisabled] = useState<boolean>(false)
   const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     // - Send to endpoint
-    axios.put(`http://hs-pkmnsnap.ngrok.io/scoreAttack/validate`, {id: id, userName: adminUsername, password: adminPassword})
+    axios.put(`https://hs-pkmnsnap.ngrok.io/scoreAttack/validate`, {id: id, userName: adminUsername, password: adminPassword})
       .then(result => console.log(result.data))
       .catch((reason) => console.log(reason))
     // console.log(id)

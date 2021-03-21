@@ -87,7 +87,7 @@ export const AttackForm = () => {
       notes: values.notes
     }
 
-    axios.post(`http://hs-pkmnsnap.ngrok.io/scoreAttack`, scoreAttackSubmission)
+    axios.post(`https://hs-pkmnsnap.ngrok.io/scoreAttack`, scoreAttackSubmission)
       .then(result => console.log(result.data))
       .catch((reason) => console.log(reason))
   }

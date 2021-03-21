@@ -7,7 +7,7 @@ import {Dispatch, SetStateAction, useEffect} from "react"
 export const useScoreAttacks = (type: LeaderboardType, setScoreAttacks: Dispatch<SetStateAction<ApiScoreAttack[]>>) => {
   useEffect(() => {
     const typeName = toCamelCase(type)
-    axios.get(`http://hs-pkmnsnap.ngrok.io/scoreAttack`)
+    axios.get(`https://hs-pkmnsnap.ngrok.io/scoreAttack`)
       .then(result => result.data)
       .then(leaderboard => {setScoreAttacks(leaderboard)})
   }, [type, setScoreAttacks])
