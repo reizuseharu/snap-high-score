@@ -29,6 +29,7 @@ import Paper from "@material-ui/core/Paper"
 import {LeaderboardType} from "@models/LeaderboardType"
 import {Styles} from "@utils/styles"
 import {convertDateToLocalString, toBase64} from "@utils/utility"
+import axios from "axios"
 import React, {useEffect, useState} from "react"
 import {useForm} from "react-hook-form"
 import {useAttackVariants} from "../hooks/leaderboard/useAttackVariants"
@@ -65,16 +66,30 @@ export const AttackForm = () => {
 
   const handleSubmitScoreAttack = () => {
     let values = getValues()
-    // console.log(values)
 
-    values.takenOn = convertDateToLocalString(values.takenOn)
-    values.score = parseInt(values.score)
-    values.special = parseInt(values.special)
-    values.size = parseInt(values.size)
-    values.pose = parseInt(values.pose)
-    values.samePokemon = parseInt(values.samePokemon)
+    const scoreAttackSubmission = {
+      userName: values.attacker,
+      challengeName: values.challenge,
+      region: values.region,
+      "console": values.console,
+      isEmulated: values.isEmulated,
+      totalScore: parseInt(values.score),
+      score: parseInt(values.score),
+      special: parseInt(values.special),
+      size: parseInt(values.size),
+      pose: parseInt(values.pose),
+      samePokemon: parseInt(values.samePokemon),
+      isTechnique: values.isTechnique,
+      takenOn: convertDateToLocalString(values.takenOn),
+      video: values.videoLink,
+      // picture: values.proofImage,
+      picture: imageFile,
+      notes: values.notes
+    }
 
-    // console.log(values)
+    axios.post(`http://hs-pkmnsnap.ngrok.io/scoreAttack`, scoreAttackSubmission)
+      .then(result => console.log(result.data))
+      .catch((reason) => console.log(reason))
   }
 
   return (

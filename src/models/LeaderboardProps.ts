@@ -1,6 +1,6 @@
-import {ScoreAttack} from "@models/ScoreAttack"
+import {ApiScoreAttack} from "@models/ApiScoreAttack"
 
 export interface LeaderboardProps {
-  scoreAttacks: ScoreAttack[]
+  scoreAttacks: ApiScoreAttack[]
   isLoading: boolean
 }

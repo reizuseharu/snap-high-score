@@ -3617,9 +3617,9 @@ capture-exit@^2.0.0:
   dependencies:
     rsvp "^4.8.4"
 
-case-sensitive-paths-webpack-plugin@2.3.0:
+case-sensitive-pathttp://hs-webpack-plugin@2.3.0:
   version "2.3.0"
-  resolved "https://registry.yarnpkg.com/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.3.0.tgz#23ac613cc9a856e4f88ff8bb73bbb5e989825cf7"
+  resolved "https://registry.yarnpkg.com/case-sensitive-pathttp://hs-webpack-plugin/-/case-sensitive-pathttp://hs-webpack-plugin-2.3.0.tgz#23ac613cc9a856e4f88ff8bb73bbb5e989825cf7"
   integrity sha512-/4YgnZS8y1UXXmC02xD5rRrBEu6T5ub+mQHLNRj0fzTRbgdBYhsNo2V5EqwgqrExjxsjtF/OpAKAMkKsxbD5XQ==
 
 caseless@~0.12.0:
@@ -10404,7 +10404,7 @@ react-scripts@latest:
     babel-preset-react-app "^10.0.0"
     bfj "^7.0.2"
     camelcase "^6.1.0"
-    case-sensitive-paths-webpack-plugin "2.3.0"
+    case-sensitive-pathttp://hs-webpack-plugin "2.3.0"
     css-loader "4.3.0"
     dotenv "8.2.0"
     dotenv-expand "5.1.0"
@@ -12215,7 +12215,7 @@ ts-pnp@1.2.0, ts-pnp@^1.1.6:
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"
-  resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.9.0.tgz#098547a6c4448807e8fcb8eae081064ee9a3c90b"
+  resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-pathttp://hs-3.9.0.tgz#098547a6c4448807e8fcb8eae081064ee9a3c90b"
   integrity sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==
   dependencies:
     "@types/json5" "^0.0.29"

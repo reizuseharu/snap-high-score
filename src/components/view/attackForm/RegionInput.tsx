@@ -25,15 +25,15 @@ export const RegionInput = ({control}: RegionInputProps) => {
           <Box>
             <FormLabel component="legend">Region</FormLabel>
             <RadioGroup row aria-label="region" id="region" value={region} onChange={handleChangeRegion}>
-              <FormControlLabel value="NTSC_USA" control={<Radio />} label="NTSC-USA" />
-              <FormControlLabel value="NTSC_JPN" control={<Radio />} label="NTSC-JPN" />
+              <FormControlLabel value="NTSC_U" control={<Radio />} label="NTSC-USA" />
+              <FormControlLabel value="NTSC_J" control={<Radio />} label="NTSC-JPN" />
               <FormControlLabel value="PAL" control={<Radio />} label="PAL" />
               <FormControlLabel value="PAL_M" control={<Radio />} label="PAL-M" />
             </RadioGroup>
           </Box>
         }
         control={control}
-        defaultValue="NTSC_JPN"
+        defaultValue="NTSC_J"
         rules={Rules.region}
       />
     </FormControl>

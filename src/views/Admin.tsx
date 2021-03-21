@@ -9,9 +9,9 @@ import {Navbar} from "@components/view/Navbar"
 import Box from "@material-ui/core/Box"
 import Grid from "@material-ui/core/Grid"
 import TextField from "@material-ui/core/TextField"
+import {ApiScoreAttack} from "@models/ApiScoreAttack"
 import {Console} from "@models/Console"
 import {LeaderboardType} from "@models/LeaderboardType"
-import {ScoreAttack} from "@models/ScoreAttack"
 import {Styles} from "@utils/styles"
 import {toCamelCase} from "@utils/utility"
 import axios from "axios"
@@ -37,7 +37,7 @@ export const Admin = () => {
   const defaultConsole = searchParams.gameConsole
 
   const [type, setType] = useState<LeaderboardType>(defaultType as LeaderboardType ?? LeaderboardType.POKEMON)
-  const [scoreAttacks, setScoreAttacks] = useState<ScoreAttack[]>([])
+  const [scoreAttacks, setScoreAttacks] = useState<ApiScoreAttack[]>([])
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
   const [attackSubVariants, setAttackSubVariants] = useState<string[]>([])
   const [attackSubVariant, setAttackSubVariant] = useState<string | null>(defaultChallenge ?? "Bulbasaur")
@@ -52,7 +52,7 @@ export const Admin = () => {
 
   useEffect(() => {
     const typeName = toCamelCase(type)
-    axios.get(`data/${typeName}Leaderboard.json`)
+    axios.get(`http://hs-pkmnsnap.ngrok.io/scoreAttack/challenge/${attackSubVariant}`)
       .then(result => result.data)
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
@@ -64,7 +64,7 @@ export const Admin = () => {
   // ! Fix silent failure
   useEffect(() => {
     const typeName = toCamelCase(type)
-    axios.get(`data/${typeName}-${attackSubVariant}-${gameConsole}-Leaderboard.json`)
+    axios.get(`http://hs-pkmnsnap.ngrok.io/scoreAttack/challenge/${attackSubVariant}/console/${gameConsole}/notVerified`)
       .then(result => result.data)
       .then(leaderboard => setScoreAttacks(leaderboard))
       .finally(() => setIsLoading(false))
