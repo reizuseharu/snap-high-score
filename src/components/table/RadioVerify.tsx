@@ -5,6 +5,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Radio from "@material-ui/core/Radio"
 import RadioGroup from "@material-ui/core/RadioGroup"
 import {Styles} from "@utils/styles"
+import axios from "axios"
 import React, {useState} from "react"
 
 interface RadioVerifyProps {
@@ -18,6 +19,9 @@ export const RadioVerify = ({id, adminUsername, adminPassword}: RadioVerifyProps
   const [disabled, setDisabled] = useState<boolean>(false)
   const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     // - Send to endpoint
+    axios.put(`http://hs-pkmnsnap.ngrok.io/scoreAttack/validate`, {id: id, userName: adminUsername, password: adminPassword})
+      .then(result => console.log(result.data))
+      .catch((reason) => console.log(reason))
     // console.log(id)
     // console.log(adminUsername)
     // console.log(adminPassword)
