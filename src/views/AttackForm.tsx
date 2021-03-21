@@ -54,18 +54,18 @@ export const AttackForm = () => {
 
     toBase64(file).then(imageData => setImageFile(imageData))
 
-    console.log(`Uploaded a file: ${file.name}`)
+    // console.log(`Uploaded a file: ${file.name}`)
   }
 
   const onSubmit = (data) => {
-    console.log("submit")
-    console.log(getValues())
-    console.log(data)
+    // console.log("submit")
+    // console.log(getValues())
+    // console.log(data)
   }
 
   const handleSubmitScoreAttack = () => {
     let values = getValues()
-    console.log(values)
+    // console.log(values)
 
     values.takenOn = convertDateToLocalString(values.takenOn)
     values.score = parseInt(values.score)
@@ -74,7 +74,7 @@ export const AttackForm = () => {
     values.pose = parseInt(values.pose)
     values.samePokemon = parseInt(values.samePokemon)
 
-    console.log(values)
+    // console.log(values)
   }
 
   return (

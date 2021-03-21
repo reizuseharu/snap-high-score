@@ -18,9 +18,9 @@ export const RadioVerify = ({id, adminUsername, adminPassword}: RadioVerifyProps
   const [disabled, setDisabled] = useState<boolean>(false)
   const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     // - Send to endpoint
-    console.log(id)
-    console.log(adminUsername)
-    console.log(adminPassword)
+    // console.log(id)
+    // console.log(adminUsername)
+    // console.log(adminPassword)
     setDisabled(true)
   }
 
