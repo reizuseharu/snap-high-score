@@ -12,8 +12,7 @@ export interface ApiScoreAttack {
   submittedOn: number[]
   region: string
   console: string
-  picture: string | null
-  video: string | null
+  proof: string | null
   isVerified: boolean
   notes?: OptionalString
 }

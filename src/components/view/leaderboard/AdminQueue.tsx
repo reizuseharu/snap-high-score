@@ -32,7 +32,7 @@ export const AdminQueue = ({scoreAttacks, isLoading, adminUsername, adminPasswor
       // @ts-ignore
       submittedOn: convertDateToLocalString(new Date(...apiScoreAttack.submittedOn)),
       platform: `${apiScoreAttack.console} • ${apiScoreAttack.region}`,
-      proofLink: apiScoreAttack.picture ?? apiScoreAttack.video,
+      proofLink: apiScoreAttack.proof,
       isVerified: apiScoreAttack.isVerified,
       notes: apiScoreAttack.notes,
     }

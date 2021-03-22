@@ -36,7 +36,7 @@ import {useAttackVariants} from "../hooks/leaderboard/useAttackVariants"
 
 export const AttackForm = () => {
   const { handleSubmit, control, reset, getValues, setValue } = useForm()
-  const [imageFile, setImageFile] = useState<string>("")
+  const [imageFile, setImageFile] = useState<string | null>(null)
   const [imageFileName, setImageFileName] = useState<string>("")
   const [type, setType] = useState<string>(LeaderboardType.POKEMON)
   const [attackVariants, setAttackVariants] = useState<Map<string, string[]>>(new Map())
@@ -81,9 +81,7 @@ export const AttackForm = () => {
       samePokemon: parseInt(values.samePokemon),
       isTechnique: values.isTechnique,
       takenOn: convertDateToLocalString(values.takenOn),
-      video: values.videoLink,
-      // picture: values.proofImage,
-      picture: imageFile,
+      proof: imageFile ?? values.videoLink,
       notes: values.notes
     }
 
