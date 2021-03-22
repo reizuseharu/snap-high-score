@@ -22,5 +22,6 @@ export const useScoreAttacks = (type: LeaderboardType, setScoreAttacks: Dispatch
         })
         setScoreAttacks(topLeaderboard)
       })
+      .catch()
   }, [type, setScoreAttacks])
 }

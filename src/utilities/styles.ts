@@ -29,7 +29,7 @@ export class Styles {
     backgroundAttachment: "fixed",
     backgroundPosition: "center",
     backgroundSize: "cover",
-    height: "200vh",
+    height: "100vh",
     backgroundRepeat: "repeat"
   }
 
@@ -40,8 +40,8 @@ export class Styles {
     backgroundAttachment: "fixed",
     backgroundPosition: "center",
     backgroundSize: "cover",
-    height: "500vh",
-    backgroundRepeat: "repeat"
+    height: "100vh",
+    backgroundRepeat: "no-repeat"
   }
 
   static readonly button = {
