@@ -26,6 +26,14 @@ export const RadioVerify = ({id, adminUsername, adminPassword}: RadioVerifyProps
       })
         .then(result => console.log(result.data))
         .catch((reason) => console.log(reason))
+    } else {
+      axios.put(`https://hs-pkmnsnap.ngrok.io/scoreAttack/invalidate`, {
+        id: id,
+        userName: adminUsername,
+        password: adminPassword
+      })
+        .then(result => console.log(result.data))
+        .catch((reason) => console.log(reason))
     }
     setDisabled(true)
   }
