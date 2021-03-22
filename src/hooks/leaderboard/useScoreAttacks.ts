@@ -9,6 +9,18 @@ export const useScoreAttacks = (type: LeaderboardType, setScoreAttacks: Dispatch
     const typeName = toCamelCase(type)
     axios.get(`https://hs-pkmnsnap.ngrok.io/scoreAttack`)
       .then(result => result.data)
-      .then(leaderboard => {setScoreAttacks(leaderboard)})
+      .then((leaderboard: ApiScoreAttack[]) => {
+        const users = new Set()
+        const topLeaderboard = leaderboard.filter((apiScoreAttack) => {
+          const userName = apiScoreAttack.userName
+          if (!users.has(userName)) {
+            users.add(userName)
+            return true
+          }
+
+          return false
+        })
+        setScoreAttacks(topLeaderboard)
+      })
   }, [type, setScoreAttacks])
 }

@@ -20,7 +20,7 @@ export const SubmissionImage = ({imageFile}: SubmissionImageProps) => {
   return (
     <>
       <IconButton onClick={handleClickOpen} aria-label="link">
-        <Image style={(imageFile === "") ? {} : Styles.green}/>
+        <Image style={(imageFile === null) ? {} : Styles.green}/>
       </IconButton>
       <Dialog
         open={open}

@@ -1,4 +1,4 @@
-import background from "@assets/img/background.png"
+import background from "@assets/img/background-2.png"
 import green from "@material-ui/core/colors/green"
 import red from "@material-ui/core/colors/red"
 
@@ -27,6 +27,8 @@ export class Styles {
   static readonly formBackground = {
     backgroundImage: `url(${background})`,
     backgroundAttachment: "fixed",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
     height: "200vh",
     backgroundRepeat: "repeat"
   }

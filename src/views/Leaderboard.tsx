@@ -56,7 +56,19 @@ export const Leaderboard = () => {
     const typeName = toCamelCase(type)
     axios.get(`https://hs-pkmnsnap.ngrok.io/scoreAttack/challenge/${attackSubVariant}`)
       .then(result => result.data)
-      .then(leaderboard => setScoreAttacks(leaderboard))
+      .then((leaderboard: ApiScoreAttack[]) => {
+        const users = new Set()
+        const topLeaderboard = leaderboard.filter((apiScoreAttack) => {
+          const userName = apiScoreAttack.userName
+          if (!users.has(userName)) {
+            users.add(userName)
+            return true
+          }
+
+          return false
+        })
+        setScoreAttacks(topLeaderboard)
+      })
       .finally(() => setIsLoading(false))
       .finally(() => setAttackSubVariants(attackVariants.get(type) ?? []))
       .finally(() => setAttackSubVariant(null))
@@ -68,7 +80,19 @@ export const Leaderboard = () => {
     const typeName = toCamelCase(type)
     axios.get(`https://hs-pkmnsnap.ngrok.io/scoreAttack/challenge/${attackSubVariant}/console/${gameConsole}`)
       .then(result => result.data)
-      .then(leaderboard => setScoreAttacks(leaderboard))
+      .then((leaderboard: ApiScoreAttack[]) => {
+        const users = new Set()
+        const topLeaderboard = leaderboard.filter((apiScoreAttack) => {
+          const userName = apiScoreAttack.userName
+          if (!users.has(userName)) {
+            users.add(userName)
+            return true
+          }
+
+          return false
+        })
+        setScoreAttacks(topLeaderboard)
+      })
       .finally(() => setIsLoading(false))
       .finally(() => history.replace({ search: `?variant=${type}&challenge=${attackSubVariant}&console=${gameConsole}`}))
       .catch((reason) => console.log(reason))
