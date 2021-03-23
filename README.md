@@ -24,3 +24,11 @@ yarn install
 ```bash
 yarn start
 ```
+
+### Analyze Bundle Size
+
+```bash
+yarn analyze
+```
+
+This will show the size of bundle and dependencies.
